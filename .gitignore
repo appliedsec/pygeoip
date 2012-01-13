@@ -1,0 +1,5 @@
+*.kpf
+*env
+*.pyc
+*.egg-info
+*.dat
