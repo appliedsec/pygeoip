@@ -9,8 +9,8 @@ gi = GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
 The only supported flags are STANDARD, MMAP_CACHE, and MEMORY_CACHE
 
 If you have any questions or find a bug, have a look at the project page [3] or
-contact Jennifer Ennis <zaylea at gmail dot com>
+contact Jennifer Ennis <jennifer at foobar dot us>
 
 [1] http://www.maxmind.com/app/python
 [2] http://pear.php.net/package/Net_GeoIP/
-[3] http://code.google.com/p/pygeoip/
+[3] http://github.com/appliedsec/pygeoip
