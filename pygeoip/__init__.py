@@ -32,6 +32,7 @@ import os
 import math
 import socket
 import mmap
+import gzip
 
 from . import const
 from .util import ip2long
@@ -78,11 +79,13 @@ class GeoIP(GeoIPBase):
         """
         Initialize the class.
 
-        @param filename: path to a geoip database
+        @param filename: path to a geoip database. If MEMORY_CACHE is used,
+            the file can be gzipped.
         @type filename: str
         @param flags: flags that affect how the database is processed.
-            Currently the only supported flags are STANDARD, MEMORY_CACHE, and
-            MMAP_CACHE.
+            Currently the only supported flags are STANDARD (the default),
+            MEMORY_CACHE (preload the whole file into memory), and
+            MMAP_CACHE (access the file via mmap).
         @type flags: int
         """
         self._filename = filename
@@ -92,11 +95,12 @@ class GeoIP(GeoIPBase):
             with open(filename, 'rb') as f:
                 self._filehandle = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
 
+        elif self._flags & const.MEMORY_CACHE:
+            self._filehandle = gzip.open(filename, 'rb')
+            self._memoryBuffer = self._filehandle.read()
+
         else:
             self._filehandle = open(filename, 'rb')
-
-            if self._flags & const.MEMORY_CACHE:
-                self._memoryBuffer = self._filehandle.read()
 
         self._setup_segments()
 
