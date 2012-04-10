@@ -33,6 +33,7 @@ import math
 import socket
 import mmap
 import gzip
+import codecs
 
 from . import const
 from .util import ip2long
@@ -100,7 +101,7 @@ class GeoIP(GeoIPBase):
             self._memoryBuffer = self._filehandle.read()
 
         else:
-            self._filehandle = open(filename, 'rb')
+            self._filehandle = codecs.open(filename, 'rb','latin_1')
 
         self._setup_segments()
 
@@ -118,7 +119,7 @@ class GeoIP(GeoIPBase):
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             delim = self._filehandle.read(3)
 
-            if delim == six.b(chr(255) * 3):
+            if delim == six.u(chr(255) * 3):
                 self._databaseType = ord(self._filehandle.read(1))
 
                 if (self._databaseType >= 106):
@@ -140,10 +141,7 @@ class GeoIP(GeoIPBase):
                     buf = self._filehandle.read(const.SEGMENT_RECORD_LENGTH)
 
                     for j in range(const.SEGMENT_RECORD_LENGTH):
-                        if six.PY3:
-                            self._databaseSegments += (buf[j] << (j * 8))
-                        else:
-                            self._databaseSegments += (ord(buf[j]) << (j * 8))
+                        self._databaseSegments += (ord(buf[j]) << (j * 8))
 
                     if self._databaseType in (const.ORG_EDITION, const.ISP_EDITION):
                         self._recordLength = const.ORG_RECORD_LENGTH
@@ -209,10 +207,7 @@ class GeoIP(GeoIPBase):
 
             for i in range(2):
                 for j in range(self._recordLength):
-                    if six.PY3:
-                        x[i] += buf[self._recordLength * i + j] << (j * 8)
-                    else:
-                        x[i] += ord(buf[self._recordLength * i + j]) << (j * 8)
+                    x[i] += ord(buf[self._recordLength * i + j]) << (j * 8)
 
             if ipnum & (1 << depth):
 
@@ -249,8 +244,6 @@ class GeoIP(GeoIPBase):
         self._filehandle.seek(record_pointer, os.SEEK_SET)
 
         org_buf = self._filehandle.read(const.MAX_ORG_RECORD_LENGTH)
-        if six.PY3:
-            org_buf = org_buf.decode()
 
         return org_buf[:org_buf.index(chr(0))]
 
@@ -325,7 +318,8 @@ class GeoIP(GeoIPBase):
         record = {}
 
         record_buf_pos = 0
-        char = record_buf[record_buf_pos] if six.PY3 else ord(record_buf[record_buf_pos])
+        char = ord(record_buf[record_buf_pos])
+        #char = record_buf[record_buf_pos] if six.PY3 else ord(record_buf[record_buf_pos])
         record['country_code'] = const.COUNTRY_CODES[char]
         record['country_code3'] = const.COUNTRY_CODES3[char]
         record['country_name'] = const.COUNTRY_NAMES[char]
@@ -333,10 +327,10 @@ class GeoIP(GeoIPBase):
         str_length = 0
 
         # get region
-        char = record_buf[record_buf_pos+str_length] if six.PY3 else ord(record_buf[record_buf_pos+str_length])
+        char = ord(record_buf[record_buf_pos+str_length])
         while (char != 0):
             str_length += 1
-            char = record_buf[record_buf_pos+str_length] if six.PY3 else ord(record_buf[record_buf_pos+str_length])
+            char = ord(record_buf[record_buf_pos+str_length])
 
         if str_length > 0:
             record['region_name'] = record_buf[record_buf_pos:record_buf_pos+str_length]
@@ -345,10 +339,10 @@ class GeoIP(GeoIPBase):
         str_length = 0
 
         # get city
-        char = record_buf[record_buf_pos+str_length] if six.PY3 else ord(record_buf[record_buf_pos+str_length])
+        char = ord(record_buf[record_buf_pos+str_length])
         while (char != 0):
             str_length += 1
-            char = record_buf[record_buf_pos+str_length] if six.PY3 else ord(record_buf[record_buf_pos+str_length])
+            char = ord(record_buf[record_buf_pos+str_length])
 
         if str_length > 0:
             record['city'] = record_buf[record_buf_pos:record_buf_pos+str_length]
@@ -359,10 +353,10 @@ class GeoIP(GeoIPBase):
         str_length = 0
 
         # get the postal code
-        char = record_buf[record_buf_pos+str_length] if six.PY3 else ord(record_buf[record_buf_pos+str_length])
+        char = ord(record_buf[record_buf_pos+str_length])
         while (char != 0):
             str_length += 1
-            char = record_buf[record_buf_pos+str_length] if six.PY3 else ord(record_buf[record_buf_pos+str_length])
+            char = ord(record_buf[record_buf_pos+str_length])
 
         if str_length > 0:
             record['postal_code'] = record_buf[record_buf_pos:record_buf_pos+str_length]
@@ -375,14 +369,14 @@ class GeoIP(GeoIPBase):
         latitude = 0
         longitude = 0
         for j in range(3):
-            char = record_buf[record_buf_pos] if six.PY3 else ord(record_buf[record_buf_pos])
+            char = ord(record_buf[record_buf_pos])
             record_buf_pos += 1
             latitude += (char << (j * 8))
 
         record['latitude'] = (latitude/10000.0) - 180.0
 
         for j in range(3):
-            char = record_buf[record_buf_pos] if six.PY3 else ord(record_buf[record_buf_pos])
+            char = ord(record_buf[record_buf_pos])
             record_buf_pos += 1
             longitude += (char << (j * 8))
 
@@ -392,7 +386,7 @@ class GeoIP(GeoIPBase):
             dmaarea_combo = 0
             if record['country_code'] == 'US':
                 for j in range(3):
-                    char = record_buf[record_buf_pos] if six.PY3 else ord(record_buf[record_buf_pos])
+                    char = ord(record_buf[record_buf_pos])
                     record_buf_pos += 1
                     dmaarea_combo += (char << (j*8))
 

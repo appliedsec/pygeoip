@@ -36,12 +36,12 @@ class BaseGeoIPTestCase(unittest.TestCase):
                                    'country_name': 'United States',
                                    'time_zone': 'America/Los_Angeles'}
 
-        self.bbc_record_data = {'city': 'Over',
-                                'region_name': 'H2',
+        self.bbc_record_data = {'city': 'Tadworth',
+                                'region_name': 'N7',
                                 'area_code': 0,
-                                'longitude': -2.55,
+                                'longitude': -0.23339999999998895,
                                 'country_code3': 'GBR',
-                                'latitude': 53.1833,
+                                'latitude': 51.283299999999997,
                                 'postal_code': None, 'dma_code': 0,
                                 'country_code': 'GB',
                                 'country_name': 'United Kingdom',
@@ -59,7 +59,7 @@ class BaseGeoIPTestCase(unittest.TestCase):
                                 'time_zone': 'Europe/London'}
 
         self.google_region_data = {'region_name': 'CA', 'country_code': 'US'}
-        self.bbc_region_data = {'region_name': 'H2', 'country_code': 'GB'}
+        self.bbc_region_data = {'region_name': 'N7', 'country_code': 'GB'}
 
         self.google_org = 'Google'
         self.bbc_org = 'BBC'
