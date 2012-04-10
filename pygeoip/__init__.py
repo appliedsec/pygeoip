@@ -282,8 +282,9 @@ class GeoIP(GeoIPBase):
                 region = ''.join([chr((seek_region - const.CANADA_OFFSET) // 26 + 65), chr((seek_region - const.CANADA_OFFSET) % 26 + 65)])
             else:
                 i = (seek_region - const.WORLD_OFFSET) // const.FIPS_RANGE
-                if i in const.COUNTRY_CODES:
-                    country_code = const.COUNTRY_CODES[(seek_region - const.WORLD_OFFSET) // const.FIPS_RANGE]
+                if i < len(const.COUNTRY_CODES):
+                    #country_code = const.COUNTRY_CODES[(seek_region - const.WORLD_OFFSET) // const.FIPS_RANGE]
+                    country_code = const.COUNTRY_CODES[i]
                 else:
                     country_code = ''
                 region = ''
