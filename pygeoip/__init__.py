@@ -97,8 +97,12 @@ class GeoIP(GeoIPBase):
                 self._filehandle = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
 
         elif self._flags & const.MEMORY_CACHE:
-            self._filehandle = gzip.open(filename, 'rb')
-            self._memoryBuffer = self._filehandle.read()
+            try:
+                self._filehandle = gzip.open(filename, 'rb')
+                self._memoryBuffer = self._filehandle.read()
+            except IOError:
+                self._filehandle = codecs.open(filename, 'rb', 'latin_1')
+                self._memoryBuffer = self._filehandle.read()
 
         else:
             self._filehandle = codecs.open(filename, 'rb','latin_1')
