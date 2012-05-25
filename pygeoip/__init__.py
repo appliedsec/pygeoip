@@ -34,6 +34,7 @@ import socket
 import mmap
 import gzip
 import codecs
+from StringIO import StringIO
 
 from . import const
 from .util import ip2long
@@ -97,9 +98,14 @@ class GeoIP(GeoIPBase):
                 self._filehandle = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
 
         elif self._flags & const.MEMORY_CACHE:
-            self._filehandle = gzip.open(filename, 'rb')
-            self._memoryBuffer = self._filehandle.read()
+            if filename.endswith('.gz'):
+                opener = gzip.open
+            else:
+                opener = open
 
+            with opener(filename, 'rb') as f:
+                self._memoryBuffer = f.read()
+                self._filehandle = StringIO(self._memoryBuffer)
         else:
             self._filehandle = codecs.open(filename, 'rb','latin_1')
 
