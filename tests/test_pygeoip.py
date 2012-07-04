@@ -1,9 +1,10 @@
 from __future__ import with_statement, absolute_import
+import threading
 import unittest
 
 import pygeoip
 
-from .config import (CITY_DB_PATH, COUNTRY_DB_PATH, ISP_DB_PATH, ORG_DB_PATH, REGION_DB_PATH, _data_dir)
+from config import (CITY_DB_PATH, COUNTRY_DB_PATH, ISP_DB_PATH, ORG_DB_PATH, REGION_DB_PATH, _data_dir)
 
 class BaseGeoIPTestCase(unittest.TestCase):
     def setUp(self):
@@ -197,5 +198,41 @@ class TestGeoIPRegionFunctions(BaseGeoIPTestCase):
 
         self.assertEqual(self.gir.region_by_addr(self.yahoo_ip), self.yahoo_region_data)
 
+class TestThread(threading.Thread):
+    def __init__(self, name, geoip, ip, country_code, assertEqual):
+        threading.Thread.__init__(self, name=name)
+        self.geoip = geoip
+        self.ip = ip
+        self.country_code = country_code
+        self.assertEqual = assertEqual
+    
+    def run(self):
+        for i in range(1000):
+            self.assertEqual(self.geoip.country_code_by_addr(self.ip), self.country_code)
+
+class TestThreadedFunctions(BaseGeoIPTestCase):
+
+    def setUp(self):
+        super(TestThreadedFunctions, self).setUp()
+        self.gi = pygeoip.GeoIP(COUNTRY_DB_PATH)
+        self.gic = pygeoip.GeoIP(CITY_DB_PATH)
+
+    def testCountryDB(self):
+        us_thread = TestThread('country-us', self.gi, self.us_ip, self.us_code, self.assertEqual)
+        gb_thread = TestThread('country-gb', self.gi, self.gb_ip, self.gb_code, self.assertEqual)
+        us_thread.start()
+        gb_thread.start()
+        us_thread.join()
+        gb_thread.join()
+        
+    def testCityDB(self):
+        us_thread = TestThread('city-us', self.gic, self.us_ip, self.us_code, self.assertEqual)
+        gb_thread = TestThread('city-gb', self.gic, self.gb_ip, self.gb_code, self.assertEqual)
+        us_thread.start()
+        gb_thread.start()
+        us_thread.join()
+        gb_thread.join()
+        
+        
 if __name__ == '__main__':
     unittest.main()
