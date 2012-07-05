@@ -30,7 +30,7 @@ except ImportError:
     from setuptools import setup, find_packages
 
 setup(name='pygeoip',
-      version='0.2.3',
+      version='0.2.4dev',
       description='Pure Python GeoIP API',
       author='Jennifer Ennis',
       author_email='zaylea@gmail.com',
