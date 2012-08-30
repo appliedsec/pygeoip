@@ -3,7 +3,7 @@ import unittest
 
 import pygeoip
 
-from .config import (CITY_DB_PATH, COUNTRY_DB_PATH, ISP_DB_PATH, ORG_DB_PATH, REGION_DB_PATH, _data_dir)
+from .config import (CITY_DB_PATH, COUNTRY_DB_PATH, COUNTRY_V6_DB_PATH, ISP_DB_PATH, ORG_DB_PATH, REGION_DB_PATH, _data_dir)
 
 class BaseGeoIPTestCase(unittest.TestCase):
     def setUp(self):
@@ -23,6 +23,13 @@ class BaseGeoIPTestCase(unittest.TestCase):
 
         self.us_code3 = 'USA'
         self.gb_code3 = 'GBR'
+
+        self.jp_ipv6 = '2001:298:ffff:ffff:ffff:ffff:ffff:ffff'
+        self.jp_code = 'JP'
+        self.ca_ipv6 = '2620:0:f0::'
+        self.ca_code = 'CA'
+        self.fr_ipv6 = '2a02:20f0:abcd::'
+        self.fr_code = 'FR'
 
         self.google_record_data = {'city': 'Mountain View',
                                    'region_name': 'CA',
@@ -70,6 +77,7 @@ class TestGeoIPCountryFunctions(BaseGeoIPTestCase):
     def setUp(self):
         super(TestGeoIPCountryFunctions, self).setUp()
         self.gi = pygeoip.GeoIP(COUNTRY_DB_PATH)
+        self.gi6 = pygeoip.GeoIP(COUNTRY_V6_DB_PATH)
         self.gic = pygeoip.GeoIP(CITY_DB_PATH)
         self.gir = pygeoip.GeoIP(REGION_DB_PATH)
 
@@ -86,6 +94,11 @@ class TestGeoIPCountryFunctions(BaseGeoIPTestCase):
         self.assertEqual(self.gic.country_code_by_addr(self.us_ip), self.us_code)
         self.assertEqual(self.gic.country_code_by_addr(self.gb_ip), self.gb_code)
         self.assertEqual(self.gir.country_code_by_addr(self.yahoo_ip), self.us_code)
+
+    def testCountryCodeByAddrIPv6(self):
+        self.assertEqual(self.gi6.country_code_by_addr(self.fr_ipv6), self.fr_code)
+        self.assertEqual(self.gi6.country_code_by_addr(self.jp_ipv6), self.jp_code)
+        self.assertEqual(self.gi6.country_code_by_addr(self.ca_ipv6), self.ca_code)
 
     def testCountryNameByName(self):
         self.assertEqual(self.gi.country_name_by_name(self.us_hostname), self.us_name)
