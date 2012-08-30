@@ -67,5 +67,5 @@ def ip2long_v6(ip):
     """
     ipbyte = socket.inet_pton(socket.AF_INET6, ip)
     ipnum = array('L', struct.unpack('!4L', ipbyte))
-    ipnum.reverse()
-    return sum(ipnum[i] << (i * 32) for i in range(len(ipnum)))
+    max_index = len(ipnum) - 1
+    return sum(ipnum[max_index - i] << (i * 32) for i in range(len(ipnum)))
