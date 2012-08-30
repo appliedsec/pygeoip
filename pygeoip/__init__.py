@@ -124,7 +124,6 @@ class GeoIP(GeoIPBase):
 
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             delim = self._filehandle.read(3)
-
             if delim == six.u(chr(255) * 3):
                 self._databaseType = ord(self._filehandle.read(1))
 
@@ -156,7 +155,7 @@ class GeoIP(GeoIPBase):
             else:
                 self._filehandle.seek(-4, os.SEEK_CUR)
 
-        if self._databaseType == const.COUNTRY_EDITION:
+        if self._databaseType in (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6):
             self._databaseSegments = const.COUNTRY_BEGIN
 
         self._filehandle.seek(filepos, os.SEEK_SET)
@@ -179,7 +178,7 @@ class GeoIP(GeoIPBase):
         if not ipnum:
             raise ValueError("Invalid IP address: %s" % addr)
 
-        if self._databaseType != const.COUNTRY_EDITION:
+        if self._databaseType not in (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6):
             raise GeoIPError('Invalid database type; country_* methods expect '\
                              'Country database')
 
@@ -419,18 +418,22 @@ class GeoIP(GeoIPBase):
         @return: 2-letter country code
         @rtype: str
         """
-        try:
-            if self._databaseType == const.COUNTRY_EDITION:
-                country_id = self._lookup_country_id(addr)
-                return const.COUNTRY_CODES[country_id]
-            elif self._databaseType in (const.REGION_EDITION_REV0, const.REGION_EDITION_REV1,
-                                          const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
-                return self.region_by_addr(addr)['country_code']
-            else:
-                raise GeoIPError('Invalid database type; country_* methods expect '\
-                                 'Country, City, or Region database')
-        except ValueError:
-            raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
+        if self._databaseType in (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6):
+            ipv = 6 if addr.find(':') >= 0 else 4
+
+            if ipv == 4 and self._databaseType != const.COUNTRY_EDITION:
+                raise ValueError('Invalid database type; expected IPv6 address')
+            if ipv == 6 and self._databaseType != const.COUNTRY_EDITION_V6:
+                raise ValueError('Invalid database type; expected IPv4 address')
+
+            country_id = self._lookup_country_id(addr)
+            return const.COUNTRY_CODES[country_id]
+        elif self._databaseType in (const.REGION_EDITION_REV0, const.REGION_EDITION_REV1,
+                                      const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
+            return self.region_by_addr(addr)['country_code']
+        else:
+            raise GeoIPError('Invalid database type; country_* methods expect '\
+                             'Country, City, or Region database')
 
     def country_code_by_name(self, hostname):
         """
@@ -442,9 +445,23 @@ class GeoIP(GeoIPBase):
         @return: 2-letter country code
         @rtype: str
         """
-        addr = socket.gethostbyname(hostname)
+        if self._databaseType == const.COUNTRY_EDITION_V6:
+            return self._country_code_by_name_v6(hostname)
+        else:
+            return self._country_code_by_name_v4(hostname)
 
+    def _country_code_by_name_v4(self, hostname):
+        addr = socket.gethostbyname(hostname)
         return self.country_code_by_addr(addr)
+
+    def _country_code_by_name_v6(self, hostname):
+        try:
+            response = socket.getaddrinfo(hostname, 0, socket.AF_INET6)
+        except socket.gaierror:
+            return ''
+        family, socktype, proto, canonname, sockaddr = response[0]
+        address, port, flow, scope = sockaddr
+        return self.country_code_by_addr(address)
 
     def country_name_by_addr(self, addr):
         """
