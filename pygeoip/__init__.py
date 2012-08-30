@@ -176,7 +176,6 @@ class GeoIP(GeoIPBase):
         """
 
         ipnum = ip2long(addr)
-
         if not ipnum:
             raise ValueError("Invalid IP address: %s" % addr)
 
@@ -196,10 +195,11 @@ class GeoIP(GeoIPBase):
         @return: offset of start of record
         @rtype: int
         """
+
         offset = 0
+        seek_depth = 127 if len(str(ipnum)) > 10 else 31
 
-        for depth in range(31, -1, -1):
-
+        for depth in range(seek_depth, -1, -1):
             if self._flags & const.MEMORY_CACHE:
                 startIndex = 2 * self._recordLength * offset
                 length = 2 * self._recordLength
@@ -214,21 +214,14 @@ class GeoIP(GeoIPBase):
             for i in range(2):
                 for j in range(self._recordLength):
                     x[i] += ord(buf[self._recordLength * i + j]) << (j * 8)
-
             if ipnum & (1 << depth):
-
                 if x[1] >= self._databaseSegments:
                     return x[1]
-
                 offset = x[1]
-
             else:
-
                 if x[0] >= self._databaseSegments:
                     return x[0]
-
                 offset = x[0]
-
 
         raise Exception('Error traversing database - perhaps it is corrupt?')
 
@@ -436,7 +429,6 @@ class GeoIP(GeoIPBase):
             else:
                 raise GeoIPError('Invalid database type; country_* methods expect '\
                                  'Country, City, or Region database')
-
         except ValueError:
             raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
 
