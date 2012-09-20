@@ -1,16 +1,66 @@
-Pure Python GeoIP API. The API is based off of MaxMind's C-based Python API [1],
-but the code itself is based on the pure PHP5 API [2] by Jim Winstead and Hans Lellelid.
+# Pure Python GeoIP API #
+The API is based on [MaxMind's C-based Python API](http://www.maxmind.com/app/python),
+but the code itself is ported from the [Pure PHP GeoIP API](http://pear.php.net/package/Net_GeoIP) by Jim Winstead and Hans Lellelid.
 
-It is mostly a drop-in replacement, except the
-`new` and `open` methods are gone. You should instantiate the GeoIP class yourself:
+It is mostly a drop-in replacement, except the `new` and `open` methods are gone.
 
-gi = GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
+Tested using tox with Python version 2.5, 2.6, 2.7, 3.0 and 3.1.
 
-The only supported flags are STANDARD, MMAP_CACHE, and MEMORY_CACHE
+## Issues and contribution ##
 
-If you have any questions or find a bug, have a look at the project page [3] or
-contact Jennifer Ennis <jennifer at foobar dot us>
+Bug reports are done by [creating an issue on Github](https://github.com/appliedsec/pygeoip/issues). If you want to contribute you can always [create a pull request](https://github.com/appliedsec/pygeoip/pulls) for discussion and code submission.
 
-[1] http://www.maxmind.com/app/python
-[2] http://pear.php.net/package/Net_GeoIP/
-[3] http://github.com/appliedsec/pygeoip
+## Installation ##
+
+You can easily install pygeoip with setuptools:
+
+    easy_install pygeoip
+
+## Supported Databases ##
+
+* Country
+* Region
+* City
+* Organization
+* ISP
+
+## Quick Documentation ##
+
+Create your GeoIP instance with appropriate access flag. `STANDARD` reads data from disk when needed, `MEMORY_CACHE` loads database into memory on instantiation and `MMAP_CACHE` loads database into memory using mmap.
+
+    import pygeoip
+    gi = pygeoip.GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
+
+### Country lookup ###
+
+    >>> gi.country_code_by_name('google.com')
+    'US'
+    >>> gi.country_code_by_addr('64.233.161.99')
+    'US'
+    >>> gi.country_name_by_addr('64.233.161.99')
+    'United States'
+
+### City lookup ###
+
+    >>> gic = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
+    >>> gic.record_by_addr('64.233.161.99')
+    {
+      'city': 'Mountain View',
+    	'region_name': 'CA',
+    	'area_code': 650,
+    	'longitude': -122.0574,
+    	'country_code3': 'USA',
+    	'latitude': 37.419199999999989,
+    	'postal_code': '94043',
+    	'dma_code': 807,
+    	'country_code': 'US',
+    	'country_name': 'United States'
+    }
+
+### Timezone lookup ###
+
+    >>> gic = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
+    >>> gic.time_zone_by_addr('64.233.161.99')
+    'America/Los_Angeles'
+
+For more information, [check out the full API documentation](http://packages.python.org/pygeoip).
