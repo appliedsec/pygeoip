@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://code.google.com/p/pygeoip/">pygeoip</a></th>
+            ><a class="navbar" target="_top" href="https://github.com/appliedsec/pygeoip">pygeoip</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -397,6 +397,42 @@ object --+
       
     </td>
   </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">str</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#time_zone_by_addr" class="summary-sig-name">time_zone_by_addr</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">addr</span>)</span><br />
+      Look up the time zone for a given IP address.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.time_zone_by_addr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">str</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#time_zone_by_name" class="summary-sig-name">time_zone_by_name</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hostname</span>)</span><br />
+      Look up the time zone for a given hostname.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.time_zone_by_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
@@ -480,9 +516,12 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>filename</code></strong> (str) - path to a geoip database</li>
+        <li><strong class="pname"><code>filename</code></strong> (str) - path to a geoip database. If MEMORY_CACHE is used, the file can 
+          be gzipped.</li>
         <li><strong class="pname"><code>flags</code></strong> (int) - flags that affect how the database is processed. Currently the 
-          only supported flags are STANDARD, MEMORY_CACHE, and MMAP_CACHE.</li>
+          only supported flags are STANDARD (the default), MEMORY_CACHE 
+          (preload the whole file into memory), and MMAP_CACHE (access the 
+          file via mmap).</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -901,6 +940,60 @@ object --+
   </dl>
 </td></tr></table>
 </div>
+<a name="time_zone_by_addr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">time_zone_by_addr</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">addr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.time_zone_by_addr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Look up the time zone for a given IP address. Use this method if you 
+  have a Region or City database.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> (str) - IP address</li>
+    </ul></dd>
+    <dt>Returns: str</dt>
+        <dd>Time zone</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="time_zone_by_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">time_zone_by_name</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hostname</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.time_zone_by_name">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Look up the time zone for a given hostname. Use this method if you 
+  have a Region or City database.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>hostname</code></strong> (str) - host name</li>
+    </ul></dd>
+    <dt>Returns: str</dt>
+        <dd>Time zone</dd>
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -926,14 +1019,14 @@ object --+
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://code.google.com/p/pygeoip/">pygeoip</a></th>
+            ><a class="navbar" target="_top" href="https://github.com/appliedsec/pygeoip">pygeoip</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Oct 14 13:02:47 2010
+    Generated by Epydoc 3.0.1 on Thu Sep 20 11:41:42 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

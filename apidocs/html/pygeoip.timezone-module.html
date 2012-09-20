@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pygeoip.util</title>
+  <title>pygeoip.timezone</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="pygeoip-module.html">Package&nbsp;pygeoip</a> ::
-        Module&nbsp;util
+        Module&nbsp;timezone
       </span>
     </td>
     <td>
@@ -53,35 +53,15 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="pygeoip.util-module.html"
+            >]&nbsp;|&nbsp;<a href="pygeoip.timezone-module.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
-<h1 class="epydoc">Module util</h1><p class="nomargin-top"><span class="codelink"><a href="pygeoip.util-pysrc.html">source&nbsp;code</a></span></p>
-<p>Misc. utility functions. It is part of the pygeoip package.</p>
-
-<hr />
-<div class="fields">      <p><strong>Author:</strong>
-        Jennifer Ennis &lt;zaylea at gmail dot com&gt;
-      </p>
-      <p><strong>License:</strong>
-        Copyright(C) 2004 MaxMind LLC
-        <p>This program is free software: you can redistribute it and/or 
-        modify it under the terms of the GNU Lesser General Public License 
-        as published by the Free Software Foundation, either version 3 of 
-        the License, or (at your option) any later version.</p>
-        <p>This program is distributed in the hope that it will be useful, 
-        but WITHOUT ANY WARRANTY; without even the implied warranty of 
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
-        General Public License for more details.</p>
-        <p>You should have received a copy of the GNU Lesser General Public
-        License along with this program.  If not, see 
-        &lt;http://www.gnu.org/licenses/lgpl.txt&gt;.</p>
-      </p>
-</div><!-- ==================== FUNCTIONS ==================== -->
+<h1 class="epydoc">Module timezone</h1><p class="nomargin-top"><span class="codelink"><a href="pygeoip.timezone-pysrc.html">source&nbsp;code</a></span></p>
+<!-- ==================== FUNCTIONS ==================== -->
 <a name="section-Functions"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
@@ -100,14 +80,14 @@
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">int</span>
+      <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pygeoip.util-module.html#ip2long" class="summary-sig-name">ip2long</a>(<span class="summary-sig-arg">ip</span>)</span><br />
-      Convert a IPv4 address into a 32-bit integer.</td>
+          <td><span class="summary-sig"><a name="time_zone_by_country_and_region"></a><span class="summary-sig-name">time_zone_by_country_and_region</span>(<span class="summary-sig-arg">country_code</span>,
+        <span class="summary-sig-arg">region_name</span>=<span class="summary-sig-default">None</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pygeoip.util-pysrc.html#ip2long">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pygeoip.timezone-pysrc.html#time_zone_by_country_and_region">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -133,25 +113,40 @@
     </table>
   </td>
 </tr>
-<tr>
+<tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'pygeoip'"><code class="variable-quote">'</code><code class="variable-string">pygeoip</code><code class="variable-quote">'</code></code>
+        <a href="pygeoip.timezone-module.html#_country" class="summary-name" onclick="show_private();">_country</a> = <code title="{'AD': 'Europe/Andorra',
+ 'AE': 'Asia/Dubai',
+ 'AF': 'Asia/Kabul',
+ 'AG': 'America/Antigua',
+ 'AI': 'America/Anguilla',
+ 'AL': 'Europe/Tirane',
+ 'AM': 'Asia/Yerevan',
+ 'AO': 'Africa/Luanda',
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">AD</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Europe/Andorra</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">AE</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Asia/Dubai</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">AF</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="None">None</code>
     </td>
   </tr>
 </table>
-<!-- ==================== FUNCTION DETAILS ==================== -->
-<a name="section-FunctionDetails"></a>
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="left"><span class="table-header">Variables Details</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-FunctionDetails"
+         ><span class="options">[<a href="#section-VariablesDetails"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
@@ -159,28 +154,29 @@
   </td>
 </tr>
 </table>
-<a name="ip2long"></a>
-<div>
+<a name="_country"></a>
+<div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">ip2long</span>(<span class="sig-arg">ip</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pygeoip.util-pysrc.html#ip2long">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
+  <h3 class="epydoc">_country</h3>
   
-  <p>Convert a IPv4 address into a 32-bit integer.</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>ip</code></strong> (str) - quad-dotted IPv4 address</li>
-    </ul></dd>
-    <dt>Returns: int</dt>
-        <dd>network byte order 32-bit integer</dd>
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">AD</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Europe/Andorra</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">AE</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Asia/Dubai</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">AF</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Asia/Kabul</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">AG</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">America/Antigua</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">AI</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">America/Anguilla</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">AL</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Europe/Tirane</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">AM</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Asia/Yerevan</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">AO</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Africa/Luanda</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
   </dl>
 </td></tr></table>
 </div>
