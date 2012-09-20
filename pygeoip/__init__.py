@@ -34,7 +34,11 @@ import socket
 import mmap
 import gzip
 import codecs
-from StringIO import StringIO
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 from . import const
 from .util import ip2long
