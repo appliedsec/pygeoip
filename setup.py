@@ -23,11 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
 try:
-    from setuptools import setup, find_packages
+    from setuptools import setup
 except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
+    from distutils.core import setup
+
 
 setup(name='pygeoip',
       version='0.2.5',
@@ -35,12 +34,13 @@ setup(name='pygeoip',
       author='Jennifer Ennis',
       author_email='zaylea@gmail.com',
       url='http://code.google.com/p/pygeoip/',
-      install_requires=['six>=1.0'],
-      classifiers=[
-      # make sure to use :: Python *and* :: Python :: 3 so
-      # that pypi can list the package on the python 3 page
-            'Programming Language :: Python',
-            'Programming Language :: Python :: 3'],
-      packages=find_packages(exclude=['tests','test_*','data','apidocs']),
+      classifiers=['Programming Language :: Python',
+                   'Programming Language :: Python :: 2.5',
+                   'Programming Language :: Python :: 2.6',
+                   'Programming Language :: Python :: 2.7',
+                   'Programming Language :: Python :: 3',
+                   'Programming Language :: Python :: 3.1',
+                   'Programming Language :: Python :: 3.2'],
+      packages=['pygeoip'],
       license='LGPL',
       keywords='geoip')
