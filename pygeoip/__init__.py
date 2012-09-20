@@ -27,8 +27,9 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
-from __future__ import with_statement, absolute_import, division
+from __future__ import with_statement, division
 import os
+import six
 import math
 import socket
 import mmap
@@ -40,21 +41,21 @@ try:
 except ImportError:
     from io import StringIO
 
-from . import const
-from .util import ip2long
-from .timezone import time_zone_by_country_and_region
+import const
+from util import ip2long
+from timezone import time_zone_by_country_and_region
 
-import six
 
 MMAP_CACHE = const.MMAP_CACHE
 MEMORY_CACHE = const.MEMORY_CACHE
 STANDARD = const.STANDARD
 
+
 class GeoIPError(Exception):
     pass
 
-class GeoIPMetaclass(type):
 
+class GeoIPMetaclass(type):
     def __new__(cls, *args, **kwargs):
         """
         Singleton method to gets an instance without reparsing the db. Unique
@@ -77,10 +78,11 @@ class GeoIPMetaclass(type):
 
         return cls._instances[filename]
 
+
 GeoIPBase = GeoIPMetaclass('GeoIPBase', (object,), {})
 
-class GeoIP(GeoIPBase):
 
+class GeoIP(GeoIPBase):
     def __init__(self, filename, flags=0):
         """
         Initialize the class.
@@ -617,8 +619,8 @@ class GeoIP(GeoIPBase):
         Look up the time zone for a given IP address.
         Use this method if you have a Region or City database.
 
-        @param hostname: IP address
-        @type hostname: str
+        @param addr: IP address
+        @type addr: str
         @return: Time zone
         @rtype: str
         """
