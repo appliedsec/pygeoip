@@ -367,7 +367,6 @@ class GeoIP(GeoIPBase):
     def id_by_addr(self, addr):
         """
         Get the country index.
-
         Looks up the index for the country which is the key for
         the code and name.
 
@@ -376,15 +375,13 @@ class GeoIP(GeoIPBase):
         @return: network byte order 32-bit integer
         @rtype: int
         """
-
         ipnum = util.ip2long(addr)
-
         if not ipnum:
             raise ValueError("Invalid IP address: %s" % addr)
 
         if self._databaseType != const.COUNTRY_EDITION:
-            raise GeoIPError('Invalid database type; country_* methods expect '\
-                             'Country database')
+            message = 'Invalid database type, expected Country'
+            raise GeoIPError(message)
 
         return self._seek_country(ipnum) - const.COUNTRY_BEGIN
 
@@ -400,30 +397,26 @@ class GeoIP(GeoIPBase):
         """
         try:
             if self._databaseType == const.COUNTRY_EDITION:
-                country_id = self.id_by_addr(addr)
-                return const.COUNTRY_CODES[country_id]
-            elif self._databaseType in (const.REGION_EDITION_REV0, const.REGION_EDITION_REV1,
-                                          const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
+                return const.COUNTRY_CODES[self.id_by_addr(addr)]
+            elif self._databaseType in const.REGION_CITY_EDITIONS:
                 return self.region_by_addr(addr)['country_code']
-            else:
-                raise GeoIPError('Invalid database type; country_* methods expect '\
-                                 'Country, City, or Region database')
 
+            message = 'Invalid database type, expected Country, City or Region'
+            raise GeoIPError(message)
         except ValueError:
-            raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
+            raise GeoIPError('Failed to lookup address %s' % addr)
 
     def country_code_by_name(self, hostname):
         """
         Returns 2-letter country code (e.g. 'US') for specified hostname.
         Use this method if you have a Country, Region, or City database.
 
-        @param hostname: host name
+        @param hostname: Hostname
         @type hostname: str
         @return: 2-letter country code
         @rtype: str
         """
         addr = socket.gethostbyname(hostname)
-
         return self.country_code_by_addr(addr)
 
     def country_name_by_addr(self, addr):
@@ -438,22 +431,21 @@ class GeoIP(GeoIPBase):
         """
         try:
             if self._databaseType == const.COUNTRY_EDITION:
-                country_id = self.id_by_addr(addr)
-                return const.COUNTRY_NAMES[country_id]
-            elif self._databaseType in (const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
+                return const.COUNTRY_NAMES[self.id_by_addr(addr)]
+            elif self._databaseType in const.CITY_EDITIONS:
                 return self.record_by_addr(addr)['country_name']
             else:
-                raise GeoIPError('Invalid database type; country_* methods expect '\
-                                 'Country or City database')
+                message = 'Invalid database type, expected Country or City'
+                raise GeoIPError(message)
         except ValueError:
-            raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
+            raise GeoIPError('Failed to lookup address %s' % addr)
 
     def country_name_by_name(self, hostname):
         """
         Returns full country name for specified hostname.
         Use this method if you have a Country database.
 
-        @param hostname: host name
+        @param hostname: Hostname
         @type hostname: str
         @return: country name
         @rtype: str
@@ -463,8 +455,8 @@ class GeoIP(GeoIPBase):
 
     def org_by_addr(self, addr):
         """
-        Lookup the organization (or ISP) for given IP address.
-        Use this method if you have an Organization/ISP database.
+        Lookup Organization, ISP or ASNum for given IP address.
+        Use this method if you have an Organization, ISP or ASNum database.
 
         @param addr: IP address
         @type addr: str
@@ -473,30 +465,29 @@ class GeoIP(GeoIPBase):
         """
         try:
             ipnum = util.ip2long(addr)
-
             if not ipnum:
-                raise ValueError("Invalid IP address: %s" % addr)
+                raise ValueError('Invalid IP address')
 
-            if self._databaseType not in (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION):
-                raise GeoIPError('Invalid database type; org_* methods expect '\
-                                 'Org/ISP database')
+            valid = (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION)
+            if self._databaseType not in valid:
+                message = 'Invalid database type, expected Org, ISP or ASNum'
+                raise GeoIPError(message)
 
             return self._get_org(ipnum)
         except ValueError:
-            raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
+            raise GeoIPError('Failed to lookup address %s' % addr)
 
     def org_by_name(self, hostname):
         """
         Lookup the organization (or ISP) for hostname.
         Use this method if you have an Organization/ISP database.
 
-        @param hostname: host name
+        @param hostname: Hostname
         @type hostname: str
-        @return: organization or ISP name
+        @return: Organization or ISP name
         @rtype: str
         """
         addr = socket.gethostbyname(hostname)
-
         return self.org_by_addr(addr)
 
     def record_by_addr(self, addr):
@@ -506,38 +497,37 @@ class GeoIP(GeoIPBase):
 
         @param addr: IP address
         @type addr: str
-        @return: dict with country_code, country_code3, country_name,
-            region, city, postal_code, latitude, longitude,
-            dma_code, metro_code, area_code, region_name, time_zone
+        @return: Dictionary with country_code, country_code3, country_name,
+            region, city, postal_code, latitude, longitude, dma_code,
+            metro_code, area_code, region_name, time_zone
         @rtype: dict
         """
         try:
             ipnum = util.ip2long(addr)
-
             if not ipnum:
-                raise ValueError("Invalid IP address: %s" % addr)
+                raise ValueError('Invalid IP address')
 
-            if not self._databaseType in (const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
-                raise GeoIPError('Invalid database type; record_* methods expect City database')
+            if not self._databaseType in const.CITY_EDITIONS:
+                message = 'Invalid database type, expected City'
+                raise GeoIPError(message)
 
             return self._get_record(ipnum)
         except ValueError:
-            raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
+            raise GeoIPError('Failed to lookup address %s' % addr)
 
     def record_by_name(self, hostname):
         """
         Look up the record for a given hostname.
         Use this method if you have a City database.
 
-        @param hostname: host name
+        @param hostname: Hostname
         @type hostname: str
-        @return: dict with country_code, country_code3, country_name,
-            region, city, postal_code, latitude, longitude,
-            dma_code, metro_code, area_code, region_name, time_zone
+        @return: Dictionary with country_code, country_code3, country_name,
+            region, city, postal_code, latitude, longitude, dma_code,
+            metro_code, area_code, region_name, time_zone
         @rtype: dict
         """
         addr = socket.gethostbyname(hostname)
-
         return self.record_by_addr(addr)
 
     def region_by_addr(self, addr):
@@ -547,34 +537,31 @@ class GeoIP(GeoIPBase):
 
         @param addr: IP address
         @type addr: str
-        @return: dict containing country_code, region,
-            and region_name
+        @return: Dictionary containing country_code, region and region_name
         @rtype: dict
         """
         try:
             ipnum = util.ip2long(addr)
-
             if not ipnum:
-                raise ValueError("Invalid IP address: %s" % addr)
+                raise ValueError('Invalid IP address')
 
-            if not self._databaseType in (const.REGION_EDITION_REV0, const.REGION_EDITION_REV1,
-                                          const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
-                raise GeoIPError('Invalid database type; region_* methods expect '\
-                                 'Region or City database')
+            db_type = self._databaseType
+            if not db_type in const.REGION_CITY_EDITIONS:
+                message = 'Invalid database type, expected Region or City'
+                raise GeoIPError(message)
 
             return self._get_region(ipnum)
         except ValueError:
-            raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
+            raise GeoIPError('Failed to lookup address %s' % addr)
 
     def region_by_name(self, hostname):
         """
         Lookup the region for given hostname.
         Use this method if you have a Region database.
 
-        @param hostname: host name
+        @param hostname: Hostname
         @type hostname: str
-        @return: dict containing country_code, region,
-            and region_name
+        @return: Dictionary containing country_code, region, and region_name
         @rtype: dict
         """
         addr = socket.gethostbyname(hostname)
@@ -592,25 +579,24 @@ class GeoIP(GeoIPBase):
         """
         try:
             ipnum = util.ip2long(addr)
-
             if not ipnum:
-                raise ValueError("Invalid IP address: %s" % addr)
+                raise ValueError('Invalid IP address')
 
-            if not self._databaseType in (const.REGION_EDITION_REV0, const.REGION_EDITION_REV1,
-                                          const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
-                raise GeoIPError('Invalid database type; region_* methods expect '\
-                                 'Region or City database')
+            db_type = self._databaseType
+            if not db_type in const.REGION_CITY_EDITIONS:
+                message = 'Invalid database type, expected Region or City'
+                raise GeoIPError(message)
 
             return self._get_record(ipnum)['time_zone']
         except ValueError:
-            raise GeoIPError('*_by_addr methods only accept IP addresses. Use *_by_name for hostnames. (Address: %s)' % addr)
+            raise GeoIPError('Failed to lookup address %s' % addr)
 
     def time_zone_by_name(self, hostname):
         """
         Look up the time zone for a given hostname.
         Use this method if you have a Region or City database.
 
-        @param hostname: host name
+        @param hostname: Hostname
         @type hostname: str
         @return: Time zone
         @rtype: str
