@@ -336,6 +336,8 @@ class GeoIP(GeoIPBase):
         record['country_code'] = const.COUNTRY_CODES[char]
         record['country_code3'] = const.COUNTRY_CODES3[char]
         record['country_name'] = const.COUNTRY_NAMES[char]
+        if const.CONTINENT_MAP.has_key(record['country_name']):
+            record['continent'] = const.CONTINENT_MAP[record['country_name']]
         record_buf_pos += 1
         str_length = 0
 
