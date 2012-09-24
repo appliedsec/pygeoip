@@ -314,7 +314,7 @@ COUNTRY_NAMES = (
     "Korea, Republic of", "Kuwait", "Cayman Islands",
     "Kazakhstan", "Lao People's Democratic Republic", "Lebanon", "Saint Lucia",
     "Liechtenstein", "Sri Lanka", "Liberia", "Lesotho", "Lithuania", "Luxembourg",
-    "Latvia", "Libyan Arab Jamahiriya", "Morocco", "Monaco", "Moldova, Republic of",
+    "Latvia", "Libya", "Morocco", "Monaco", "Moldova, Republic of",
     "Madagascar", "Marshall Islands", "Macedonia",
     "Mali", "Myanmar", "Mongolia", "Macau", "Northern Mariana Islands",
     "Martinique", "Mauritania", "Montserrat", "Malta", "Mauritius", "Maldives",
