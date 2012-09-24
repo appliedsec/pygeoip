@@ -276,7 +276,7 @@ class GeoIP(GeoIPBase):
             seek_region = seek_country - const.STATE_BEGIN_REV0
             if seek_region >= 1000:
                 country_code = 'US'
-                region = ''.join([chr((seek_region // 1000) // 26 + 65), chr((seek_region // 1000) % 26 + 65)])
+                region = ''.join([chr((seek_region - 1000) // 26 + 65), chr((seek_region - 1000) % 26 + 65)])
             else:
                 country_code = const.COUNTRY_CODES[seek_region]
                 region = ''
