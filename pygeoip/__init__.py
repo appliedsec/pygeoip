@@ -41,9 +41,9 @@ try:
 except ImportError:
     from io import StringIO
 
-import const
-from util import ip2long
-from timezone import time_zone_by_country_and_region
+import pygeoip.const
+from pygeoip.util import ip2long
+from pygeoip.timezone import time_zone_by_country_and_region
 
 
 MMAP_CACHE = const.MMAP_CACHE

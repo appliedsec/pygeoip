@@ -1,9 +1,8 @@
-import os.path
+import os.path as path
 
-_data_dir = "/Users/jennifere/projects/pygeoip/data"
+DATA_DIR = path.join(path.dirname(path.realpath(__file__)), 'data')
 
-COUNTRY_DB_PATH = os.path.join(os.path.abspath(_data_dir), 'GeoIP.dat')
-ISP_DB_PATH = os.path.join(os.path.abspath(_data_dir), 'GeoIPISP.dat')
-ORG_DB_PATH = os.path.join(os.path.abspath(_data_dir), 'GeoIPOrg.dat')
-CITY_DB_PATH = os.path.join(os.path.abspath(_data_dir), 'GeoLiteCity.dat')
-REGION_DB_PATH = os.path.join(os.path.abspath(_data_dir), 'GeoIPRegion-515.dat')
+COUNTRY_DB_PATH = path.join(DATA_DIR, 'GeoIP.dat')
+REGION_DB_PATH = path.join(DATA_DIR, 'GeoIPRegion.dat')
+CITY_DB_PATH = path.join(DATA_DIR, 'GeoLiteCity.dat')
+ORG_DB_PATH = path.join(DATA_DIR, 'GeoIPOrg.dat')
