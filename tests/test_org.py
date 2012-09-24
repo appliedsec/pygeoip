@@ -30,6 +30,3 @@ class TestGeoIPOrgFunctions(unittest.TestCase):
 
         self.assertEqual(gb_org, self.gb_org)
         self.assertEqual(us_org, self.us_org)
-
-
-

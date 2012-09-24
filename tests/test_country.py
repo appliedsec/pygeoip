@@ -29,8 +29,8 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
         self.assertEqual(gb_code, self.gb_code)
 
     def testCountryCodeByAddr(self):
-        us_code = self.gi.country_code_by_name(self.us_ip)
-        gb_code = self.gi.country_code_by_name(self.gb_ip)
+        us_code = self.gi.country_code_by_addr(self.us_ip)
+        gb_code = self.gi.country_code_by_addr(self.gb_ip)
         
         self.assertEqual(us_code, self.us_code)
         self.assertEqual(gb_code, self.gb_code)
