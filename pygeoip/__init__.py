@@ -44,7 +44,7 @@ except ImportError:
     from io import StringIO
 
 import pygeoip.const
-from pygeoip.util import ip2long
+from pygeoip import util
 from pygeoip.timezone import time_zone_by_country_and_region
 
 
@@ -377,7 +377,7 @@ class GeoIP(GeoIPBase):
         @rtype: int
         """
 
-        ipnum = ip2long(addr)
+        ipnum = util.ip2long(addr)
 
         if not ipnum:
             raise ValueError("Invalid IP address: %s" % addr)
@@ -472,7 +472,7 @@ class GeoIP(GeoIPBase):
         @rtype: str
         """
         try:
-            ipnum = ip2long(addr)
+            ipnum = util.ip2long(addr)
 
             if not ipnum:
                 raise ValueError("Invalid IP address: %s" % addr)
@@ -512,7 +512,7 @@ class GeoIP(GeoIPBase):
         @rtype: dict
         """
         try:
-            ipnum = ip2long(addr)
+            ipnum = util.ip2long(addr)
 
             if not ipnum:
                 raise ValueError("Invalid IP address: %s" % addr)
@@ -552,7 +552,7 @@ class GeoIP(GeoIPBase):
         @rtype: dict
         """
         try:
-            ipnum = ip2long(addr)
+            ipnum = util.ip2long(addr)
 
             if not ipnum:
                 raise ValueError("Invalid IP address: %s" % addr)
@@ -591,7 +591,7 @@ class GeoIP(GeoIPBase):
         @rtype: str
         """
         try:
-            ipnum = ip2long(addr)
+            ipnum = util.ip2long(addr)
 
             if not ipnum:
                 raise ValueError("Invalid IP address: %s" % addr)
