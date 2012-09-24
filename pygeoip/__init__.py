@@ -131,7 +131,7 @@ class GeoIP(GeoIPBase):
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             delim = self._filehandle.read(3)
 
-            if delim == six.b(chr(255) * 3):
+            if delim == six.u(chr(255) * 3):
                 self._databaseType = ord(self._filehandle.read(1))
 
                 if (self._databaseType >= 106):
