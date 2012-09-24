@@ -40,7 +40,8 @@ class TestGeoIPCityFunctions(unittest.TestCase):
             'longitude': -0.23339999999998895,
             'country_code3': 'GBR',
             'latitude': 51.283299999999997,
-            'postal_code': None, 'dma_code': 0,
+            'postal_code': '',
+            'dma_code': 0,
             'country_code': 'GB',
             'country_name': 'United Kingdom',
             'time_zone': 'Europe/London'
