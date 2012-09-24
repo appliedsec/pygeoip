@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Pure Python GeoIP API. The API is based off of U{MaxMind's C-based Python API<http://www.maxmind.com/app/python>},
 but the code itself is based on the U{pure PHP5 API<http://pear.php.net/package/Net_GeoIP/>}
@@ -9,6 +10,7 @@ C{new} and C{open} methods are gone. You should instantiate the L{GeoIP} class y
 C{gi = GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)}
 
 @author: Jennifer Ennis <zaylea at gmail dot com>
+@author: William Tisäter <william@defunct.cc>
 
 @license:
 Copyright(C) 2004 MaxMind LLC
@@ -166,31 +168,6 @@ class GeoIP(GeoIPBase):
             self._databaseSegments = const.COUNTRY_BEGIN
 
         self._filehandle.seek(filepos, os.SEEK_SET)
-
-    def _lookup_country_id(self, addr):
-        """
-        Get the country index.
-
-        This method is called by the _lookupCountryCode and _lookupCountryName
-        methods. It looks up the index ('id') for the country which is the key
-        for the code and name.
-
-        @param addr: The IP address
-        @type addr: str
-        @return: network byte order 32-bit integer
-        @rtype: int
-        """
-
-        ipnum = ip2long(addr)
-
-        if not ipnum:
-            raise ValueError("Invalid IP address: %s" % addr)
-
-        if self._databaseType != const.COUNTRY_EDITION:
-            raise GeoIPError('Invalid database type; country_* methods expect '\
-                             'Country database')
-
-        return self._seek_country(ipnum) - const.COUNTRY_BEGIN
 
     def _seek_country(self, ipnum):
         """
@@ -422,6 +399,30 @@ class GeoIP(GeoIPBase):
 
         return record
 
+    def id_by_addr(self, addr):
+        """
+        Get the country index.
+
+        Looks up the index for the country which is the key for
+        the code and name.
+
+        @param addr: The IP address
+        @type addr: str
+        @return: network byte order 32-bit integer
+        @rtype: int
+        """
+
+        ipnum = ip2long(addr)
+
+        if not ipnum:
+            raise ValueError("Invalid IP address: %s" % addr)
+
+        if self._databaseType != const.COUNTRY_EDITION:
+            raise GeoIPError('Invalid database type; country_* methods expect '\
+                             'Country database')
+
+        return self._seek_country(ipnum) - const.COUNTRY_BEGIN
+
     def country_code_by_addr(self, addr):
         """
         Returns 2-letter country code (e.g. 'US') for specified IP address.
@@ -434,7 +435,7 @@ class GeoIP(GeoIPBase):
         """
         try:
             if self._databaseType == const.COUNTRY_EDITION:
-                country_id = self._lookup_country_id(addr)
+                country_id = self.id_by_addr(addr)
                 return const.COUNTRY_CODES[country_id]
             elif self._databaseType in (const.REGION_EDITION_REV0, const.REGION_EDITION_REV1,
                                           const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
@@ -472,7 +473,7 @@ class GeoIP(GeoIPBase):
         """
         try:
             if self._databaseType == const.COUNTRY_EDITION:
-                country_id = self._lookup_country_id(addr)
+                country_id = self.id_by_addr(addr)
                 return const.COUNTRY_NAMES[country_id]
             elif self._databaseType in (const.CITY_EDITION_REV0, const.CITY_EDITION_REV1):
                 return self.record_by_addr(addr)['country_name']
