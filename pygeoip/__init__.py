@@ -44,7 +44,6 @@ except ImportError:
 import pygeoip.const
 from pygeoip.util import ip2long
 from pygeoip.timezone import time_zone_by_country_and_region
-from pygeoip.regionname import region_name_by_country_and_region_code
 
 
 MMAP_CACHE = const.MMAP_CACHE
@@ -347,8 +346,7 @@ class GeoIP(GeoIPBase):
             char = ord(record_buf[record_buf_pos+str_length])
 
         if str_length > 0:
-            record['region'] = record_buf[record_buf_pos:record_buf_pos+str_length]
-            record['region_name'] = region_name_by_country_and_region_code(record['country_code'], record['region']) if 'country_code' in record else ''
+            record['region_name'] = record_buf[record_buf_pos:record_buf_pos+str_length]
 
         record_buf_pos += str_length + 1
         str_length = 0
@@ -418,7 +416,7 @@ class GeoIP(GeoIPBase):
 
         if 'country_code' in record:
             record['time_zone'] = time_zone_by_country_and_region(
-                record['country_code'], record.get('region')) or ''
+                record['country_code'], record.get('region_name')) or ''
         else:
             record['time_zone'] = ''
 
@@ -544,7 +542,7 @@ class GeoIP(GeoIPBase):
         @type addr: str
         @return: dict with country_code, country_code3, country_name,
             region, city, postal_code, latitude, longitude,
-            dma_code, metro_code, area_code, region, region_name, time_zone
+            dma_code, metro_code, area_code, region_name, time_zone
         @rtype: dict
         """
         try:
@@ -569,7 +567,7 @@ class GeoIP(GeoIPBase):
         @type hostname: str
         @return: dict with country_code, country_code3, country_name,
             region, city, postal_code, latitude, longitude,
-            dma_code, metro_code, area_code, region, region_name, time_zone
+            dma_code, metro_code, area_code, region_name, time_zone
         @rtype: dict
         """
         addr = socket.gethostbyname(hostname)
@@ -584,7 +582,7 @@ class GeoIP(GeoIPBase):
         @param addr: IP address
         @type addr: str
         @return: dict containing country_code, region,
-            region and region_name
+            and region_name
         @rtype: dict
         """
         try:
@@ -610,7 +608,7 @@ class GeoIP(GeoIPBase):
         @param hostname: host name
         @type hostname: str
         @return: dict containing country_code, region,
-            region and region_name
+            and region_name
         @rtype: dict
         """
         addr = socket.gethostbyname(hostname)
