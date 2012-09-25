@@ -75,7 +75,7 @@ class GeoIPMetaclass(type):
         elif 'filename' in kwargs:
             filename = kwargs['filename']
 
-        if not filename in cls._instances:
+        if filename not in cls._instances:
             cls._instances[filename] = type.__new__(cls, *args, **kwargs)
 
         return cls._instances[filename]
@@ -507,7 +507,7 @@ class GeoIP(GeoIPBase):
             if not ipnum:
                 raise ValueError('Invalid IP address')
 
-            if not self._databaseType in const.CITY_EDITIONS:
+            if self._databaseType not in const.CITY_EDITIONS:
                 message = 'Invalid database type, expected City'
                 raise GeoIPError(message)
 
@@ -545,8 +545,7 @@ class GeoIP(GeoIPBase):
             if not ipnum:
                 raise ValueError('Invalid IP address')
 
-            db_type = self._databaseType
-            if not db_type in const.REGION_CITY_EDITIONS:
+            if self._databaseType not in const.REGION_CITY_EDITIONS:
                 message = 'Invalid database type, expected Region or City'
                 raise GeoIPError(message)
 
@@ -582,9 +581,8 @@ class GeoIP(GeoIPBase):
             if not ipnum:
                 raise ValueError('Invalid IP address')
 
-            db_type = self._databaseType
-            if not db_type in const.REGION_CITY_EDITIONS:
-                message = 'Invalid database type, expected Region or City'
+            if self._databaseType not in const.CITY_EDITIONS:
+                message = 'Invalid database type, expected City'
                 raise GeoIPError(message)
 
             return self._get_record(ipnum)['time_zone']
