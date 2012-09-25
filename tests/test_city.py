@@ -94,20 +94,6 @@ class TestGeoIPCityFunctions(unittest.TestCase):
         self.assertEqual(us_region, self.us_region_data)
         self.assertEqual(gb_region, self.gb_region_data)
 
-    def testTimeZoneByAddr(self):
-        us_time_zone = self.gic.time_zone_by_addr(self.us_ip)
-        gb_time_zone = self.gic.time_zone_by_addr(self.gb_ip)
-
-        self.assertEquals(us_time_zone, 'America/Los_Angeles')
-        self.assertEquals(gb_time_zone, 'Europe/London')
-
-    def testTimeZoneByName(self):
-        us_time_zone = self.gic.time_zone_by_name(self.us_hostname)
-        gb_time_zone = self.gic.time_zone_by_name(self.gb_hostname)
-
-        self.assertEquals(us_time_zone, 'America/Los_Angeles')
-        self.assertEquals(gb_time_zone, 'Europe/London')
-
     def testRecordByAddr(self):
         equal_keys = ('city', 'region_name', 'area_code', 'country_code3',
                       'postal_code', 'dma_code', 'country_code',
