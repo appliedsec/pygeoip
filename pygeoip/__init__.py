@@ -36,6 +36,7 @@ import socket
 import mmap
 import gzip
 import codecs
+from threading import Lock
 
 try:
     from StringIO import StringIO
@@ -118,6 +119,7 @@ class GeoIP(GeoIPBase):
         else:
             self._filehandle = codecs.open(filename, 'rb', 'latin_1')
 
+        self._lock = Lock()
         self._setup_segments()
 
     def _setup_segments(self):
@@ -142,6 +144,7 @@ class GeoIP(GeoIPBase):
         self._recordLength = const.STANDARD_RECORD_LENGTH
         self._databaseSegments = const.COUNTRY_BEGIN
 
+        self._lock.acquire()
         filepos = self._filehandle.tell()
         self._filehandle.seek(-3, os.SEEK_END)
 
@@ -178,6 +181,7 @@ class GeoIP(GeoIPBase):
             else:
                 self._filehandle.seek(-4, os.SEEK_CUR)
         self._filehandle.seek(filepos, os.SEEK_SET)
+        self._lock.release()
 
     def _seek_country(self, ipnum):
         """
@@ -200,8 +204,10 @@ class GeoIP(GeoIPBase):
             else:
                 startIndex = 2 * self._recordLength * offset
                 readLength = 2 * self._recordLength
+                self._lock.acquire()
                 self._filehandle.seek(startIndex, os.SEEK_SET)
                 buf = self._filehandle.read(readLength)
+                self._lock.release()
 
             x = [0, 0]
             for i in range(2):
@@ -231,8 +237,10 @@ class GeoIP(GeoIPBase):
             return None
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
+        self._lock.acquire()
         self._filehandle.seek(seek_org + read_length, os.SEEK_SET)
         org_buf = self._filehandle.read(const.MAX_ORG_RECORD_LENGTH)
+        self._lock.release()
 
         return org_buf[:org_buf.index(chr(0))]
 
@@ -298,10 +306,11 @@ class GeoIP(GeoIPBase):
         if seek_country == self._databaseSegments:
             return None
 
-        
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
+        self._lock.acquire()
         self._filehandle.seek(seek_country + read_length, os.SEEK_SET)
         record_buf = self._filehandle.read(const.FULL_RECORD_LENGTH)
+        self._lock.release()
 
         record = {
             'dma_code': 0,
