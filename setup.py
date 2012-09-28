@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 """
 Setup file for pygeoip package.
 

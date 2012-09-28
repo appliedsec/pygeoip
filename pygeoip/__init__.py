@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Pure Python GeoIP API. The API is based off of U{MaxMind's C-based Python API<http://www.maxmind.com/app/python>},
-but the code itself is based on the U{pure PHP5 API<http://pear.php.net/package/Net_GeoIP/>}
-by Jim Winstead and Hans Lellelid.
+Pure Python GeoIP API
 
-It is mostly a drop-in replacement, except the
-C{new} and C{open} methods are gone. You should instantiate the L{GeoIP} class yourself:
+The API is based on U{MaxMind's C-based Python
+API<http://www.maxmind.com/app/python>}, but the code itself is based on
+the U{pure PHP5 API<http://pear.php.net/package/Net_GeoIP/>} by Jim Winstead
+and Hans Lellelid.
+
+It is mostly a drop-in replacement, except the C{new} and C{open} methods
+are gone. You should instantiate the L{GeoIP} class yourself:
 
 C{gi = GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)}
 
@@ -63,9 +66,9 @@ class GeoIPMetaclass(type):
         """
         Singleton method to gets an instance without reparsing the db. Unique
         instances are instantiated based on the filename of the db. Flags are
-        ignored for this, i.e. if you initialize one with STANDARD flag (default)
-        and then try later to initialize with MEMORY_CACHE, it will still
-        return the STANDARD one.
+        ignored for this, i.e. if you initialize one with STANDARD
+        flag (default) and then try later to initialize with MEMORY_CACHE, it
+        will still return the STANDARD one.
         """
 
         if not hasattr(cls, '_instances'):
@@ -150,9 +153,9 @@ class GeoIP(GeoIPBase):
 
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             chars = chr(255) * 3
-            encoding = 'unicode_escape'
+            flag = 'unicode_escape'
             delim = self._filehandle.read(3)
-            if (delim == chars) if PY3 else (delim == unicode(chars, encoding)):
+            if (delim == chars) if PY3 else (delim == unicode(chars, flag)):
                 self._databaseType = ord(self._filehandle.read(1))
 
                 # Backwards compatibility with databases from
@@ -277,7 +280,7 @@ class GeoIP(GeoIPBase):
             elif seek_region < const.CANADA_OFFSET:
                 country_code = 'US'
                 region = get_region_name(seek_region - const.US_OFFSET)
-            elif seek_region  < const.WORLD_OFFSET:
+            elif seek_region < const.WORLD_OFFSET:
                 country_code = 'CA'
                 region = get_region_name(seek_region - const.CANADA_OFFSET)
             else:
@@ -289,7 +292,7 @@ class GeoIP(GeoIPBase):
             country_code = rec['country_code'] if 'country_code' in rec else ''
             region = rec['region_name'] if 'region_name' in rec else ''
 
-        return {'country_code' : country_code, 'region_name' : region }
+        return {'country_code': country_code, 'region_name': region}
 
     def _get_record(self, ipnum):
         """
@@ -363,7 +366,7 @@ class GeoIP(GeoIPBase):
             if record['country_code'] == 'US':
                 for j in range(3):
                     char = ord(record_buf[record_buf_pos])
-                    dmaarea_combo += (char << (j*8))
+                    dmaarea_combo += (char << (j * 8))
                     record_buf_pos += 1
 
                 record['dma_code'] = int(math.floor(dmaarea_combo / 1000))
@@ -422,13 +425,16 @@ class GeoIP(GeoIPBase):
         @rtype: str
         """
         try:
-            COUNTRY_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
-            if self._databaseType in COUNTRY_EDITIONS:
+            VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
+            if self._databaseType in VALID_EDITIONS:
                 ipv = 6 if addr.find(':') >= 0 else 4
+
                 if ipv == 4 and self._databaseType != const.COUNTRY_EDITION:
-                    raise ValueError('Invalid database type; expected IPv6 address')
+                    message = 'Invalid database type; expected IPv6 address'
+                    raise ValueError(message)
                 if ipv == 6 and self._databaseType != const.COUNTRY_EDITION_V6:
-                    raise ValueError('Invalid database type; expected IPv4 address')
+                    message = 'Invalid database type; expected IPv4 address'
+                    raise ValueError(message)
 
                 country_id = self.id_by_addr(addr)
 
@@ -465,8 +471,8 @@ class GeoIP(GeoIPBase):
         @rtype: str
         """
         try:
-            COUNTRY_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
-            if self._databaseType in COUNTRY_EDITIONS:
+            VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
+            if self._databaseType in VALID_EDITIONS:
                 return const.COUNTRY_NAMES[self.id_by_addr(addr)]
             elif self._databaseType in const.CITY_EDITIONS:
                 return self.record_by_addr(addr)['country_name']

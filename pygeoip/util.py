@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Misc. utility functions. It is part of the pygeoip package.
 
@@ -51,10 +52,11 @@ def ip2long_v4(ip):
     ip_array = ip.split('.')
     if PY3:
         # int and long are unified in py3
-        ip_long = int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + int(ip_array[2]) * 256 + int(ip_array[3])
+        return int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + \
+               int(ip_array[2]) * 256 + int(ip_array[3])
     else:
-        ip_long = long(ip_array[0]) * 16777216 + long(ip_array[1]) * 65536 + long(ip_array[2]) * 256 + long(ip_array[3])
-    return ip_long
+        return long(ip_array[0]) * 16777216 + long(ip_array[1]) * 65536 + \
+               long(ip_array[2]) * 256 + long(ip_array[3])
 
 
 def ip2long_v6(ip):
