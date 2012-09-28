@@ -31,7 +31,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 from __future__ import with_statement, division
 import os
-import six
 import math
 import socket
 import mmap
@@ -45,6 +44,7 @@ except ImportError:
 
 import pygeoip.const
 from pygeoip import util
+from pygeoip.const import PY2, PY3
 from pygeoip.timezone import time_zone_by_country_and_region
 
 
@@ -128,14 +128,14 @@ class GeoIP(GeoIPBase):
 
         Supported databases:
 
-            COUNTRY_EDITION
-            REGION_EDITION_REV0
-            REGION_EDITION_REV1
-            CITY_EDITION_REV0
-            CITY_EDITION_REV1
-            ORG_EDITION
-            ISP_EDITION
-            ASNUM_EDITION
+        * COUNTRY_EDITION
+        * REGION_EDITION_REV0
+        * REGION_EDITION_REV1
+        * CITY_EDITION_REV0
+        * CITY_EDITION_REV1
+        * ORG_EDITION
+        * ISP_EDITION
+        * ASNUM_EDITION
 
         """
         self._databaseType = const.COUNTRY_EDITION
@@ -146,7 +146,10 @@ class GeoIP(GeoIPBase):
         self._filehandle.seek(-3, os.SEEK_END)
 
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
-            if self._filehandle.read(3) == six.u(chr(255) * 3):
+            chars = chr(255) * 3
+            encoding = 'unicode_escape'
+            delim = self._filehandle.read(3)
+            if (delim == chars) if PY3 else (delim == unicode(chars, encoding)):
                 self._databaseType = ord(self._filehandle.read(1))
 
                 # Backwards compatibility with databases from

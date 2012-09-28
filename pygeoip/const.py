@@ -21,6 +21,11 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
+from platform import python_version_tuple
+
+PY2 = python_version_tuple()[0] == '2'
+PY3 = python_version_tuple()[0] == '3'
+
 GEOIP_STANDARD = 0
 GEOIP_MEMORY_CACHE = 1
 

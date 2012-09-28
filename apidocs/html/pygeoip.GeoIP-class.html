@@ -112,30 +112,12 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_setup_segments"></a><span class="summary-sig-name">_setup_segments</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#_setup_segments" class="summary-sig-name" onclick="show_private();">_setup_segments</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Parses the database file to determine what kind of database is being 
       used and setup segment sizes and start points that will be used by 
       the seek*() methods later.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP._setup_segments">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">int</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#_lookup_country_id" class="summary-sig-name" onclick="show_private();">_lookup_country_id</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Get the country index.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP._lookup_country_id">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -170,7 +152,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#_get_org" class="summary-sig-name" onclick="show_private();">_get_org</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ipnum</span>)</span><br />
-      Seek and return organization (or ISP) name for converted IP addr.</td>
+      Seek and return organization or ISP name for ipnum.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP._get_org">source&nbsp;code</a></span>
             
@@ -210,6 +192,41 @@ object --+
       Populate location dict for converted IP.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP._get_record">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_gethostbyname"></a><span class="summary-sig-name">_gethostbyname</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hostname</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP._gethostbyname">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">int</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#id_by_addr" class="summary-sig-name">id_by_addr</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">addr</span>)</span><br />
+      Get the country index.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.id_by_addr">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -297,7 +314,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#org_by_addr" class="summary-sig-name">org_by_addr</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
-      Lookup the organization (or ISP) for given IP address.</td>
+      Lookup Organization, ISP or ASNum for given IP address.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.org_by_addr">source&nbsp;code</a></span>
             
@@ -516,12 +533,12 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>filename</code></strong> (str) - path to a geoip database. If MEMORY_CACHE is used, the file can 
+        <li><strong class="pname"><code>filename</code></strong> (str) - Path to a geoip database. If MEMORY_CACHE is used, the file can 
           be gzipped.</li>
-        <li><strong class="pname"><code>flags</code></strong> (int) - flags that affect how the database is processed. Currently the 
-          only supported flags are STANDARD (the default), MEMORY_CACHE 
-          (preload the whole file into memory), and MMAP_CACHE (access the 
-          file via mmap).</li>
+        <li><strong class="pname"><code>flags</code></strong> (int) - Flags that affect how the database is processed. Currently 
+          supported flags are STANDARD (the default), MEMORY_CACHE (preload
+          the whole file into memory) and MMAP_CACHE (access the file via 
+          mmap).</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -529,32 +546,28 @@ object --+
   </dl>
 </td></tr></table>
 </div>
-<a name="_lookup_country_id"></a>
+<a name="_setup_segments"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">_lookup_country_id</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">addr</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_setup_segments</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pygeoip-pysrc.html#GeoIP._lookup_country_id">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pygeoip-pysrc.html#GeoIP._setup_segments">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Get the country index.</p>
-  <p>This method is called by the _lookupCountryCode and _lookupCountryName
-  methods. It looks up the index ('id') for the country which is the key 
-  for the code and name.</p>
+  <p>Parses the database file to determine what kind of database is being 
+  used and setup segment sizes and start points that will be used by the 
+  seek*() methods later.</p>
+  <p>Supported databases:</p>
+  <p>* COUNTRY_EDITION * REGION_EDITION_REV0 * REGION_EDITION_REV1 * 
+  CITY_EDITION_REV0 * CITY_EDITION_REV1 * ORG_EDITION * ISP_EDITION * 
+  ASNUM_EDITION</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> (str) - The IP address</li>
-    </ul></dd>
-    <dt>Returns: int</dt>
-        <dd>network byte order 32-bit integer</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -600,7 +613,7 @@ object --+
     </td>
   </tr></table>
   
-  <p>Seek and return organization (or ISP) name for converted IP addr.</p>
+  <p>Seek and return organization or ISP name for ipnum.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -631,7 +644,7 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>ipnum</code></strong> (int) - converted IP address</li>
+        <li><strong class="pname"><code>ipnum</code></strong> (int) - Converted IP address</li>
     </ul></dd>
     <dt>Returns: dict</dt>
         <dd>dict containing country_code and region_name</dd>
@@ -657,12 +670,39 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>ipnum</code></strong> (int) - converted IP address</li>
+        <li><strong class="pname"><code>ipnum</code></strong> (int) - Converted IP address</li>
     </ul></dd>
     <dt>Returns: dict</dt>
         <dd>dict with country_code, country_code3, country_name, region, 
           city, postal_code, latitude, longitude, dma_code, metro_code, 
           area_code, region_name, time_zone</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="id_by_addr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">id_by_addr</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">addr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.id_by_addr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the country index. Looks up the index for the country which is the
+  key for the code and name.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> (str) - The IP address</li>
+    </ul></dd>
+    <dt>Returns: int</dt>
+        <dd>network byte order 32-bit integer</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -713,7 +753,7 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>hostname</code></strong> (str) - host name</li>
+        <li><strong class="pname"><code>hostname</code></strong> (str) - Hostname</li>
     </ul></dd>
     <dt>Returns: str</dt>
         <dd>2-letter country code</dd>
@@ -767,7 +807,7 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>hostname</code></strong> (str) - host name</li>
+        <li><strong class="pname"><code>hostname</code></strong> (str) - Hostname</li>
     </ul></dd>
     <dt>Returns: str</dt>
         <dd>country name</dd>
@@ -789,8 +829,8 @@ object --+
     </td>
   </tr></table>
   
-  <p>Lookup the organization (or ISP) for given IP address. Use this method
-  if you have an Organization/ISP database.</p>
+  <p>Lookup Organization, ISP or ASNum for given IP address. Use this 
+  method if you have an Organization, ISP or ASNum database.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -821,10 +861,10 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>hostname</code></strong> (str) - host name</li>
+        <li><strong class="pname"><code>hostname</code></strong> (str) - Hostname</li>
     </ul></dd>
     <dt>Returns: str</dt>
-        <dd>organization or ISP name</dd>
+        <dd>Organization or ISP name</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -851,9 +891,9 @@ object --+
         <li><strong class="pname"><code>addr</code></strong> (str) - IP address</li>
     </ul></dd>
     <dt>Returns: dict</dt>
-        <dd>dict with country_code, country_code3, country_name, region, 
-          city, postal_code, latitude, longitude, dma_code, metro_code, 
-          area_code, region_name, time_zone</dd>
+        <dd>Dictionary with country_code, country_code3, country_name, 
+          region, city, postal_code, latitude, longitude, dma_code, 
+          metro_code, area_code, region_name, time_zone</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -877,12 +917,12 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>hostname</code></strong> (str) - host name</li>
+        <li><strong class="pname"><code>hostname</code></strong> (str) - Hostname</li>
     </ul></dd>
     <dt>Returns: dict</dt>
-        <dd>dict with country_code, country_code3, country_name, region, 
-          city, postal_code, latitude, longitude, dma_code, metro_code, 
-          area_code, region_name, time_zone</dd>
+        <dd>Dictionary with country_code, country_code3, country_name, 
+          region, city, postal_code, latitude, longitude, dma_code, 
+          metro_code, area_code, region_name, time_zone</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -909,7 +949,7 @@ object --+
         <li><strong class="pname"><code>addr</code></strong> (str) - IP address</li>
     </ul></dd>
     <dt>Returns: dict</dt>
-        <dd>dict containing country_code, region, and region_name</dd>
+        <dd>Dictionary containing country_code, region and region_name</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -933,10 +973,10 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>hostname</code></strong> (str) - host name</li>
+        <li><strong class="pname"><code>hostname</code></strong> (str) - Hostname</li>
     </ul></dd>
     <dt>Returns: dict</dt>
-        <dd>dict containing country_code, region, and region_name</dd>
+        <dd>Dictionary containing country_code, region, and region_name</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -987,7 +1027,7 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>hostname</code></strong> (str) - host name</li>
+        <li><strong class="pname"><code>hostname</code></strong> (str) - Hostname</li>
     </ul></dd>
     <dt>Returns: str</dt>
         <dd>Time zone</dd>
@@ -1026,7 +1066,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Sep 20 17:58:04 2012
+    Generated by Epydoc 3.0.1 on Fri Sep 28 22:42:00 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -20,10 +20,11 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
-import six
 import struct
 import socket
 from array import array
+
+from pygeoip.const import PY3
 
 
 def ip2long(ip):
@@ -48,7 +49,7 @@ def ip2long_v4(ip):
     @rtype: int
     """
     ip_array = ip.split('.')
-    if six.PY3:
+    if PY3:
         # int and long are unified in py3
         ip_long = int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + int(ip_array[2]) * 256 + int(ip_array[3])
     else:

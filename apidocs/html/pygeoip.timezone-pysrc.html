@@ -760,22 +760,23 @@
 <a name="L697"></a><tt class="py-lineno">697</tt>  <tt class="py-line"><tt id="link-694" class="py-name"><a title="pygeoip.timezone._country" class="py-name" href="#" onclick="return doclink('link-694', '_country', 'link-0');">_country</a></tt><tt class="py-op">[</tt><tt class="py-string">"ZM"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-string">"Africa/Lusaka"</tt> </tt>
 <a name="L698"></a><tt class="py-lineno">698</tt>  <tt class="py-line"><tt id="link-695" class="py-name"><a title="pygeoip.timezone._country" class="py-name" href="#" onclick="return doclink('link-695', '_country', 'link-0');">_country</a></tt><tt class="py-op">[</tt><tt class="py-string">"ZW"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-string">"Africa/Harare"</tt> </tt>
 <a name="L699"></a><tt class="py-lineno">699</tt>  <tt class="py-line"> </tt>
-<a name="time_zone_by_country_and_region"></a><div id="time_zone_by_country_and_region-def"><a name="L700"></a><tt class="py-lineno">700</tt> <a class="py-toggle" href="#" id="time_zone_by_country_and_region-toggle" onclick="return toggle('time_zone_by_country_and_region');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pygeoip.timezone-module.html#time_zone_by_country_and_region">time_zone_by_country_and_region</a><tt class="py-op">(</tt><tt class="py-param">country_code</tt><tt class="py-op">,</tt> <tt class="py-param">region_name</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="time_zone_by_country_and_region-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="time_zone_by_country_and_region-expanded"><a name="L701"></a><tt class="py-lineno">701</tt>  <tt class="py-line"> </tt>
-<a name="L702"></a><tt class="py-lineno">702</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">country_code</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt id="link-696" class="py-name"><a title="pygeoip.timezone._country" class="py-name" href="#" onclick="return doclink('link-696', '_country', 'link-0');">_country</a></tt><tt class="py-op">:</tt> </tt>
-<a name="L703"></a><tt class="py-lineno">703</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L700"></a><tt class="py-lineno">700</tt>  <tt class="py-line"> </tt>
+<a name="time_zone_by_country_and_region"></a><div id="time_zone_by_country_and_region-def"><a name="L701"></a><tt class="py-lineno">701</tt> <a class="py-toggle" href="#" id="time_zone_by_country_and_region-toggle" onclick="return toggle('time_zone_by_country_and_region');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pygeoip.timezone-module.html#time_zone_by_country_and_region">time_zone_by_country_and_region</a><tt class="py-op">(</tt><tt class="py-param">country_code</tt><tt class="py-op">,</tt> <tt class="py-param">region_name</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="time_zone_by_country_and_region-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="time_zone_by_country_and_region-expanded"><a name="L702"></a><tt class="py-lineno">702</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">country_code</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt id="link-696" class="py-name"><a title="pygeoip.timezone._country" class="py-name" href="#" onclick="return doclink('link-696', '_country', 'link-0');">_country</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L703"></a><tt class="py-lineno">703</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">''</tt> </tt>
 <a name="L704"></a><tt class="py-lineno">704</tt>  <tt class="py-line"> </tt>
 <a name="L705"></a><tt class="py-lineno">705</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">region_name</tt> <tt class="py-keyword">or</tt> <tt class="py-name">region_name</tt> <tt class="py-op">==</tt> <tt class="py-string">'00'</tt><tt class="py-op">:</tt> </tt>
 <a name="L706"></a><tt class="py-lineno">706</tt>  <tt class="py-line">        <tt class="py-name">region_name</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
 <a name="L707"></a><tt class="py-lineno">707</tt>  <tt class="py-line"> </tt>
 <a name="L708"></a><tt class="py-lineno">708</tt>  <tt class="py-line">    <tt class="py-name">timezones</tt> <tt class="py-op">=</tt> <tt id="link-697" class="py-name"><a title="pygeoip.timezone._country" class="py-name" href="#" onclick="return doclink('link-697', '_country', 'link-0');">_country</a></tt><tt class="py-op">[</tt><tt class="py-name">country_code</tt><tt class="py-op">]</tt> </tt>
-<a name="L709"></a><tt class="py-lineno">709</tt>  <tt class="py-line"> </tt>
-<a name="L710"></a><tt class="py-lineno">710</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">timezones</tt><tt class="py-op">,</tt> <tt class="py-name">str</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-<a name="L711"></a><tt class="py-lineno">711</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">timezones</tt> </tt>
-<a name="L712"></a><tt class="py-lineno">712</tt>  <tt class="py-line"> </tt>
-<a name="L713"></a><tt class="py-lineno">713</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">region_name</tt><tt class="py-op">:</tt> </tt>
-<a name="L714"></a><tt class="py-lineno">714</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">timezones</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">region_name</tt><tt class="py-op">)</tt> </tt>
-</div><a name="L715"></a><tt class="py-lineno">715</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L709"></a><tt class="py-lineno">709</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">timezones</tt><tt class="py-op">,</tt> <tt class="py-name">str</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L710"></a><tt class="py-lineno">710</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">timezones</tt> </tt>
+<a name="L711"></a><tt class="py-lineno">711</tt>  <tt class="py-line"> </tt>
+<a name="L712"></a><tt class="py-lineno">712</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">region_name</tt><tt class="py-op">:</tt> </tt>
+<a name="L713"></a><tt class="py-lineno">713</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">''</tt> </tt>
+<a name="L714"></a><tt class="py-lineno">714</tt>  <tt class="py-line"> </tt>
+<a name="L715"></a><tt class="py-lineno">715</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">timezones</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">region_name</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L716"></a><tt class="py-lineno">716</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -813,7 +814,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Sep 20 17:58:05 2012
+    Generated by Epydoc 3.0.1 on Fri Sep 28 22:42:00 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
