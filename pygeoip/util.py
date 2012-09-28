@@ -21,22 +21,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
 import six
+import struct
+import socket
+from array import array
+
 
 def ip2long(ip):
     """
+    Wrapper function for IPv4 and IPv6 converters
+    @param ip: IPv4 or IPv6 address
+    @type ip: str
+    """
+    if ip.find(':') >= 0:
+        return ip2long_v6(ip)
+    else:
+        return ip2long_v4(ip)
+
+
+def ip2long_v4(ip):
+    """
     Convert a IPv4 address into a 32-bit integer.
-    
+
     @param ip: quad-dotted IPv4 address
     @type ip: str
     @return: network byte order 32-bit integer
     @rtype: int
     """
     ip_array = ip.split('.')
-    
     if six.PY3:
         # int and long are unified in py3
         ip_long = int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + int(ip_array[2]) * 256 + int(ip_array[3])
     else:
         ip_long = long(ip_array[0]) * 16777216 + long(ip_array[1]) * 65536 + long(ip_array[2]) * 256 + long(ip_array[3])
-    return ip_long  
+    return ip_long
 
+
+def ip2long_v6(ip):
+    """
+    Convert a IPv6 address into long.
+
+    @param ip: IPv6 address
+    @type ip: str
+    @return: network byte order long
+    @rtype: long
+    """
+    ipbyte = socket.inet_pton(socket.AF_INET6, ip)
+    ipnum = array('L', struct.unpack('!4L', ipbyte))
+    max_index = len(ipnum) - 1
+    return sum(ipnum[max_index - i] << (i * 32) for i in range(len(ipnum)))
