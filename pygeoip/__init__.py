@@ -365,6 +365,18 @@ class GeoIP(GeoIPBase):
 
         return record
 
+    def _gethostbyname(self, hostname):
+        if self._databaseType in const.IPV6_EDITIONS:
+            try:
+                response = socket.getaddrinfo(hostname, 0, socket.AF_INET6)
+            except socket.gaierror:
+                return ''
+            family, socktype, proto, canonname, sockaddr = response[0]
+            address, port, flow, scope = sockaddr
+            return address
+        else:
+            return socket.gethostbyname(hostname)
+
     def id_by_addr(self, addr):
         """
         Get the country index.
@@ -427,23 +439,8 @@ class GeoIP(GeoIPBase):
         @return: 2-letter country code
         @rtype: str
         """
-        if self._databaseType == const.COUNTRY_EDITION_V6:
-            return self._country_code_by_name_v6(hostname)
-        else:
-            return self._country_code_by_name_v4(hostname)
-
-    def _country_code_by_name_v4(self, hostname):
-        addr = socket.gethostbyname(hostname)
+        addr = self._gethostbyname(hostname)
         return self.country_code_by_addr(addr)
-
-    def _country_code_by_name_v6(self, hostname):
-        try:
-            response = socket.getaddrinfo(hostname, 0, socket.AF_INET6)
-        except socket.gaierror:
-            return ''
-        family, socktype, proto, canonname, sockaddr = response[0]
-        address, port, flow, scope = sockaddr
-        return self.country_code_by_addr(address)
 
     def country_name_by_addr(self, addr):
         """
@@ -456,7 +453,8 @@ class GeoIP(GeoIPBase):
         @rtype: str
         """
         try:
-            if self._databaseType == const.COUNTRY_EDITION:
+            COUNTRY_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
+            if self._databaseType in COUNTRY_EDITIONS:
                 return const.COUNTRY_NAMES[self.id_by_addr(addr)]
             elif self._databaseType in const.CITY_EDITIONS:
                 return self.record_by_addr(addr)['country_name']
@@ -476,7 +474,7 @@ class GeoIP(GeoIPBase):
         @return: country name
         @rtype: str
         """
-        addr = socket.gethostbyname(hostname)
+        addr = self._gethostbyname(hostname)
         return self.country_name_by_addr(addr)
 
     def org_by_addr(self, addr):
