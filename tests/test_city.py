@@ -51,6 +51,8 @@ class TestGeoIPCityFunctions(unittest.TestCase):
         self.gb_region_data = {'region_name': 'N7', 'country_code': 'GB'}
 
         self.gic = pygeoip.GeoIP(CITY_DB_PATH)
+        self.gic_mem = pygeoip.GeoIP(CITY_DB_PATH, pygeoip.MEMORY_CACHE)
+        self.gic_mmap = pygeoip.GeoIP(CITY_DB_PATH, pygeoip.MMAP_CACHE)
 
     def testCountryCodeByName(self):
         us_code = self.gic.country_code_by_name(self.us_hostname)
@@ -93,6 +95,13 @@ class TestGeoIPCityFunctions(unittest.TestCase):
 
         self.assertEqual(us_region, self.us_region_data)
         self.assertEqual(gb_region, self.gb_region_data)
+
+    def testCacheMethods(self):
+        mem_record = self.gic_mem.record_by_addr(self.us_ip)
+        mmap_record = self.gic_mmap.record_by_addr(self.us_ip)
+
+        self.assertEqual(mem_record['city'], self.us_record_data['city'])
+        self.assertEqual(mmap_record['city'], self.us_record_data['city'])
 
     def testRecordByAddr(self):
         equal_keys = ('city', 'region_name', 'area_code', 'country_code3',

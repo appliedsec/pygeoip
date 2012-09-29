@@ -50,9 +50,11 @@ from pygeoip.const import PY2, PY3
 from pygeoip.timezone import time_zone_by_country_and_region
 
 
+STANDARD = const.STANDARD
 MMAP_CACHE = const.MMAP_CACHE
 MEMORY_CACHE = const.MEMORY_CACHE
-STANDARD = const.STANDARD
+
+ENCODING = const.ENCODING
 
 
 class GeoIPError(Exception):
@@ -115,7 +117,7 @@ class GeoIP(GeoIPBase):
             f.close()
 
         else:
-            self._filehandle = codecs.open(filename, 'rb', 'iso-8859-1')
+            self._filehandle = codecs.open(filename, 'rb', ENCODING)
 
         self._lock = Lock()
         self._setup_segments()
@@ -129,6 +131,7 @@ class GeoIP(GeoIPBase):
         Supported databases:
 
         * COUNTRY_EDITION
+        * COUNTRY_EDITION_V6
         * REGION_EDITION_REV0
         * REGION_EDITION_REV1
         * CITY_EDITION_REV0
@@ -148,9 +151,14 @@ class GeoIP(GeoIPBase):
 
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             chars = chr(255) * 3
-            flag = 'unicode_escape'
             delim = self._filehandle.read(3)
-            if (delim == chars) if PY3 else (delim == unicode(chars, flag)):
+
+            if PY2:
+                chars = chars.decode(ENCODING)
+                if type(delim) is str:
+                    delim = delim.decode(ENCODING)
+
+            if delim == chars:
                 byte = self._filehandle.read(1)
                 self._databaseType = ord(byte)
 
