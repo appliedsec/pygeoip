@@ -42,7 +42,7 @@ from threading import Lock
 try:
     from StringIO import StringIO
 except ImportError:
-    from io import StringIO
+    from io import StringIO, BytesIO
 
 import pygeoip.const
 from pygeoip import util
@@ -110,7 +110,8 @@ class GeoIP(GeoIPBase):
         elif self._flags & const.MEMORY_CACHE:
             f = open(filename, 'rb')
             self._memoryBuffer = f.read()
-            self._filehandle = StringIO(self._memoryBuffer)
+            iohandle = BytesIO if PY3 else StringIO
+            self._filehandle = iohandle(self._memoryBuffer)
             f.close()
 
         else:
@@ -150,7 +151,8 @@ class GeoIP(GeoIPBase):
             flag = 'unicode_escape'
             delim = self._filehandle.read(3)
             if (delim == chars) if PY3 else (delim == unicode(chars, flag)):
-                self._databaseType = ord(self._filehandle.read(1))
+                byte = self._filehandle.read(1)
+                self._databaseType = ord(byte)
 
                 # Compatibility with databases from April 2003 and earlier
                 if (self._databaseType >= 106):
@@ -212,7 +214,9 @@ class GeoIP(GeoIPBase):
             x = [0, 0]
             for i in range(2):
                 for j in range(self._recordLength):
-                    x[i] += ord(buf[self._recordLength * i + j]) << (j * 8)
+                    byte = buf[self._recordLength * i + j]
+                    magic = byte if type(byte) is int else ord(byte)
+                    x[i] += magic << (j * 8)
             if ipnum & (1 << depth):
                 if x[1] >= self._databaseSegments:
                     return x[1]

@@ -53,10 +53,10 @@ def ip2long_v4(ip):
     if PY3:
         # int and long are unified in py3
         return int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + \
-               int(ip_array[2]) * 256 + int(ip_array[3])
+            int(ip_array[2]) * 256 + int(ip_array[3])
     else:
         return long(ip_array[0]) * 16777216 + long(ip_array[1]) * 65536 + \
-               long(ip_array[2]) * 256 + long(ip_array[3])
+            long(ip_array[2]) * 256 + long(ip_array[3])
 
 
 def ip2long_v6(ip):
