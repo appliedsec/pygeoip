@@ -153,6 +153,9 @@ class GeoIP(GeoIPBase):
             chars = chr(255) * 3
             delim = self._filehandle.read(3)
 
+            if PY3 and type(delim) is bytes:
+                delim = delim.decode(ENCODING)
+
             if PY2:
                 chars = chars.decode(ENCODING)
                 if type(delim) is str:
@@ -179,6 +182,9 @@ class GeoIP(GeoIPBase):
                                             const.ASNUM_EDITION):
                     self._databaseSegments = 0
                     buf = self._filehandle.read(const.SEGMENT_RECORD_LENGTH)
+
+                    if PY3 and type(buf) is bytes:
+                        buf = buf.decode(ENCODING)
 
                     for j in range(const.SEGMENT_RECORD_LENGTH):
                         self._databaseSegments += (ord(buf[j]) << (j * 8))
@@ -219,12 +225,14 @@ class GeoIP(GeoIPBase):
                 buf = self._filehandle.read(readLength)
                 self._lock.release()
 
+            if PY3 and type(buf) is bytes:
+                buf = buf.decode(ENCODING)
+
             x = [0, 0]
             for i in range(2):
                 for j in range(self._recordLength):
                     byte = buf[self._recordLength * i + j]
-                    magic = byte if type(byte) is int else ord(byte)
-                    x[i] += magic << (j * 8)
+                    x[i] += ord(byte) << (j * 8)
             if ipnum & (1 << depth):
                 if x[1] >= self._databaseSegments:
                     return x[1]
@@ -251,10 +259,13 @@ class GeoIP(GeoIPBase):
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
         self._lock.acquire()
         self._filehandle.seek(seek_org + read_length, os.SEEK_SET)
-        org_buf = self._filehandle.read(const.MAX_ORG_RECORD_LENGTH)
+        buf = self._filehandle.read(const.MAX_ORG_RECORD_LENGTH)
         self._lock.release()
 
-        return org_buf[:org_buf.index(chr(0))]
+        if PY3 and type(buf) is bytes:
+            buf = buf.decode(ENCODING)
+
+        return buf[:buf.index(chr(0))]
 
     def _get_region(self, ipnum):
         """
@@ -321,8 +332,11 @@ class GeoIP(GeoIPBase):
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
         self._lock.acquire()
         self._filehandle.seek(seek_country + read_length, os.SEEK_SET)
-        record_buf = self._filehandle.read(const.FULL_RECORD_LENGTH)
+        buf = self._filehandle.read(const.FULL_RECORD_LENGTH)
         self._lock.release()
+
+        if PY3 and type(buf) is bytes:
+            buf = buf.decode(ENCODING)
 
         record = {
             'dma_code': 0,
@@ -333,38 +347,38 @@ class GeoIP(GeoIPBase):
 
         latitude = 0
         longitude = 0
-        record_buf_pos = 0
+        buf_pos = 0
 
         # Get country
-        char = ord(record_buf[record_buf_pos])
+        char = ord(buf[buf_pos])
         record['country_code'] = const.COUNTRY_CODES[char]
         record['country_code3'] = const.COUNTRY_CODES3[char]
         record['country_name'] = const.COUNTRY_NAMES[char]
-        record_buf_pos += 1
+        buf_pos += 1
 
-        def get_data(record_buf, record_buf_pos):
-            offset = record_buf_pos
-            char = ord(record_buf[offset])
+        def get_data(buf, buf_pos):
+            offset = buf_pos
+            char = ord(buf[offset])
             while (char != 0):
                 offset += 1
-                char = ord(record_buf[offset])
-            if offset > record_buf_pos:
-                return (offset, record_buf[record_buf_pos:offset])
+                char = ord(buf[offset])
+            if offset > buf_pos:
+                return (offset, buf[buf_pos:offset])
             return (offset, '')
 
-        offset, record['region_name'] = get_data(record_buf, record_buf_pos)
-        offset, record['city'] = get_data(record_buf, offset + 1)
-        offset, record['postal_code'] = get_data(record_buf, offset + 1)
-        record_buf_pos = offset + 1
+        offset, record['region_name'] = get_data(buf, buf_pos)
+        offset, record['city'] = get_data(buf, offset + 1)
+        offset, record['postal_code'] = get_data(buf, offset + 1)
+        buf_pos = offset + 1
 
         for j in range(3):
-            char = ord(record_buf[record_buf_pos])
-            record_buf_pos += 1
+            char = ord(buf[buf_pos])
+            buf_pos += 1
             latitude += (char << (j * 8))
 
         for j in range(3):
-            char = ord(record_buf[record_buf_pos])
-            record_buf_pos += 1
+            char = ord(buf[buf_pos])
+            buf_pos += 1
             longitude += (char << (j * 8))
 
         record['latitude'] = (latitude / 10000.0) - 180.0
@@ -374,9 +388,9 @@ class GeoIP(GeoIPBase):
             dmaarea_combo = 0
             if record['country_code'] == 'US':
                 for j in range(3):
-                    char = ord(record_buf[record_buf_pos])
+                    char = ord(buf[buf_pos])
                     dmaarea_combo += (char << (j * 8))
-                    record_buf_pos += 1
+                    buf_pos += 1
 
                 record['dma_code'] = int(math.floor(dmaarea_combo / 1000))
                 record['area_code'] = dmaarea_combo % 1000
