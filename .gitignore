@@ -2,7 +2,7 @@
 *env
 *.pyc
 *.egg-info
-*.dat
+tests/data/*
 .tox
 build
 dist

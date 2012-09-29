@@ -32,7 +32,6 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
-from __future__ import with_statement, division
 import os
 import math
 import socket
@@ -70,7 +69,6 @@ class GeoIPMetaclass(type):
         flag (default) and then try later to initialize with MEMORY_CACHE, it
         will still return the STANDARD one.
         """
-
         if not hasattr(cls, '_instances'):
             cls._instances = {}
 
@@ -106,21 +104,19 @@ class GeoIP(GeoIPBase):
         self._flags = flags
 
         if self._flags & const.MMAP_CACHE:
-            with open(filename, 'rb') as f:
-                access = mmap.ACCESS_READ
-                self._filehandle = mmap.mmap(f.fileno(), 0, access=access)
+            f = open(filename, 'rb')
+            access = mmap.ACCESS_READ
+            self._filehandle = mmap.mmap(f.fileno(), 0, access=access)
+            f.close()
 
         elif self._flags & const.MEMORY_CACHE:
-            if filename.endswith('.gz'):
-                opener = gzip.open
-            else:
-                opener = open
+            f = open(filename, 'rb')
+            self._memoryBuffer = f.read()
+            self._filehandle = StringIO(self._memoryBuffer)
+            f.close()
 
-            with opener(filename, 'rb') as f:
-                self._memoryBuffer = f.read()
-                self._filehandle = StringIO(self._memoryBuffer)
         else:
-            self._filehandle = codecs.open(filename, 'rb', 'latin_1')
+            self._filehandle = codecs.open(filename, 'rb', 'iso-8859-1')
 
         self._lock = Lock()
         self._setup_segments()
@@ -158,15 +154,16 @@ class GeoIP(GeoIPBase):
             if (delim == chars) if PY3 else (delim == unicode(chars, flag)):
                 self._databaseType = ord(self._filehandle.read(1))
 
-                # Backwards compatibility with databases from
-                # April 2003 and earlier
+                # Compatibility with databases from April 2003 and earlier
                 if (self._databaseType >= 106):
                     self._databaseType -= 105
 
                 if self._databaseType == const.REGION_EDITION_REV0:
                     self._databaseSegments = const.STATE_BEGIN_REV0
+
                 elif self._databaseType == const.REGION_EDITION_REV1:
                     self._databaseSegments = const.STATE_BEGIN_REV1
+
                 elif self._databaseType in (const.CITY_EDITION_REV0,
                                             const.CITY_EDITION_REV1,
                                             const.ORG_EDITION,
@@ -174,6 +171,7 @@ class GeoIP(GeoIPBase):
                                             const.ASNUM_EDITION):
                     self._databaseSegments = 0
                     buf = self._filehandle.read(const.SEGMENT_RECORD_LENGTH)
+
                     for j in range(const.SEGMENT_RECORD_LENGTH):
                         self._databaseSegments += (ord(buf[j]) << (j * 8))
 
@@ -183,6 +181,7 @@ class GeoIP(GeoIPBase):
                 break
             else:
                 self._filehandle.seek(-4, os.SEEK_CUR)
+
         self._filehandle.seek(filepos, os.SEEK_SET)
         self._lock.release()
 
@@ -225,7 +224,7 @@ class GeoIP(GeoIPBase):
                     return x[0]
                 offset = x[0]
 
-        raise Exception('Error traversing database - perhaps it is corrupt?')
+        raise GeoIPError('Corrupt database')
 
     def _get_org(self, ipnum):
         """
