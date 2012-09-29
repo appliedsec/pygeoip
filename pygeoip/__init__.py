@@ -36,7 +36,6 @@ import os
 import math
 import socket
 import mmap
-import gzip
 import codecs
 from threading import Lock
 
@@ -91,8 +90,7 @@ class GeoIP(GeoIPBase):
         """
         Initialize the class.
 
-        @param filename: Path to a geoip database. If MEMORY_CACHE is used,
-            the file can be gzipped.
+        @param filename: Path to a geoip database.
         @type filename: str
         @param flags: Flags that affect how the database is processed.
             Currently supported flags are STANDARD (the default),
