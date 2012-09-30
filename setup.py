@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Setup file for pygeoip package.
 
@@ -32,6 +33,8 @@ setup(name='pygeoip',
       description='Pure Python GeoIP API',
       author='Jennifer Ennis',
       author_email='zaylea@gmail.com',
+      maintainer='William Tisäter',
+      maintainer_email='william@defunct.cc',
       url='https://github.com/appliedsec/pygeoip',
       classifiers=['Programming Language :: Python',
                    'Programming Language :: Python :: 2.5',

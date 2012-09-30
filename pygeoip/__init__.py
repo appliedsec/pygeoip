@@ -2,21 +2,12 @@
 """
 Pure Python GeoIP API
 
-The API is based on U{MaxMind's C-based Python
-API<http://www.maxmind.com/app/python>}, but the code itself is based on
-the U{pure PHP5 API<http://pear.php.net/package/Net_GeoIP/>} by Jim Winstead
-and Hans Lellelid.
+The API is based on MaxMind's C-based Python API, but the code itself is
+ported from the Pure PHP GeoIP API by Jim Winstead and Hans Lellelid.
 
-It is mostly a drop-in replacement, except the C{new} and C{open} methods
-are gone. You should instantiate the L{GeoIP} class yourself:
+@author: Jennifer Ennis <zaylea@gmail.com>
 
-C{gi = GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)}
-
-@author: Jennifer Ennis <zaylea at gmail dot com>
-@author: William Tisäter <william@defunct.cc>
-
-@license:
-Copyright(C) 2004 MaxMind LLC
+@license: Copyright(C) 2004 MaxMind LLC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by

@@ -40,27 +40,41 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
     >>> gi.country_name_by_addr('64.233.161.99')
     'United States'
 
+### Region lookup ###
+
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
+    >>> gi.region_by_name('apple.com')
+    {'region_name': 'CA', 'country_code': 'US'}
+
 ### City lookup ###
 
-    >>> gic = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
-    >>> gic.record_by_addr('64.233.161.99')
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
+    >>> gi.record_by_addr('64.233.161.99')
     {
-      'city': 'Mountain View',
-    	'region_name': 'CA',
-    	'area_code': 650,
-    	'longitude': -122.0574,
-    	'country_code3': 'USA',
-    	'latitude': 37.419199999999989,
-    	'postal_code': '94043',
-    	'dma_code': 807,
-    	'country_code': 'US',
-    	'country_name': 'United States'
+        'city': 'Mountain View',
+        'region_name': 'CA',
+        'area_code': 650,
+        'longitude': -122.0574,
+        'country_code3': 'USA',
+        'latitude': 37.419199999999989,
+        'postal_code': '94043',
+        'dma_code': 807,
+        'country_code': 'US',
+        'country_name': 'United States'
     }
-
-### Timezone lookup ###
-
-    >>> gic = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
-    >>> gic.time_zone_by_addr('64.233.161.99')
+    >>> gi.time_zone_by_addr('64.233.161.99')
     'America/Los_Angeles'
+
+### Organization lookup ###
+
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIPOrg.dat')
+    >>> gi.org_by_name('dell.com')
+    'Dell Computer Corporation'
+
+### ISP lookup ###
+
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
+    >>> gi.org_by_name('cnn.com')
+    'Turner Broadcasting System'
 
 For more information, [check out the full API documentation](http://packages.python.org/pygeoip).

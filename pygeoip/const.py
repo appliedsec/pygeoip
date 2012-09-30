@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Constants needed for parsing binary GeoIP databases. It is part of the pygeoip
-package.
+Constants needed for the binary parser. Part of the pygeoip package.
 
-@author: Jennifer Ennis <zaylea at gmail dot com>
+@author: Jennifer Ennis <zaylea@gmail.com>
 
-@license:
-Copyright(C) 2004 MaxMind LLC
+@license: Copyright(C) 2004 MaxMind LLC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
