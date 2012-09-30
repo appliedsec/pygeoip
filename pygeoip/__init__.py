@@ -398,11 +398,11 @@ class GeoIP(GeoIPBase):
         if self._databaseType in const.IPV6_EDITIONS:
             try:
                 response = socket.getaddrinfo(hostname, 0, socket.AF_INET6)
+                family, socktype, proto, canonname, sockaddr = response[0]
+                address, port, flow, scope = sockaddr
+                return address
             except socket.gaierror:
                 return ''
-            family, socktype, proto, canonname, sockaddr = response[0]
-            address, port, flow, scope = sockaddr
-            return address
         else:
             return socket.gethostbyname(hostname)
 
@@ -543,7 +543,7 @@ class GeoIP(GeoIPBase):
         @return: Organization or ISP name
         @rtype: str
         """
-        addr = socket.gethostbyname(hostname)
+        addr = self._gethostbyname(hostname)
         return self.org_by_addr(addr)
 
     def record_by_addr(self, addr):
@@ -583,7 +583,7 @@ class GeoIP(GeoIPBase):
             metro_code, area_code, region_name, time_zone
         @rtype: dict
         """
-        addr = socket.gethostbyname(hostname)
+        addr = self._gethostbyname(hostname)
         return self.record_by_addr(addr)
 
     def region_by_addr(self, addr):
@@ -619,7 +619,7 @@ class GeoIP(GeoIPBase):
         @return: Dictionary containing country_code, region, and region_name
         @rtype: dict
         """
-        addr = socket.gethostbyname(hostname)
+        addr = self._gethostbyname(hostname)
         return self.region_by_addr(addr)
 
     def time_zone_by_addr(self, addr):
@@ -655,5 +655,5 @@ class GeoIP(GeoIPBase):
         @return: Time zone
         @rtype: str
         """
-        addr = socket.gethostbyname(hostname)
+        addr = self._gethostbyname(hostname)
         return self.time_zone_by_addr(addr)
