@@ -4,7 +4,7 @@ but the code itself is ported from the [Pure PHP GeoIP API](http://pear.php.net/
 
 It is mostly a drop-in replacement, except the `new` and `open` methods are gone.
 
-Tested using tox with Python version 2.5, 2.6, 2.7, 3.0 and 3.1.
+Tested using tox with Python version 2.5, 2.6, 2.7, 3.1, 3.2 and 3.3.
 
 ## Issues and contribution ##
 
