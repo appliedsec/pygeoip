@@ -23,6 +23,7 @@ You can easily install pygeoip with setuptools:
 * City
 * Organization
 * ISP
+* ASN
 
 ## Quick Documentation ##
 
@@ -76,5 +77,11 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
     >>> gi.org_by_name('cnn.com')
     'Turner Broadcasting System'
+
+### ASN lookup ###
+
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIPASNum.dat')
+    >>> gi.org_by_name('cnn.com')
+    'AS5662 Turner Broadcasting'
 
 For more information, [check out the full API documentation](http://packages.python.org/pygeoip).

@@ -1,4 +1,5 @@
 pygeoip	pygeoip-module.html
+pygeoip.ENCODING	pygeoip-module.html#ENCODING
 pygeoip.time_zone_by_country_and_region	pygeoip.timezone-module.html#time_zone_by_country_and_region
 pygeoip.__package__	pygeoip-module.html#__package__
 pygeoip.STANDARD	pygeoip-module.html#STANDARD
@@ -6,6 +7,7 @@ pygeoip.MMAP_CACHE	pygeoip-module.html#MMAP_CACHE
 pygeoip.MEMORY_CACHE	pygeoip-module.html#MEMORY_CACHE
 pygeoip.const	pygeoip.const-module.html
 pygeoip.const.GEOIP_STANDARD	pygeoip.const-module.html#GEOIP_STANDARD
+pygeoip.const.ENCODING	pygeoip.const-module.html#ENCODING
 pygeoip.const.COUNTRY_CODES3	pygeoip.const-module.html#COUNTRY_CODES3
 pygeoip.const.PY3	pygeoip.const-module.html#PY3
 pygeoip.const.IPV6_EDITIONS	pygeoip.const-module.html#IPV6_EDITIONS

@@ -7,10 +7,8 @@ from tests.config import COUNTRY_DB_PATH
 
 class TestGeoIPCacheMethods(unittest.TestCase):
     def setUp(self):
-        self.us_hostname = 'google.com'
         self.us_ip = '64.233.161.99'
         self.us_code = 'US'
-        self.us_name = 'United States'
 
         self.gi_mmap = pygeoip.GeoIP(COUNTRY_DB_PATH, MMAP_CACHE)
         self.gi_memory = pygeoip.GeoIP(COUNTRY_DB_PATH, MEMORY_CACHE)
