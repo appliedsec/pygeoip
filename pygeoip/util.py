@@ -33,34 +33,9 @@ def ip2long(ip):
     @param ip: IPv4 or IPv6 address
     @type ip: str
     """
-    if ip.find(':') >= 0:
-        return ip2long_v6(ip)
-    else:
-        return ip2long_v4(ip)
+    try:
+        return int(socket.inet_aton(ip).encode('hex'), 16)
+    except socket.error:
+        return int(socket.inet_pton(socket.AF_INET6, ip).encode('hex'), 16)
 
 
-def ip2long_v4(ip):
-    """
-    Convert a IPv4 address into a 32-bit integer.
-
-    @param ip: quad-dotted IPv4 address
-    @type ip: str
-    @return: network byte order 32-bit integer
-    @rtype: int
-    """
-    
-    return int(socket.inet_aton(ip).encode('hex'), 16)
-
-
-
-
-def ip2long_v6(ip):
-    """
-    Convert a IPv6 address into long.
-
-    @param ip: IPv6 address
-    @type ip: str
-    @return: network byte order long
-    @rtype: long
-    """
-    return int(socket.inet_pton(socket.AF_INET6, ip).encode('hex'), 16)
