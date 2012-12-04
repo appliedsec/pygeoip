@@ -48,14 +48,10 @@ def ip2long_v4(ip):
     @return: network byte order 32-bit integer
     @rtype: int
     """
-    ip_array = ip.split('.')
-    if PY3:
-        # int and long are unified in py3
-        return int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + \
-            int(ip_array[2]) * 256 + int(ip_array[3])
-    else:
-        return long(ip_array[0]) * 16777216 + long(ip_array[1]) * 65536 + \
-            long(ip_array[2]) * 256 + long(ip_array[3])
+    
+    return int(socket.inet_aton(ip).encode('hex'), 16)
+
+
 
 
 def ip2long_v6(ip):
@@ -67,7 +63,4 @@ def ip2long_v6(ip):
     @return: network byte order long
     @rtype: long
     """
-    ipbyte = socket.inet_pton(socket.AF_INET6, ip)
-    ipnum = array('L', struct.unpack('!4L', ipbyte))
-    max_index = len(ipnum) - 1
-    return sum(ipnum[max_index - i] << (i * 32) for i in range(len(ipnum)))
+    return int(socket.inet_pton(socket.AF_INET6, ip).encode('hex'), 16)
