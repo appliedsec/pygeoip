@@ -265,7 +265,8 @@ COUNTRY_CODES = (
     'SZ', 'TC', 'TD', 'TF', 'TG', 'TH', 'TJ', 'TK', 'TM', 'TN', 'TO', 'TL',
     'TR', 'TT', 'TV', 'TW', 'TZ', 'UA', 'UG', 'UM', 'US', 'UY', 'UZ', 'VA',
     'VC', 'VE', 'VG', 'VI', 'VN', 'VU', 'WF', 'WS', 'YE', 'YT', 'RS', 'ZA',
-    'ZM', 'ME', 'ZW', 'A1', 'A2', 'O1', 'AX', 'GG', 'IM', 'JE', 'BL', 'MF'
+    'ZM', 'ME', 'ZW', 'A1', 'A2', 'O1', 'AX', 'GG', 'IM', 'JE', 'BL', 'MF',
+    'BQ', 'SS'
 )
 
 COUNTRY_CODES3 = (
@@ -293,7 +294,7 @@ COUNTRY_CODES3 = (
     'TTO', 'TUV', 'TWN', 'TZA', 'UKR', 'UGA', 'UM', 'USA', 'URY', 'UZB', 'VAT',
     'VCT', 'VEN', 'VGB', 'VIR', 'VNM', 'VUT', 'WLF', 'WSM', 'YEM', 'YT', 'SRB',
     'ZAF', 'ZMB', 'MNE', 'ZWE', 'A1', 'A2', 'O1', 'ALA', 'GGY', 'IMN', 'JEY',
-    'BLM', 'MAF'
+    'BLM', 'MAF', 'BES', 'SSD'
 )
 
 COUNTRY_NAMES = (
@@ -353,7 +354,7 @@ COUNTRY_NAMES = (
     'Yemen', 'Mayotte', 'Serbia', 'South Africa', 'Zambia', 'Montenegro',
     'Zimbabwe', 'Anonymous Proxy', 'Satellite Provider', 'Other',
     'Aland Islands', 'Guernsey', 'Isle of Man', 'Jersey', 'Saint Barthelemy',
-    'Saint Martin'
+    'Saint Martin', 'Bonaire, Sint Eustatius and Saba', 'South Sudan, Republic of',
 )
 
 # storage / caching flags
