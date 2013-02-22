@@ -61,48 +61,80 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="pygeoip.util-module.html">Module pygeoip.util</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
-<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">Misc. utility functions. It is part of the pygeoip package.</tt> </tt>
-<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">@author: Jennifer Ennis &lt;zaylea at gmail dot com&gt;</tt> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">@license:</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">Copyright(C) 2004 MaxMind LLC</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">This program is free software: you can redistribute it and/or modify</tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-docstring">it under the terms of the GNU Lesser General Public License as published by</tt> </tt>
-<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring">the Free Software Foundation, either version 3 of the License, or</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">(at your option) any later version.</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">This program is distributed in the hope that it will be useful,</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">GNU General Public License for more details.</tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">You should have received a copy of the GNU Lesser General Public License</tt> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">along with this program.  If not, see &lt;http://www.gnu.org/licenses/lgpl.txt&gt;.</tt> </tt>
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring">Utility functions. Part of the pygeoip package.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">@author: Jennifer Ennis &lt;zaylea@gmail.com&gt;</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">@license: Copyright(C) 2004 MaxMind LLC</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-docstring">it under the terms of the GNU Lesser General Public License as published by</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring">the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">(at your option) any later version.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">GNU General Public License for more details.</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">You should have received a copy of the GNU Lesser General Public License</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">along with this program.  If not, see &lt;http://www.gnu.org/licenses/lgpl.txt&gt;.</tt> </tt>
 <a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
-<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">six</tt> </tt>
-<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
-<a name="ip2long"></a><div id="ip2long-def"><a name="L25"></a><tt class="py-lineno">25</tt> <a class="py-toggle" href="#" id="ip2long-toggle" onclick="return toggle('ip2long');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pygeoip.util-module.html#ip2long">ip2long</a><tt class="py-op">(</tt><tt class="py-param">ip</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="ip2long-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ip2long-expanded"><a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    Convert a IPv4 address into a 32-bit integer.</tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    @param ip: quad-dotted IPv4 address</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    @type ip: str</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">    @return: network byte order 32-bit integer</tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">    @rtype: int</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">    <tt class="py-name">ip_array</tt> <tt class="py-op">=</tt> <tt class="py-name">ip</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">'.'</tt><tt class="py-op">)</tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">     </tt>
-<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">six</tt><tt class="py-op">.</tt><tt class="py-name">PY3</tt><tt class="py-op">:</tt> </tt>
-<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt class="py-comment"># int and long are unified in py3</tt> </tt>
-<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-name">ip_long</tt> <tt class="py-op">=</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">16777216</tt> <tt class="py-op">+</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">65536</tt> <tt class="py-op">+</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">256</tt> <tt class="py-op">+</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
-<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
-<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt class="py-name">ip_long</tt> <tt class="py-op">=</tt> <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">16777216</tt> <tt class="py-op">+</tt> <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">65536</tt> <tt class="py-op">+</tt> <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">256</tt> <tt class="py-op">+</tt> <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
-<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">ip_long</tt> </tt>
-</div><a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">struct</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">socket</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">array</tt> <tt class="py-keyword">import</tt> <tt class="py-name">array</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package pygeoip=pygeoip-module.html"><a title="pygeoip" class="py-name" href="#" onclick="return doclink('link-0', 'pygeoip', 'link-0');">pygeoip</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module pygeoip.const=pygeoip.const-module.html"><a title="pygeoip.const" class="py-name" href="#" onclick="return doclink('link-1', 'const', 'link-1');">const</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Variable pygeoip.const.PY3=pygeoip.const-module.html#PY3"><a title="pygeoip.const.PY3" class="py-name" href="#" onclick="return doclink('link-2', 'PY3', 'link-2');">PY3</a></tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="ip2long"></a><div id="ip2long-def"><a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="ip2long-toggle" onclick="return toggle('ip2long');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pygeoip.util-module.html#ip2long">ip2long</a><tt class="py-op">(</tt><tt class="py-param">ip</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ip2long-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ip2long-expanded"><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">    Wrapper function for IPv4 and IPv6 converters</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">    @param ip: IPv4 or IPv6 address</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring">    @type ip: str</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">ip</tt><tt class="py-op">.</tt><tt class="py-name">find</tt><tt class="py-op">(</tt><tt class="py-string">':'</tt><tt class="py-op">)</tt> <tt class="py-op">&gt;=</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-3" class="py-name" targets="Function pygeoip.util.ip2long_v6()=pygeoip.util-module.html#ip2long_v6"><a title="pygeoip.util.ip2long_v6" class="py-name" href="#" onclick="return doclink('link-3', 'ip2long_v6', 'link-3');">ip2long_v6</a></tt><tt class="py-op">(</tt><tt class="py-name">ip</tt><tt class="py-op">)</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-4" class="py-name" targets="Function pygeoip.util.ip2long_v4()=pygeoip.util-module.html#ip2long_v4"><a title="pygeoip.util.ip2long_v4" class="py-name" href="#" onclick="return doclink('link-4', 'ip2long_v4', 'link-4');">ip2long_v4</a></tt><tt class="py-op">(</tt><tt class="py-name">ip</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="ip2long_v4"></a><div id="ip2long_v4-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="ip2long_v4-toggle" onclick="return toggle('ip2long_v4');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pygeoip.util-module.html#ip2long_v4">ip2long_v4</a><tt class="py-op">(</tt><tt class="py-param">ip</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ip2long_v4-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ip2long_v4-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-docstring">    Convert a IPv4 address into a 32-bit integer.</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-docstring">    @param ip: quad-dotted IPv4 address</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring">    @type ip: str</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-docstring">    @return: network byte order 32-bit integer</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-docstring">    @rtype: int</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">    <tt class="py-name">ip_array</tt> <tt class="py-op">=</tt> <tt class="py-name">ip</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">'.'</tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-5" class="py-name"><a title="pygeoip.const.PY3" class="py-name" href="#" onclick="return doclink('link-5', 'PY3', 'link-2');">PY3</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt class="py-comment"># int and long are unified in py3</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">16777216</tt> <tt class="py-op">+</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">65536</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">            <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">256</tt> <tt class="py-op">+</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">16777216</tt> <tt class="py-op">+</tt> <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">65536</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">            <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-number">256</tt> <tt class="py-op">+</tt> <tt class="py-name">long</tt><tt class="py-op">(</tt><tt class="py-name">ip_array</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"> </tt>
+<a name="ip2long_v6"></a><div id="ip2long_v6-def"><a name="L61"></a><tt class="py-lineno">61</tt> <a class="py-toggle" href="#" id="ip2long_v6-toggle" onclick="return toggle('ip2long_v6');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pygeoip.util-module.html#ip2long_v6">ip2long_v6</a><tt class="py-op">(</tt><tt class="py-param">ip</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ip2long_v6-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ip2long_v6-expanded"><a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"><tt class="py-docstring">    Convert a IPv6 address into long.</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"><tt class="py-docstring">    @param ip: IPv6 address</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line"><tt class="py-docstring">    @type ip: str</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"><tt class="py-docstring">    @return: network byte order long</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"><tt class="py-docstring">    @rtype: long</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">    <tt class="py-name">ipbyte</tt> <tt class="py-op">=</tt> <tt class="py-name">socket</tt><tt class="py-op">.</tt><tt class="py-name">inet_pton</tt><tt class="py-op">(</tt><tt class="py-name">socket</tt><tt class="py-op">.</tt><tt class="py-name">AF_INET6</tt><tt class="py-op">,</tt> <tt class="py-name">ip</tt><tt class="py-op">)</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">    <tt class="py-name">ipnum</tt> <tt class="py-op">=</tt> <tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-string">'L'</tt><tt class="py-op">,</tt> <tt class="py-name">struct</tt><tt class="py-op">.</tt><tt class="py-name">unpack</tt><tt class="py-op">(</tt><tt class="py-string">'!4L'</tt><tt class="py-op">,</tt> <tt class="py-name">ipbyte</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">    <tt class="py-name">max_index</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">ipnum</tt><tt class="py-op">)</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">sum</tt><tt class="py-op">(</tt><tt class="py-name">ipnum</tt><tt class="py-op">[</tt><tt class="py-name">max_index</tt> <tt class="py-op">-</tt> <tt class="py-name">i</tt><tt class="py-op">]</tt> <tt class="py-op">&lt;&lt;</tt> <tt class="py-op">(</tt><tt class="py-name">i</tt> <tt class="py-op">*</tt> <tt class="py-number">32</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">ipnum</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -140,7 +172,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Sep 20 17:58:04 2012
+    Generated by Epydoc 3.0.1 on Sun Sep 30 13:48:03 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -17,14 +17,14 @@ class TestGeoIPTimeZoneFunctions(unittest.TestCase):
 
     def testTimeZoneByAddr(self):
         us_time_zone = self.gic.time_zone_by_addr(self.us_ip)
-        self.assertEquals(us_time_zone, 'America/Los_Angeles')
-
         gb_time_zone = self.gic.time_zone_by_addr(self.gb_ip)
+
+        self.assertEquals(us_time_zone, 'America/Los_Angeles')
         self.assertEquals(gb_time_zone, 'Europe/London')
 
     def testTimeZoneByName(self):
         us_time_zone = self.gic.time_zone_by_name(self.us_hostname)
-        self.assertEquals(us_time_zone, 'America/Los_Angeles')
-
         gb_time_zone = self.gic.time_zone_by_name(self.gb_hostname)
+
+        self.assertEquals(us_time_zone, 'America/Los_Angeles')
         self.assertEquals(gb_time_zone, 'Europe/London')

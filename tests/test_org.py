@@ -7,9 +7,9 @@ from tests.config import ORG_DB_PATH
 
 class TestGeoIPOrgFunctions(unittest.TestCase):
     def setUp(self):
-        self.us_org = 'Google'
-        self.us_ip = '64.233.161.99'
-        self.us_hostname = 'google.com'
+        self.us_org = 'APPLE COMPUTER'
+        self.us_ip = '17.172.224.47'
+        self.us_hostname = 'apple.com'
 
         self.gb_org = 'BBC'
         self.gb_ip = '212.58.253.68'
@@ -30,6 +30,3 @@ class TestGeoIPOrgFunctions(unittest.TestCase):
 
         self.assertEqual(gb_org, self.gb_org)
         self.assertEqual(us_org, self.us_org)
-
-
-

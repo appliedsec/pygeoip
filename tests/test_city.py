@@ -40,7 +40,8 @@ class TestGeoIPCityFunctions(unittest.TestCase):
             'longitude': -0.23339999999998895,
             'country_code3': 'GBR',
             'latitude': 51.283299999999997,
-            'postal_code': None, 'dma_code': 0,
+            'postal_code': '',
+            'dma_code': 0,
             'country_code': 'GB',
             'country_name': 'United Kingdom',
             'time_zone': 'Europe/London'
@@ -50,6 +51,8 @@ class TestGeoIPCityFunctions(unittest.TestCase):
         self.gb_region_data = {'region_name': 'N7', 'country_code': 'GB'}
 
         self.gic = pygeoip.GeoIP(CITY_DB_PATH)
+        self.gic_mem = pygeoip.GeoIP(CITY_DB_PATH, pygeoip.MEMORY_CACHE)
+        self.gic_mmap = pygeoip.GeoIP(CITY_DB_PATH, pygeoip.MMAP_CACHE)
 
     def testCountryCodeByName(self):
         us_code = self.gic.country_code_by_name(self.us_hostname)
@@ -93,19 +96,12 @@ class TestGeoIPCityFunctions(unittest.TestCase):
         self.assertEqual(us_region, self.us_region_data)
         self.assertEqual(gb_region, self.gb_region_data)
 
-    def testTimeZoneByAddr(self):
-        us_time_zone = self.gic.time_zone_by_addr(self.us_ip)
-        gb_time_zone = self.gic.time_zone_by_addr(self.gb_ip)
+    def testCacheMethods(self):
+        mem_record = self.gic_mem.record_by_addr(self.us_ip)
+        mmap_record = self.gic_mmap.record_by_addr(self.us_ip)
 
-        self.assertEquals(us_time_zone, 'America/Los_Angeles')
-        self.assertEquals(gb_time_zone, 'Europe/London')
-
-    def testTimeZoneByName(self):
-        us_time_zone = self.gic.time_zone_by_name(self.us_hostname)
-        gb_time_zone = self.gic.time_zone_by_name(self.gb_hostname)
-
-        self.assertEquals(us_time_zone, 'America/Los_Angeles')
-        self.assertEquals(gb_time_zone, 'Europe/London')
+        self.assertEqual(mem_record['city'], self.us_record_data['city'])
+        self.assertEqual(mmap_record['city'], self.us_record_data['city'])
 
     def testRecordByAddr(self):
         equal_keys = ('city', 'region_name', 'area_code', 'country_code3',

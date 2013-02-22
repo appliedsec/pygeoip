@@ -61,12 +61,12 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module const</h1><p class="nomargin-top"><span class="codelink"><a href="pygeoip.const-pysrc.html">source&nbsp;code</a></span></p>
-<p>Constants needed for parsing binary GeoIP databases. It is part of the
-  pygeoip package.</p>
+<p>Constants needed for the binary parser. Part of the pygeoip 
+  package.</p>
 
 <hr />
 <div class="fields">      <p><strong>Author:</strong>
-        Jennifer Ennis &lt;zaylea at gmail dot com&gt;
+        Jennifer Ennis &lt;zaylea@gmail.com&gt;
       </p>
       <p><strong>License:</strong>
         Copyright(C) 2004 MaxMind LLC
@@ -99,6 +99,20 @@
     </table>
   </td>
 </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PY2"></a><span class="summary-name">PY2</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PY3"></a><span class="summary-name">PY3</span> = <code title="False">False</code>
+    </td>
+  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -240,6 +254,13 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="COUNTRY_EDITION_V6"></a><span class="summary-name">COUNTRY_EDITION_V6</span> = <code title="12">12</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="REGION_EDITION_REV0"></a><span class="summary-name">REGION_EDITION_REV0</span> = <code title="7">7</code>
     </td>
   </tr>
@@ -282,14 +303,14 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="PROXY_EDITION"></a><span class="summary-name">PROXY_EDITION</span> = <code title="8">8</code>
+        <a name="ASNUM_EDITION"></a><span class="summary-name">ASNUM_EDITION</span> = <code title="9">9</code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="ASNUM_EDITION"></a><span class="summary-name">ASNUM_EDITION</span> = <code title="9">9</code>
+        <a name="PROXY_EDITION"></a><span class="summary-name">PROXY_EDITION</span> = <code title="8">8</code>
     </td>
   </tr>
 <tr>
@@ -303,7 +324,28 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="COUNTRY_EDITION_V6"></a><span class="summary-name">COUNTRY_EDITION_V6</span> = <code title="12">12</code>
+        <a name="IPV6_EDITIONS"></a><span class="summary-name">IPV6_EDITIONS</span> = <code title="(12)"><code class="variable-group">(</code>12<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CITY_EDITIONS"></a><span class="summary-name">CITY_EDITIONS</span> = <code title="(6, 2)"><code class="variable-group">(</code>6<code class="variable-op">, </code>2<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="REGION_EDITIONS"></a><span class="summary-name">REGION_EDITIONS</span> = <code title="(7, 3)"><code class="variable-group">(</code>7<code class="variable-op">, </code>3<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="REGION_CITY_EDITIONS"></a><span class="summary-name">REGION_CITY_EDITIONS</span> = <code title="(7, 3, 6, 2)"><code class="variable-group">(</code>7<code class="variable-op">, </code>3<code class="variable-op">, </code>6<code class="variable-op">, </code>2<code class="variable-group">)</code></code>
     </td>
   </tr>
 <tr>
@@ -380,7 +422,14 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="None">None</code>
+        <a name="ENCODING"></a><span class="summary-name">ENCODING</span> = <code title="'iso-8859-1'"><code class="variable-quote">'</code><code class="variable-string">iso-8859-1</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'pygeoip'"><code class="variable-quote">'</code><code class="variable-string">pygeoip</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 </table>
@@ -538,7 +587,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Sep 20 17:58:04 2012
+    Generated by Epydoc 3.0.1 on Sun Sep 30 13:48:03 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
