@@ -1,0 +1,8 @@
+recursive-include apidocs *
+recursive-include tests *
+include README.md
+include COPYING
+include DEVELOPER
+include INSTALL
+include epydoc.ini
+include tox.ini
