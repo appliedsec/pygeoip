@@ -12,7 +12,6 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
 
         self.us_ip = '64.233.161.99'
         self.gb_ip = '212.58.253.68'
-        self.ss_ip = '212.21.45.100'
 
         self.ie6_hostname = 'google.com'
         self.ie6_ip = '2a00:1450:400f:800::1002'
@@ -20,12 +19,10 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
         self.ie_code = 'IE'
         self.us_code = 'US'
         self.gb_code = 'GB'
-        self.ss_code = 'SS'
 
         self.ie_name = 'Ireland'
         self.us_name = 'United States'
         self.gb_name = 'United Kingdom'
-        self.ss_name = 'South Sudan, Republic of'
 
         self.gi = pygeoip.GeoIP(COUNTRY_DB_PATH)
         self.gi6 = pygeoip.GeoIP(COUNTRY_V6_DB_PATH)
@@ -42,12 +39,10 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
     def testCountryCodeByAddr(self):
         us_code = self.gi.country_code_by_addr(self.us_ip)
         gb_code = self.gi.country_code_by_addr(self.gb_ip)
-        ss_code = self.gi.country_code_by_addr(self.ss_ip)
         ie6_code = self.gi6.country_code_by_addr(self.ie6_ip)
         
         self.assertEqual(us_code, self.us_code)
         self.assertEqual(gb_code, self.gb_code)
-        self.assertEqual(ss_code, self.ss_code)
         self.assertEqual(ie6_code, self.ie_code)
 
     def testCountryNameByName(self):
@@ -62,10 +57,8 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
     def testCountryNameByAddr(self):
         us_name = self.gi.country_name_by_addr(self.us_ip)
         gb_name = self.gi.country_name_by_addr(self.gb_ip)
-        ss_name = self.gi.country_name_by_addr(self.ss_ip)
         ie6_name = self.gi6.country_name_by_addr(self.ie6_ip)
 
         self.assertEqual(us_name, self.us_name)
         self.assertEqual(gb_name, self.gb_name)
-        self.assertEqual(ss_name, self.ss_name)
         self.assertEqual(ie6_name, self.ie_name)
