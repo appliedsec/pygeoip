@@ -20,11 +20,8 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
-import struct
 import socket
-from array import array
-
-from pygeoip.const import PY3
+import binascii
 
 
 def ip2long(ip):
@@ -34,8 +31,6 @@ def ip2long(ip):
     @type ip: str
     """
     try:
-        return int(socket.inet_aton(ip).encode('hex'), 16)
+        return int(binascii.hexlify(socket.inet_aton(ip)), 16)
     except socket.error:
-        return int(socket.inet_pton(socket.AF_INET6, ip).encode('hex'), 16)
-
-
+        return int(binascii.hexlify(socket.inet_pton(socket.AF_INET6, ip)), 16)
