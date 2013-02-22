@@ -354,7 +354,7 @@ COUNTRY_NAMES = (
     'Yemen', 'Mayotte', 'Serbia', 'South Africa', 'Zambia', 'Montenegro',
     'Zimbabwe', 'Anonymous Proxy', 'Satellite Provider', 'Other',
     'Aland Islands', 'Guernsey', 'Isle of Man', 'Jersey', 'Saint Barthelemy',
-    'Saint Martin', 'Bonaire, Sint Eustatius and Saba', 'South Sudan, Republic of',
+    'Saint Martin', 'Bonaire, Sint Eustatius and Saba', 'South Sudan'
 )
 
 # storage / caching flags
