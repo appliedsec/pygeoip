@@ -30,6 +30,7 @@ class TestGeoIPCityFunctions(unittest.TestCase):
             'dma_code': 807,
             'country_code': 'US',
             'country_name': 'United States',
+            'continent': 'NA',
             'time_zone': 'America/Los_Angeles'
         }
 
@@ -44,6 +45,7 @@ class TestGeoIPCityFunctions(unittest.TestCase):
             'dma_code': 0,
             'country_code': 'GB',
             'country_name': 'United Kingdom',
+            'continent': 'EU',
             'time_zone': 'Europe/London'
         }
 

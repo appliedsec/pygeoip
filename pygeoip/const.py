@@ -357,7 +357,7 @@ COUNTRY_NAMES = (
     'Saint Martin', 'Bonaire, Sint Eustatius and Saba', 'South Sudan'
 )
 
-CONTINENT_NAMES = {
+CONTINENT_NAMES = (
     '--', 'AS', 'EU', 'EU', 'AS', 'AS', 'NA', 'NA', 'EU', 'AS', 'NA', 'AF',
     'AN', 'SA', 'OC', 'EU', 'OC', 'NA', 'AS', 'EU', 'NA', 'AS', 'EU', 'AF',
     'EU', 'AS', 'AF', 'AF', 'NA', 'AS', 'SA', 'SA', 'NA', 'AS', 'AN', 'AF',
@@ -380,7 +380,7 @@ CONTINENT_NAMES = {
     'EU', 'NA', 'SA', 'NA', 'NA', 'AS', 'OC', 'OC', 'OC', 'AS', 'AF', 'EU',
     'AF', 'AF', 'EU', 'AF', '--', '--', '--', 'EU', 'EU', 'EU', 'EU', 'NA',
     'NA', 'NA', 'AF'
-}
+)
 
 # storage / caching flags
 STANDARD = 0
