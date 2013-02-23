@@ -299,8 +299,8 @@ class GeoIP(GeoIPBase):
                     country_code = const.COUNTRY_CODES[index]
         elif self._databaseType in const.CITY_EDITIONS:
             rec = self._get_record(ipnum)
-            country_code = rec['country_code'] if 'country_code' in rec else ''
-            region = rec['region_name'] if 'region_name' in rec else ''
+            region = rec.get('region_name', '')
+            country_code = rec.get('country_code', '')
 
         return {'country_code': country_code, 'region_name': region}
 
@@ -317,7 +317,7 @@ class GeoIP(GeoIPBase):
         """
         seek_country = self._seek_country(ipnum)
         if seek_country == self._databaseSegments:
-            return None
+            return {}
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
         self._lock.acquire()
@@ -386,9 +386,7 @@ class GeoIP(GeoIPBase):
                 record['dma_code'] = int(math.floor(dmaarea_combo / 1000))
                 record['area_code'] = dmaarea_combo % 1000
 
-        if record['dma_code'] in const.DMA_MAP:
-            record['metro_code'] = const.DMA_MAP[record['dma_code']]
-
+        record['metro_code'] = const.DMA_MAP.get(record['dma_code'])
         params = (record['country_code'], record['region_name'])
         record['time_zone'] = time_zone_by_country_and_region(*params)
 
@@ -454,7 +452,7 @@ class GeoIP(GeoIPBase):
 
                 return const.COUNTRY_CODES[country_id]
             elif self._databaseType in const.REGION_CITY_EDITIONS:
-                return self.region_by_addr(addr)['country_code']
+                return self.region_by_addr(addr).get('country_code')
 
             message = 'Invalid database type, expected Country, City or Region'
             raise GeoIPError(message)
@@ -489,7 +487,7 @@ class GeoIP(GeoIPBase):
             if self._databaseType in VALID_EDITIONS:
                 return const.COUNTRY_NAMES[self.id_by_addr(addr)]
             elif self._databaseType in const.CITY_EDITIONS:
-                return self.record_by_addr(addr)['country_name']
+                return self.record_by_addr(addr).get('country_name')
             else:
                 message = 'Invalid database type, expected Country or City'
                 raise GeoIPError(message)
@@ -641,7 +639,7 @@ class GeoIP(GeoIPBase):
                 message = 'Invalid database type, expected City'
                 raise GeoIPError(message)
 
-            return self._get_record(ipnum)['time_zone']
+            return self._get_record(ipnum).get('time_zone')
         except ValueError:
             raise GeoIPError('Failed to lookup address %s' % addr)
 
