@@ -199,38 +199,41 @@ class GeoIP(GeoIPBase):
         @return: offset of start of record
         @rtype: int
         """
-        offset = 0
-        seek_depth = 127 if len(str(ipnum)) > 10 else 31
+        try:
+            offset = 0
+            seek_depth = 127 if len(str(ipnum)) > 10 else 31
 
-        for depth in range(seek_depth, -1, -1):
-            if self._flags & const.MEMORY_CACHE:
-                startIndex = 2 * self._recordLength * offset
-                endIndex = startIndex + (2 * self._recordLength)
-                buf = self._memoryBuffer[startIndex:endIndex]
-            else:
-                startIndex = 2 * self._recordLength * offset
-                readLength = 2 * self._recordLength
-                self._lock.acquire()
-                self._filehandle.seek(startIndex, os.SEEK_SET)
-                buf = self._filehandle.read(readLength)
-                self._lock.release()
+            for depth in range(seek_depth, -1, -1):
+                if self._flags & const.MEMORY_CACHE:
+                    startIndex = 2 * self._recordLength * offset
+                    endIndex = startIndex + (2 * self._recordLength)
+                    buf = self._memoryBuffer[startIndex:endIndex]
+                else:
+                    startIndex = 2 * self._recordLength * offset
+                    readLength = 2 * self._recordLength
+                    self._lock.acquire()
+                    self._filehandle.seek(startIndex, os.SEEK_SET)
+                    buf = self._filehandle.read(readLength)
+                    self._lock.release()
 
-            if PY3 and type(buf) is bytes:
-                buf = buf.decode(ENCODING)
+                if PY3 and type(buf) is bytes:
+                    buf = buf.decode(ENCODING)
 
-            x = [0, 0]
-            for i in range(2):
-                for j in range(self._recordLength):
-                    byte = buf[self._recordLength * i + j]
-                    x[i] += ord(byte) << (j * 8)
-            if ipnum & (1 << depth):
-                if x[1] >= self._databaseSegments:
-                    return x[1]
-                offset = x[1]
-            else:
-                if x[0] >= self._databaseSegments:
-                    return x[0]
-                offset = x[0]
+                x = [0, 0]
+                for i in range(2):
+                    for j in range(self._recordLength):
+                        byte = buf[self._recordLength * i + j]
+                        x[i] += ord(byte) << (j * 8)
+                if ipnum & (1 << depth):
+                    if x[1] >= self._databaseSegments:
+                        return x[1]
+                    offset = x[1]
+                else:
+                    if x[0] >= self._databaseSegments:
+                        return x[0]
+                    offset = x[0]
+        except:
+            pass
 
         raise GeoIPError('Corrupt database')
 
@@ -449,7 +452,6 @@ class GeoIP(GeoIPBase):
                     raise ValueError(message)
 
                 country_id = self.id_by_addr(addr)
-
                 return const.COUNTRY_CODES[country_id]
             elif self._databaseType in const.REGION_CITY_EDITIONS:
                 return self.region_by_addr(addr).get('country_code')
@@ -485,7 +487,8 @@ class GeoIP(GeoIPBase):
         try:
             VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
             if self._databaseType in VALID_EDITIONS:
-                return const.COUNTRY_NAMES[self.id_by_addr(addr)]
+                country_id = self.id_by_addr(addr)
+                return const.COUNTRY_NAMES[country_id]
             elif self._databaseType in const.CITY_EDITIONS:
                 return self.record_by_addr(addr).get('country_name')
             else:
