@@ -61,7 +61,8 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
         'postal_code': '94043',
         'dma_code': 807,
         'country_code': 'US',
-        'country_name': 'United States'
+        'country_name': 'United States',
+        'continent': 'NA'
     }
     >>> gi.time_zone_by_addr('64.233.161.99')
     'America/Los_Angeles'
