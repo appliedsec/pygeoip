@@ -126,9 +126,11 @@ class GeoIP(GeoIPBase):
         * REGION_EDITION_REV1
         * CITY_EDITION_REV0
         * CITY_EDITION_REV1
+        * CITY_EDITION_REV1_V6
         * ORG_EDITION
         * ISP_EDITION
         * ASNUM_EDITION
+        * ASNUM_EDITION_V6
 
         """
         self._databaseType = const.COUNTRY_EDITION
@@ -167,9 +169,11 @@ class GeoIP(GeoIPBase):
 
                 elif self._databaseType in (const.CITY_EDITION_REV0,
                                             const.CITY_EDITION_REV1,
+                                            const.CITY_EDITION_REV1_V6,
                                             const.ORG_EDITION,
                                             const.ISP_EDITION,
-                                            const.ASNUM_EDITION):
+                                            const.ASNUM_EDITION,
+                                            const.ASNUM_EDITION_V6):
                     self._databaseSegments = 0
                     buf = self._filehandle.read(const.SEGMENT_RECORD_LENGTH)
 
@@ -378,7 +382,7 @@ class GeoIP(GeoIPBase):
         record['latitude'] = (latitude / 10000.0) - 180.0
         record['longitude'] = (longitude / 10000.0) - 180.0
 
-        if self._databaseType == const.CITY_EDITION_REV1:
+        if self._databaseType in (const.CITY_EDITION_REV1, const.CITY_EDITION_REV1_V6):
             dmaarea_combo = 0
             if record['country_code'] == 'US':
                 for j in range(3):
@@ -525,7 +529,7 @@ class GeoIP(GeoIPBase):
             if not ipnum:
                 raise ValueError('Invalid IP address')
 
-            valid = (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION)
+            valid = (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION, const.ASNUM_EDITION_V6)
             if self._databaseType not in valid:
                 message = 'Invalid database type, expected Org, ISP or ASNum'
                 raise GeoIPError(message)
