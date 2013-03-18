@@ -30,16 +30,23 @@ You can easily install pygeoip with setuptools:
 Create your GeoIP instance with appropriate access flag. `STANDARD` reads data from disk when needed, `MEMORY_CACHE` loads database into memory on instantiation and `MMAP_CACHE` loads database into memory using mmap.
 
     import pygeoip
-    gi = pygeoip.GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
+    gi4 = pygeoip.GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
+    gi6 = pygeoip.GeoIP('/path/to/GeoIPv6.dat', pygeoip.MEMORY_CACHE)
 
 ### Country lookup ###
 
-    >>> gi.country_code_by_name('google.com')
+    >>> gi4.country_code_by_name('google.com')
     'US'
-    >>> gi.country_code_by_addr('64.233.161.99')
+    >>> gi4.country_code_by_addr('64.233.161.99')
     'US'
-    >>> gi.country_name_by_addr('64.233.161.99')
+    >>> gi4.country_name_by_addr('64.233.161.99')
     'United States'
+    >>> gi6.country_code_by_name('google.com')
+    'IE'
+    >>> gi6.country_code_by_addr('2001:7fd::1')
+    'EU'
+    >>> gi6.country_name_by_addr('2001:7fd::1')
+    'Europe'
 
 ### Region lookup ###
 
