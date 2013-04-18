@@ -1,5 +1,5 @@
 # Pure Python GeoIP API #
-The API is based on [MaxMind's C-based Python API](http://www.maxmind.com/app/python),
+The API is based on [MaxMind's C-based Python API](http://dev.maxmind.com/geoip/downloadable#Python-5),
 but the code itself is ported from the [Pure PHP GeoIP API](http://pear.php.net/package/Net_GeoIP) by Jim Winstead and Hans Lellelid.
 
 It is mostly a drop-in replacement, except the `new` and `open` methods are gone.
