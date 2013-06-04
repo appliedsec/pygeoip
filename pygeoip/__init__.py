@@ -324,7 +324,7 @@ class GeoIP(GeoIPBase):
         """
         seek_country = self._seek_country(ipnum)
         if seek_country == self._databaseSegments:
-            return {}
+            return None
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
         self._lock.acquire()
