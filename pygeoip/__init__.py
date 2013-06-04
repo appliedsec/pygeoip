@@ -324,7 +324,7 @@ class GeoIP(GeoIPBase):
         """
         seek_country = self._seek_country(ipnum)
         if seek_country == self._databaseSegments:
-            return None
+            return {}
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
         self._lock.acquire()
@@ -572,7 +572,11 @@ class GeoIP(GeoIPBase):
                 message = 'Invalid database type, expected City'
                 raise GeoIPError(message)
 
-            return self._get_record(ipnum)
+            rec = self._get_record(ipnum)
+            if not rec:
+                return None
+
+            return rec
         except ValueError:
             raise GeoIPError('Failed to lookup address %s' % addr)
 
