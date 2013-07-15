@@ -20,7 +20,7 @@
 * Fix: Ship metadata with source distribution (Thanks to ralphbean)
 * Fix: Simplify ip2long methods (Thanks to stevetu)
 * Fix: Encoding bug when reading CityLite from mmap or memory
-* Fix: Remove __future__ imports
+* Fix: Remove `__future__` imports
 * Fix: Better PEP8 compatibility
 * Fix: Switched from DOS to UNIX file format
 * Fix: Misspelled countries (Thanks to Erik Fichtner)
