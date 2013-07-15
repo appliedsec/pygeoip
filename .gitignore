@@ -1,4 +1,3 @@
-*.kpf
 *env
 *.pyc
 *.egg-info
