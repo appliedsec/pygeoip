@@ -12,7 +12,8 @@ pygeoip.const.COUNTRY_CODES3	pygeoip.const-module.html#COUNTRY_CODES3
 pygeoip.const.PY3	pygeoip.const-module.html#PY3
 pygeoip.const.IPV6_EDITIONS	pygeoip.const-module.html#IPV6_EDITIONS
 pygeoip.const.ORG_EDITION	pygeoip.const-module.html#ORG_EDITION
-pygeoip.const.ASNUM_EDITION	pygeoip.const-module.html#ASNUM_EDITION
+pygeoip.const.CITY_EDITION_REV1_V6	pygeoip.const-module.html#CITY_EDITION_REV1_V6
+pygeoip.const.CONTINENT_NAMES	pygeoip.const-module.html#CONTINENT_NAMES
 pygeoip.const.STRUCTURE_INFO_MAX_SIZE	pygeoip.const-module.html#STRUCTURE_INFO_MAX_SIZE
 pygeoip.const.COUNTRY_NAMES	pygeoip.const-module.html#COUNTRY_NAMES
 pygeoip.const.REGION_EDITION_REV0	pygeoip.const-module.html#REGION_EDITION_REV0
@@ -21,6 +22,7 @@ pygeoip.const.CANADA_OFFSET	pygeoip.const-module.html#CANADA_OFFSET
 pygeoip.const.MAX_ORG_RECORD_LENGTH	pygeoip.const-module.html#MAX_ORG_RECORD_LENGTH
 pygeoip.const.CITY_EDITIONS	pygeoip.const-module.html#CITY_EDITIONS
 pygeoip.const.__package__	pygeoip.const-module.html#__package__
+pygeoip.const.ASNUM_EDITION	pygeoip.const-module.html#ASNUM_EDITION
 pygeoip.const.CITY_EDITION_REV0	pygeoip.const-module.html#CITY_EDITION_REV0
 pygeoip.const.STATE_BEGIN_REV1	pygeoip.const-module.html#STATE_BEGIN_REV1
 pygeoip.const.STATE_BEGIN_REV0	pygeoip.const-module.html#STATE_BEGIN_REV0
@@ -32,6 +34,7 @@ pygeoip.const.PY2	pygeoip.const-module.html#PY2
 pygeoip.const.WORLD_OFFSET	pygeoip.const-module.html#WORLD_OFFSET
 pygeoip.const.CITY_EDITION_REV1	pygeoip.const-module.html#CITY_EDITION_REV1
 pygeoip.const.DATABASE_INFO_MAX_SIZE	pygeoip.const-module.html#DATABASE_INFO_MAX_SIZE
+pygeoip.const.ASNUM_EDITION_V6	pygeoip.const-module.html#ASNUM_EDITION_V6
 pygeoip.const.ORG_RECORD_LENGTH	pygeoip.const-module.html#ORG_RECORD_LENGTH
 pygeoip.const.COUNTRY_BEGIN	pygeoip.const-module.html#COUNTRY_BEGIN
 pygeoip.const.PROXY_EDITION	pygeoip.const-module.html#PROXY_EDITION
@@ -54,10 +57,8 @@ pygeoip.timezone._country	pygeoip.timezone-module.html#_country
 pygeoip.timezone.time_zone_by_country_and_region	pygeoip.timezone-module.html#time_zone_by_country_and_region
 pygeoip.timezone.__package__	pygeoip.timezone-module.html#__package__
 pygeoip.util	pygeoip.util-module.html
-pygeoip.util.__package__	pygeoip.util-module.html#__package__
-pygeoip.util.ip2long_v4	pygeoip.util-module.html#ip2long_v4
-pygeoip.util.ip2long_v6	pygeoip.util-module.html#ip2long_v6
 pygeoip.util.ip2long	pygeoip.util-module.html#ip2long
+pygeoip.util.__package__	pygeoip.util-module.html#__package__
 pygeoip.GeoIP	pygeoip.GeoIP-class.html
 pygeoip.GeoIP.country_code_by_addr	pygeoip.GeoIP-class.html#country_code_by_addr
 pygeoip.GeoIP.region_by_name	pygeoip.GeoIP-class.html#region_by_name
@@ -79,8 +80,4 @@ pygeoip.GeoIP.record_by_addr	pygeoip.GeoIP-class.html#record_by_addr
 pygeoip.GeoIP.country_name_by_addr	pygeoip.GeoIP-class.html#country_name_by_addr
 pygeoip.GeoIP.org_by_name	pygeoip.GeoIP-class.html#org_by_name
 pygeoip.GeoIP.country_name_by_name	pygeoip.GeoIP-class.html#country_name_by_name
-pygeoip.GeoIPBase	pygeoip.GeoIPBase-class.html
 pygeoip.GeoIPError	pygeoip.GeoIPError-class.html
-pygeoip.GeoIPMetaclass	pygeoip.GeoIPMetaclass-class.html
-pygeoip.GeoIPMetaclass._instances	pygeoip.GeoIPMetaclass-class.html#_instances
-pygeoip.GeoIPMetaclass.__new__	pygeoip.GeoIPMetaclass-class.html#__new__
