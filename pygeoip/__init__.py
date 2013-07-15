@@ -26,9 +26,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 import os
 import math
 import socket
-import mmap
 import codecs
 from threading import Lock
+
+try:
+    import mmap
+except ImportError:
+    mmap = None
 
 try:
     from StringIO import StringIO
@@ -93,7 +97,12 @@ class GeoIP(GeoIPBase):
         self._filename = filename
         self._flags = flags
 
-        if self._flags & const.MMAP_CACHE:
+        if self._flags & const.MMAP_CACHE and mmap is None:
+            import warnings
+            warnings.warn("MMAP_CACHE cannot be used without a mmap module")
+            self._flags &= ~const.MMAP_CACHE
+
+        elif self._flags & const.MMAP_CACHE:
             f = open(filename, 'rb')
             access = mmap.ACCESS_READ
             self._filehandle = mmap.mmap(f.fileno(), 0, access=access)
