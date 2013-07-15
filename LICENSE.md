@@ -1,16 +1,16 @@
-                   GNU LESSER GENERAL PUBLIC LICENSE
-                       Version 3, 29 June 2007
+# GNU LESSER GENERAL PUBLIC LICENSE
+_Version 3, 29 June 2007_
 
- Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
- Everyone is permitted to copy and distribute verbatim copies
- of this license document, but changing it is not allowed.
+_Copyright (C) 2007 [Free Software Foundation, Inc](http://fsf.org/).
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed._
 
 
-  This version of the GNU Lesser General Public License incorporates
+This version of the GNU Lesser General Public License incorporates
 the terms and conditions of version 3 of the GNU General Public
 License, supplemented by the additional permissions listed below.
 
-  0. Additional Definitions.
+  0. **Additional Definitions.**
 
   As used herein, "this License" refers to version 3 of the GNU Lesser
 General Public License, and the "GNU GPL" refers to version 3 of the GNU
@@ -39,12 +39,12 @@ object code and/or source code for the Application, including any data
 and utility programs needed for reproducing the Combined Work from the
 Application, but excluding the System Libraries of the Combined Work.
 
-  1. Exception to Section 3 of the GNU GPL.
+  1. **Exception to Section 3 of the GNU GPL.**
 
   You may convey a covered work under sections 3 and 4 of this License
 without being bound by section 3 of the GNU GPL.
 
-  2. Conveying Modified Versions.
+  2. **Conveying Modified Versions.**
 
   If you modify a copy of the Library, and, in your modifications, a
 facility refers to a function or data to be supplied by an Application
@@ -60,7 +60,7 @@ version:
    b) under the GNU GPL, with none of the additional permissions of
    this License applicable to that copy.
 
-  3. Object Code Incorporating Material from Library Header Files.
+  3. **Object Code Incorporating Material from Library Header Files.**
 
   The object code form of an Application may incorporate material from
 a header file that is part of the Library.  You may convey such object
@@ -76,7 +76,7 @@ layouts and accessors, or small macros, inline functions and templates
    b) Accompany the object code with a copy of the GNU GPL and this license
    document.
 
-  4. Combined Works.
+  4. **Combined Works.**
 
   You may convey a Combined Work under terms of your choice that,
 taken together, effectively do not restrict modification of the
@@ -125,7 +125,7 @@ the following:
    Information in the manner specified by section 6 of the GNU GPL
    for conveying Corresponding Source.)
 
-  5. Combined Libraries.
+  5. **Combined Libraries.**
 
   You may place library facilities that are a work based on the
 Library side by side in a single library together with other library
@@ -141,7 +141,7 @@ choice, if you do both of the following:
    is a work based on the Library, and explaining where to find the
    accompanying uncombined form of the same work.
 
-  6. Revised Versions of the GNU Lesser General Public License.
+  6. **Revised Versions of the GNU Lesser General Public License.**
 
   The Free Software Foundation may publish revised and/or new versions
 of the GNU Lesser General Public License from time to time. Such new

@@ -1,6 +1,6 @@
-Bootstrap manual for developers of pygeoip
+# Bootstrap manual for developers of pygeoip
 
-Dependencies: tox, nose, epydoc
+_Dependencies: tox, nose, epydoc_
 
 For testing we are using tox virtualenv-based Python version testing
 and nose as test framwork.
