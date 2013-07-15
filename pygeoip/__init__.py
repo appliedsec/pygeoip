@@ -51,18 +51,10 @@ MEMORY_CACHE = const.MEMORY_CACHE
 ENCODING = const.ENCODING
 
 
-class GeoIPError(Exception):
-    pass
-
-
-class GeoIPMetaclass(type):
+class _GeoIPMetaclass(type):
     def __new__(cls, *args, **kwargs):
-        """
-        Singleton method to gets an instance without reparsing the db. Unique
-        instances are instantiated based on the filename of the db. Flags are
-        ignored for this, i.e. if you initialize one with STANDARD
-        flag (default) and then try later to initialize with MEMORY_CACHE, it
-        will still return the STANDARD one.
+        """ Singleton method to gets an instance without reparsing
+        the database, the filename is being used as cache key.
         """
         if not hasattr(cls, '_instances'):
             cls._instances = {}
@@ -78,10 +70,14 @@ class GeoIPMetaclass(type):
         return cls._instances[filename]
 
 
-GeoIPBase = GeoIPMetaclass('GeoIPBase', (object,), {})
+_GeoIPBase = _GeoIPMetaclass('GeoIPBase', (object,), {})
 
 
-class GeoIP(GeoIPBase):
+class GeoIPError(Exception):
+    pass
+
+
+class GeoIP(_GeoIPBase):
     def __init__(self, filename, flags=0):
         """
         Initialize the class.
