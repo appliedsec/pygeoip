@@ -6,7 +6,7 @@
 * Fix: Sync timezones from latest ISO-8601 edition
 * Fix: `record_by_addr()` will now return `None` when missing data
 
-[William Tisäter](mailto:william@defunct.cc)  2013-06-04 15:55:01
+[William Tisäter](mailto:william@defunct.cc) -- 2013-06-04 15:55:01
 
 ### Release 0.2.6
 
@@ -30,5 +30,5 @@
 * Fix: Remove dependency of ez_setup.py
 * Fix: Add Python 3.2 and 3.3 to tox tests
 
-[William Tisäter](mailto:william@defunct.cc)  2013-02-22 02:51:36
+[William Tisäter](mailto:william@defunct.cc) -- 2013-02-22 02:51:36
 
