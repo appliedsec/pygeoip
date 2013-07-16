@@ -12,6 +12,14 @@ if [ ! -d venv ]; then
 	venv/bin/pip install tox nose epydoc || error "pip failed"
 fi
 
+if [ ! -d tests/data ]; then
+    pushd tests
+        wget http://www.defunct.cc/maxmind-geoip-samples.tar.gz
+        tar -zxvf maxmind-geoip-samples.tar.gz
+        unlink maxmind-geoip-samples.tar.gz
+    popd
+fi
+
 venv/bin/tox || error "tox failed"
 venv/bin/epydoc --config=epydoc.ini --no-private || error "epydoc failed"
 
