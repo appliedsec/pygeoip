@@ -1,15 +1,9 @@
 #!/bin/bash
 
-function error {
-    echo "Error: $1" 1>&2
-    exit 1
-}
+function warning { echo "Warning: $1"; }
+function error { echo "Error: $1" 1>&2; exit 1; }
 
-if [ -z $(which pandoc) ]; then
-    error "Missing pandoc binary"
-fi
-
-if [ -z $(which virtualenv) ]; then
+if [ -z "$(virtualenv --version)" ]; then
     error "Missing virtualenv binary"
 fi
 
@@ -21,5 +15,9 @@ fi
 venv/bin/tox || error "tox failed"
 venv/bin/epydoc --config=epydoc.ini --no-private || error "epydoc failed"
 
-pandoc -f markdown -t rst -o README.rst README.md || error "pandoc failed"
+if [ -z "$(pandoc --version)" ]; then
+    warning "Skipping Markdown to reStructuredText translation"
+else
+    pandoc -f markdown -t rst -o README.rst README.md || error "pandoc failed"
+fi
 
