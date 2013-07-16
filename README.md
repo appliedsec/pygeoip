@@ -1,29 +1,32 @@
 # Pure Python GeoIP API #
-The API is based on [MaxMind's C-based Python API](http://dev.maxmind.com/geoip/downloadable#Python-5),
-but the code itself is ported from the [Pure PHP GeoIP API](http://pear.php.net/package/Net_GeoIP) by Jim Winstead and Hans Lellelid.
 
-It is mostly a drop-in replacement, except the `new` and `open` methods are gone.
+This library is based on [Maxmind's GeoIP C API](https://github.com/maxmind/geoip-api-c).
 
-Tested using tox with Python version 2.5, 2.6, 2.7, 3.1, 3.2 and 3.3.
-
-## Issues and contribution ##
-
-Bug reports are done by [creating an issue on Github](https://github.com/appliedsec/pygeoip/issues). If you want to contribute you can always [create a pull request](https://github.com/appliedsec/pygeoip/pulls) for discussion and code submission.
+Tested with Python version 2.5, 2.6, 2.7, 3.1, 3.2 and 3.3.
 
 ## Installation ##
 
-You can easily install pygeoip with setuptools:
+You can easily install pygeoip from PyPi.
 
-    easy_install pygeoip
+    pip install pygeoip
 
 ## Supported Databases ##
 
-* Country
-* Region
-* City
-* Organization
-* ISP
-* ASN
+    * COUNTRY_EDITION
+    * COUNTRY_EDITION_V6
+    * REGION_EDITION_REV0
+    * REGION_EDITION_REV1
+    * CITY_EDITION_REV0
+    * CITY_EDITION_REV1
+    * CITY_EDITION_REV1_V6
+    * ORG_EDITION
+    * ISP_EDITION
+    * ASNUM_EDITION
+    * ASNUM_EDITION_V6
+
+## Issues and Contribution ##
+
+Bug reports are done by [creating an issue on Github](https://github.com/appliedsec/pygeoip/issues). If you want to contribute you can always [create a pull request](https://github.com/appliedsec/pygeoip/pulls) for discussion and code submission.
 
 ## Quick Documentation ##
 
@@ -33,7 +36,7 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
     gi4 = pygeoip.GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
     gi6 = pygeoip.GeoIP('/path/to/GeoIPv6.dat', pygeoip.MEMORY_CACHE)
 
-### Country lookup ###
+### Country Lookup ###
 
     >>> gi4.country_code_by_name('google.com')
     'US'
@@ -48,13 +51,13 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
     >>> gi6.country_name_by_addr('2001:7fd::1')
     'Europe'
 
-### Region lookup ###
+### Region Lookup ###
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
     >>> gi.region_by_name('apple.com')
     {'region_name': 'CA', 'country_code': 'US'}
 
-### City lookup ###
+### City Lookup ###
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
     >>> gi.record_by_addr('64.233.161.99')
@@ -74,19 +77,19 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
     >>> gi.time_zone_by_addr('64.233.161.99')
     'America/Los_Angeles'
 
-### Organization lookup ###
+### Organization Lookup ###
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPOrg.dat')
     >>> gi.org_by_name('dell.com')
     'Dell Computer Corporation'
 
-### ISP lookup ###
+### ISP Lookup ###
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
     >>> gi.org_by_name('cnn.com')
     'Turner Broadcasting System'
 
-### ASN lookup ###
+### ASN Lookup ###
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPASNum.dat')
     >>> gi.org_by_name('cnn.com')
