@@ -101,13 +101,13 @@ class GeoIP(object):
             self._flags &= ~const.MMAP_CACHE
 
         if self._flags & const.MMAP_CACHE:
-            f = open(filename, 'rb')
+            f = codecs.open(filename, 'rb', ENCODING)
             access = mmap.ACCESS_READ
             self._filehandle = mmap.mmap(f.fileno(), 0, access=access)
             f.close()
 
         elif self._flags & const.MEMORY_CACHE:
-            f = open(filename, 'rb')
+            f = codecs.open(filename, 'rb', ENCODING)
             self._memoryBuffer = f.read()
             iohandle = BytesIO if PY3 else StringIO
             self._filehandle = iohandle(self._memoryBuffer)
