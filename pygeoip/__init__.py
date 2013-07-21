@@ -51,33 +51,36 @@ MEMORY_CACHE = const.MEMORY_CACHE
 ENCODING = const.ENCODING
 
 
-class _GeoIPMetaclass(type):
-    def __new__(cls, *args, **kwargs):
-        """ Singleton method to gets an instance without reparsing
-        the database, the filename is being used as cache key.
-        """
-        if not hasattr(cls, '_instances'):
-            cls._instances = {}
-
-        if len(args) > 0:
-            filename = args[0]
-        elif 'filename' in kwargs:
-            filename = kwargs['filename']
-
-        if filename not in cls._instances:
-            cls._instances[filename] = type.__new__(cls, *args, **kwargs)
-
-        return cls._instances[filename]
-
-
-_GeoIPBase = _GeoIPMetaclass('GeoIPBase', (object,), {})
-
-
 class GeoIPError(Exception):
     pass
 
 
-class GeoIP(_GeoIPBase):
+class _GeoIPMetaclass(type):
+    _instances = {}
+    _instance_lock = Lock()
+
+    def __call__(cls, *args, **kwargs):
+        """ Singleton method to gets an instance without reparsing
+        the database, the filename is being used as cache key.
+        """
+        if len(args) > 0:
+            filename = args[0]
+        elif 'filename' in kwargs:
+            filename = kwargs['filename']
+        else:
+            return None
+
+        cls._instance_lock.acquire()
+        if filename not in cls._instances:
+            cls._instances[filename] = super(_GeoIPMetaclass, cls).__call__(*args, **kwargs)
+        cls._instance_lock.release()
+
+        return cls._instances[filename]
+
+
+class GeoIP(object):
+    __metaclass__ = _GeoIPMetaclass
+
     def __init__(self, filename, flags=0):
         """
         Initialize the class.
