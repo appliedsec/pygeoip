@@ -93,7 +93,6 @@ class GeoIP(object):
             MMAP_CACHE (access the file via mmap).
         @type flags: int
         """
-        self._filename = filename
         self._flags = flags
 
         if self._flags & const.MMAP_CACHE and mmap is None:
