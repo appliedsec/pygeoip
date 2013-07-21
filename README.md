@@ -4,6 +4,8 @@ This library is based on [Maxmind's GeoIP C API](https://github.com/maxmind/geoi
 
 Tested with Python version 2.5, 2.6, 2.7, 3.2 and 3.3.
 
+[![Build Status](https://travis-ci.org/appliedsec/pygeoip.png)](https://travis-ci.org/appliedsec/pygeoip)
+
 ## Installation ##
 
 You can easily install pygeoip from PyPi.
