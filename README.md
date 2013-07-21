@@ -2,7 +2,7 @@
 
 This library is based on [Maxmind's GeoIP C API](https://github.com/maxmind/geoip-api-c).
 
-Tested with Python version 2.5, 2.6, 2.7, 3.1, 3.2 and 3.3.
+Tested with Python version 2.5, 2.6, 2.7, 3.2 and 3.3.
 
 ## Installation ##
 
