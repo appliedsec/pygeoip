@@ -243,7 +243,7 @@ class GeoIP(object):
                     if x[0] >= self._databaseSegments:
                         return x[0]
                     offset = x[0]
-        except:
+        except (IndexError, UnicodeDecodeError):
             pass
 
         raise GeoIPError('Corrupt database')
