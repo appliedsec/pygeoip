@@ -165,7 +165,7 @@ class GeoIP(object):
                 self._databaseType = ord(byte)
 
                 # Compatibility with databases from April 2003 and earlier
-                if (self._databaseType >= 106):
+                if self._databaseType >= 106:
                     self._databaseType -= 105
 
                 if self._databaseType == const.REGION_EDITION_REV0:
@@ -361,15 +361,16 @@ class GeoIP(object):
         record['continent'] = const.CONTINENT_NAMES[char]
 
         buf_pos += 1
+
         def get_data(buf, buf_pos):
             offset = buf_pos
             char = ord(buf[offset])
-            while (char != 0):
+            while char != 0:
                 offset += 1
                 char = ord(buf[offset])
             if offset > buf_pos:
-                return (offset, buf[buf_pos:offset])
-            return (offset, '')
+                return offset, buf[buf_pos:offset]
+            return offset, ''
 
         offset, record['region_name'] = get_data(buf, buf_pos)
         offset, record['city'] = get_data(buf, offset + 1)
