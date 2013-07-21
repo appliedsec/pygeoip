@@ -100,7 +100,7 @@ class GeoIP(object):
             warnings.warn("MMAP_CACHE cannot be used without a mmap module")
             self._flags &= ~const.MMAP_CACHE
 
-        elif self._flags & const.MMAP_CACHE:
+        if self._flags & const.MMAP_CACHE:
             f = open(filename, 'rb')
             access = mmap.ACCESS_READ
             self._filehandle = mmap.mmap(f.fileno(), 0, access=access)
