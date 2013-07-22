@@ -436,7 +436,7 @@ class GeoIP(object):
         else:
             return socket.gethostbyname(hostname)
 
-    def id_by_addr(self, addr):
+    def _id_by_addr(self, addr):
         """
         Looks up the index for the country which is the key for the
         code and name.
@@ -471,7 +471,7 @@ class GeoIP(object):
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
-            country_id = self.id_by_addr(addr)
+            country_id = self._id_by_addr(addr)
             return const.COUNTRY_CODES[country_id]
         elif self._databaseType in const.REGION_CITY_EDITIONS:
             return self.region_by_addr(addr).get('country_code')
@@ -503,7 +503,7 @@ class GeoIP(object):
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
-            country_id = self.id_by_addr(addr)
+            country_id = self._id_by_addr(addr)
             return const.COUNTRY_NAMES[country_id]
         elif self._databaseType in const.CITY_EDITIONS:
             return self.record_by_addr(addr).get('country_name')
