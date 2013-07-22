@@ -53,7 +53,7 @@ pygeoip.const.REGION_CITY_EDITIONS	pygeoip.const-module.html#REGION_CITY_EDITION
 pygeoip.const.MEMORY_CACHE	pygeoip.const-module.html#MEMORY_CACHE
 pygeoip.const.MAX_RECORD_LENGTH	pygeoip.const-module.html#MAX_RECORD_LENGTH
 pygeoip.timezone	pygeoip.timezone-module.html
-pygeoip.timezone._country	pygeoip.timezone-module.html#_country
+pygeoip.timezone.country_dict	pygeoip.timezone-module.html#country_dict
 pygeoip.timezone.time_zone_by_country_and_region	pygeoip.timezone-module.html#time_zone_by_country_and_region
 pygeoip.timezone.__package__	pygeoip.timezone-module.html#__package__
 pygeoip.util	pygeoip.util-module.html

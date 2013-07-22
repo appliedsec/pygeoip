@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Constants needed for the binary parser. Part of the pygeoip package.
+Constants for the database parser
 
 @author: Jennifer Ennis <zaylea@gmail.com>
+@author: William Tisäter <william@defunct.cc>
 
 @license: Copyright(C) 2004 MaxMind LLC
 

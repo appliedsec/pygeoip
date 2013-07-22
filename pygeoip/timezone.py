@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Time zone functions. Part of the pygeoip package.
+Time zone data and lookup function
 
 @author: Jennifer Ennis <zaylea@gmail.com>
+@author: William Tisäter <william@defunct.cc>
 
 @license: Copyright(C) 2004 MaxMind LLC
 

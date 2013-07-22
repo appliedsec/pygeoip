@@ -2,10 +2,8 @@
 """
 Pure Python GeoIP API
 
-The API is based on MaxMind's C-based Python API, but the code itself is
-ported from the Pure PHP GeoIP API by Jim Winstead and Hans Lellelid.
-
 @author: Jennifer Ennis <zaylea@gmail.com>
+@author: William Tisäter <william@defunct.cc>
 
 @license: Copyright(C) 2004 MaxMind LLC
 

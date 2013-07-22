@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Utility functions. Part of the pygeoip package.
+Utility function for address translation
 
 @author: Jennifer Ennis <zaylea@gmail.com>
+@author: William Tisäter <william@defunct.cc>
 
 @license: Copyright(C) 2004 MaxMind LLC
 
