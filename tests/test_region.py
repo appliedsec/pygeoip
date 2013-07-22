@@ -11,7 +11,7 @@ class TestGeoIPRegionFunctions(unittest.TestCase):
         self.us_hostname = 'apple.com'
         self.us_ip = '17.172.224.47'
         self.us_region_data = {
-            'region_name': 'CA',
+            'region_code': 'CA',
             'country_code': 'US'
         }
 

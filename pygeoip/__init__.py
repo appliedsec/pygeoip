@@ -288,19 +288,18 @@ class GeoIP(object):
 
     def _get_region(self, ipnum):
         """
-        Seek and return the region info (dict containing country_code
-        and region_name).
+        Seek and return the region information.
 
         @param ipnum: Converted IP address
         @type ipnum: int
-        @return: dict containing country_code and region_name
+        @return: dict containing country_code and region_code
         @rtype: dict
         """
-        region = ''
-        country_code = ''
+        region_code = None
+        country_code = None
         seek_country = self._seek_country(ipnum)
 
-        def get_region_name(offset):
+        def get_region_code(offset):
             region1 = chr(offset // 26 + 65)
             region2 = chr(offset % 26 + 65)
             return ''.join([region1, region2])
@@ -309,7 +308,7 @@ class GeoIP(object):
             seek_region = seek_country - const.STATE_BEGIN_REV0
             if seek_region >= 1000:
                 country_code = 'US'
-                region = get_region_name(seek_region - 1000)
+                region_code = get_region_code(seek_region - 1000)
             else:
                 country_code = const.COUNTRY_CODES[seek_region]
         elif self._databaseType == const.REGION_EDITION_REV1:
@@ -318,20 +317,20 @@ class GeoIP(object):
                 pass
             elif seek_region < const.CANADA_OFFSET:
                 country_code = 'US'
-                region = get_region_name(seek_region - const.US_OFFSET)
+                region_code = get_region_code(seek_region - const.US_OFFSET)
             elif seek_region < const.WORLD_OFFSET:
                 country_code = 'CA'
-                region = get_region_name(seek_region - const.CANADA_OFFSET)
+                region_code = get_region_code(seek_region - const.CANADA_OFFSET)
             else:
                 index = (seek_region - const.WORLD_OFFSET) // const.FIPS_RANGE
                 if index in const.COUNTRY_CODES:
                     country_code = const.COUNTRY_CODES[index]
         elif self._databaseType in const.CITY_EDITIONS:
             rec = self._get_record(ipnum)
-            region = rec.get('region_name', '')
-            country_code = rec.get('country_code', '')
+            region_code = rec.get('region_code')
+            country_code = rec.get('country_code')
 
-        return {'country_code': country_code, 'region_name': region}
+        return {'country_code': country_code, 'region_code': region_code}
 
     def _get_record(self, ipnum):
         """
@@ -339,9 +338,9 @@ class GeoIP(object):
 
         @param ipnum: Converted IP address
         @type ipnum: int
-        @return: dict with country_code, country_code3, country_name,
-            region, city, postal_code, latitude, longitude,
-            dma_code, metro_code, area_code, region_name, time_zone
+        @return: dict with city, region_code, area_code, time_zone,
+            dma_code, metro_code, country_code3, latitude, postal_code,
+            longitude, country_code, country_name, continent
         @rtype: dict
         """
         seek_country = self._seek_country(ipnum)
@@ -387,7 +386,7 @@ class GeoIP(object):
                 return offset, buf[buf_pos:offset]
             return offset, ''
 
-        offset, record['region_name'] = get_data(buf, buf_pos)
+        offset, record['region_code'] = get_data(buf, buf_pos)
         offset, record['city'] = get_data(buf, offset + 1)
         offset, record['postal_code'] = get_data(buf, offset + 1)
         buf_pos = offset + 1
@@ -417,7 +416,7 @@ class GeoIP(object):
                 record['area_code'] = dmaarea_combo % 1000
 
         record['metro_code'] = const.DMA_MAP.get(record['dma_code'])
-        params = (record['country_code'], record['region_name'])
+        params = (record['country_code'], record['region_code'])
         record['time_zone'] = time_zone_by_country_and_region(*params)
 
         return record
@@ -562,7 +561,7 @@ class GeoIP(object):
         @type addr: str
         @return: Dictionary with country_code, country_code3, country_name,
             region, city, postal_code, latitude, longitude, dma_code,
-            metro_code, area_code, region_name, time_zone
+            metro_code, area_code, region_code, time_zone
         @rtype: dict
         """
         if self._databaseType not in const.CITY_EDITIONS:
@@ -585,7 +584,7 @@ class GeoIP(object):
         @type hostname: str
         @return: Dictionary with country_code, country_code3, country_name,
             region, city, postal_code, latitude, longitude, dma_code,
-            metro_code, area_code, region_name, time_zone
+            metro_code, area_code, region_code, time_zone
         @rtype: dict
         """
         addr = self._gethostbyname(hostname)
@@ -598,7 +597,7 @@ class GeoIP(object):
 
         @param addr: IP address
         @type addr: str
-        @return: Dictionary containing country_code, region and region_name
+        @return: Dictionary containing country_code and region_code
         @rtype: dict
         """
         if self._databaseType not in const.REGION_CITY_EDITIONS:
@@ -615,7 +614,7 @@ class GeoIP(object):
 
         @param hostname: Hostname
         @type hostname: str
-        @return: Dictionary containing country_code, region, and region_name
+        @return: Dictionary containing country_code, region_code and region
         @rtype: dict
         """
         addr = self._gethostbyname(hostname)

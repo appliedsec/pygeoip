@@ -21,7 +21,7 @@ class TestGeoIPCityFunctions(unittest.TestCase):
 
         self.us_record_data = {
             'city': 'Mountain View',
-            'region_name': 'CA',
+            'region_code': 'CA',
             'area_code': 650,
             'longitude': -122.05740356445312,
             'country_code3': 'USA',
@@ -36,7 +36,7 @@ class TestGeoIPCityFunctions(unittest.TestCase):
 
         self.gb_record_data = {
             'city': 'Tadworth',
-            'region_name': 'N7',
+            'region_code': 'N7',
             'area_code': 0,
             'longitude': -0.23339999999998895,
             'country_code3': 'GBR',
@@ -49,8 +49,8 @@ class TestGeoIPCityFunctions(unittest.TestCase):
             'time_zone': 'Europe/London'
         }
 
-        self.us_region_data = {'region_name': 'CA', 'country_code': 'US'}
-        self.gb_region_data = {'region_name': 'N7', 'country_code': 'GB'}
+        self.us_region_data = {'region_code': 'CA', 'country_code': 'US'}
+        self.gb_region_data = {'region_code': 'N7', 'country_code': 'GB'}
 
         self.gic = pygeoip.GeoIP(CITY_DB_PATH)
         self.gic_mem = pygeoip.GeoIP(CITY_DB_PATH, pygeoip.MEMORY_CACHE)

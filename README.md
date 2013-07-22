@@ -57,21 +57,23 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
     >>> gi.region_by_name('apple.com')
-    {'region_name': 'CA', 'country_code': 'US'}
+    {'region_code': 'CA', 'country_code': 'US'}
 
 ### City Lookup ###
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
     >>> gi.record_by_addr('64.233.161.99')
     {
-        'city': 'Mountain View',
-        'region_name': 'CA',
+        'city': u'Mountain View',
+        'region_code': u'CA',
         'area_code': 650,
-        'longitude': -122.0574,
-        'country_code3': 'USA',
-        'latitude': 37.419199999999989,
-        'postal_code': '94043',
+        'time_zone': 'America/Los_Angeles',
         'dma_code': 807,
+        'metro_code': 'San Francisco, CA',
+        'country_code3': 'USA',
+        'latitude': 37.41919999999999,
+        'postal_code': u'94043',
+        'longitude': -122.0574,
         'country_code': 'US',
         'country_name': 'United States',
         'continent': 'NA'
