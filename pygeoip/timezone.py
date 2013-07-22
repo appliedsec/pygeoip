@@ -740,7 +740,7 @@ _country = {
     'ZA': 'Africa/Johannesburg',
     'ZM': 'Africa/Lusaka',
     'ZW': 'Africa/Harare'
- }
+}
 
 
 def time_zone_by_country_and_region(country_code, region_name=None):

@@ -51,33 +51,36 @@ MEMORY_CACHE = const.MEMORY_CACHE
 ENCODING = const.ENCODING
 
 
-class _GeoIPMetaclass(type):
-    def __new__(cls, *args, **kwargs):
-        """ Singleton method to gets an instance without reparsing
-        the database, the filename is being used as cache key.
-        """
-        if not hasattr(cls, '_instances'):
-            cls._instances = {}
-
-        if len(args) > 0:
-            filename = args[0]
-        elif 'filename' in kwargs:
-            filename = kwargs['filename']
-
-        if filename not in cls._instances:
-            cls._instances[filename] = type.__new__(cls, *args, **kwargs)
-
-        return cls._instances[filename]
-
-
-_GeoIPBase = _GeoIPMetaclass('GeoIPBase', (object,), {})
-
-
 class GeoIPError(Exception):
     pass
 
 
-class GeoIP(_GeoIPBase):
+class _GeoIPMetaclass(type):
+    _instances = {}
+    _instance_lock = Lock()
+
+    def __call__(cls, *args, **kwargs):
+        """ Singleton method to gets an instance without reparsing
+        the database, the filename is being used as cache key.
+        """
+        if len(args) > 0:
+            filename = args[0]
+        elif 'filename' in kwargs:
+            filename = kwargs['filename']
+        else:
+            return None
+
+        cls._instance_lock.acquire()
+        if filename not in cls._instances:
+            cls._instances[filename] = super(_GeoIPMetaclass, cls).__call__(*args, **kwargs)
+        cls._instance_lock.release()
+
+        return cls._instances[filename]
+
+
+class GeoIP(object):
+    __metaclass__ = _GeoIPMetaclass
+
     def __init__(self, filename, flags=0):
         """
         Initialize the class.
@@ -90,7 +93,6 @@ class GeoIP(_GeoIPBase):
             MMAP_CACHE (access the file via mmap).
         @type flags: int
         """
-        self._filename = filename
         self._flags = flags
 
         if self._flags & const.MMAP_CACHE and mmap is None:
@@ -98,14 +100,14 @@ class GeoIP(_GeoIPBase):
             warnings.warn("MMAP_CACHE cannot be used without a mmap module")
             self._flags &= ~const.MMAP_CACHE
 
-        elif self._flags & const.MMAP_CACHE:
-            f = open(filename, 'rb')
+        if self._flags & const.MMAP_CACHE:
+            f = codecs.open(filename, 'rb', ENCODING)
             access = mmap.ACCESS_READ
             self._filehandle = mmap.mmap(f.fileno(), 0, access=access)
             f.close()
 
         elif self._flags & const.MEMORY_CACHE:
-            f = open(filename, 'rb')
+            f = codecs.open(filename, 'rb', ENCODING)
             self._memoryBuffer = f.read()
             iohandle = BytesIO if PY3 else StringIO
             self._filehandle = iohandle(self._memoryBuffer)
@@ -163,7 +165,7 @@ class GeoIP(_GeoIPBase):
                 self._databaseType = ord(byte)
 
                 # Compatibility with databases from April 2003 and earlier
-                if (self._databaseType >= 106):
+                if self._databaseType >= 106:
                     self._databaseType -= 105
 
                 if self._databaseType == const.REGION_EDITION_REV0:
@@ -241,7 +243,7 @@ class GeoIP(_GeoIPBase):
                     if x[0] >= self._databaseSegments:
                         return x[0]
                     offset = x[0]
-        except:
+        except (IndexError, UnicodeDecodeError):
             pass
 
         raise GeoIPError('Corrupt database')
@@ -359,15 +361,16 @@ class GeoIP(_GeoIPBase):
         record['continent'] = const.CONTINENT_NAMES[char]
 
         buf_pos += 1
+
         def get_data(buf, buf_pos):
             offset = buf_pos
             char = ord(buf[offset])
-            while (char != 0):
+            while char != 0:
                 offset += 1
                 char = ord(buf[offset])
             if offset > buf_pos:
-                return (offset, buf[buf_pos:offset])
-            return (offset, '')
+                return offset, buf[buf_pos:offset]
+            return offset, ''
 
         offset, record['region_name'] = get_data(buf, buf_pos)
         offset, record['city'] = get_data(buf, offset + 1)
