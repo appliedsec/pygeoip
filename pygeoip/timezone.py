@@ -744,17 +744,14 @@ _country = {
 
 
 def time_zone_by_country_and_region(country_code, region_name=None):
-    if country_code not in _country:
-        return ''
+    timezones = _country.get(country_code)
+    if not timezones:
+        return None
 
-    if not region_name or region_name == '00':
-        region_name = None
-
-    timezones = _country[country_code]
     if isinstance(timezones, str):
         return timezones
 
     if not region_name:
-        return ''
+        return None
 
     return timezones.get(region_name)

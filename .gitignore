@@ -6,3 +6,5 @@ tests/data/*
 build
 dist
 pygeoip-*
+cover
+.coverage
