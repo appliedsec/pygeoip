@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
+from nose.tools import raises
 
 import pygeoip
 from tests.config import COUNTRY_DB_PATH, COUNTRY_V6_DB_PATH
@@ -64,3 +65,13 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
         self.assertEqual(us_name, self.us_name)
         self.assertEqual(gb_name, self.gb_name)
         self.assertEqual(ie6_name, self.ie_name)
+
+    @raises(pygeoip.GeoIPError)
+    def testOpen4With6(self):
+        data = self.gi.country_code_by_addr(self.ie6_ip)
+        raise ValueError(data)
+
+    @raises(pygeoip.GeoIPError)
+    def testOpen6With4(self):
+        data = self.gi6.country_code_by_addr(self.gb_ip)
+        raise ValueError(data)

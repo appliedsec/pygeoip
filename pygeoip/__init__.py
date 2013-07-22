@@ -62,6 +62,9 @@ class _GeoIPMetaclass(type):
     def __call__(cls, *args, **kwargs):
         """ Singleton method to gets an instance without reparsing
         the database, the filename is being used as cache key.
+
+        @param cache: Used in tests for skipping instance caching
+        @type cache: bool
         """
         if len(args) > 0:
             filename = args[0]
@@ -69,6 +72,10 @@ class _GeoIPMetaclass(type):
             filename = kwargs['filename']
         else:
             return None
+
+        if not kwargs.get('cache', True):
+            del kwargs['cache']
+            return super(_GeoIPMetaclass, cls).__call__(*args, **kwargs)
 
         cls._instance_lock.acquire()
         if filename not in cls._instances:
@@ -104,14 +111,17 @@ class GeoIP(object):
             f = codecs.open(filename, 'rb', ENCODING)
             access = mmap.ACCESS_READ
             self._fp = mmap.mmap(f.fileno(), 0, access=access)
+            self._type = 'MMAP_CACHE'
             f.close()
         elif self._flags & const.MEMORY_CACHE:
             f = codecs.open(filename, 'rb', ENCODING)
             self._memory = f.read()
             self._fp = self._str_to_fp(self._memory)
+            self._type = 'MEMORY_CACHE'
             f.close()
         else:
             self._fp = codecs.open(filename, 'rb', ENCODING)
+            self._type = 'STANDARD'
 
         self._lock = Lock()
         self._setup_segments()
@@ -430,24 +440,25 @@ class GeoIP(object):
 
     def id_by_addr(self, addr):
         """
-        Get the country index.
-        Looks up the index for the country which is the key for
-        the code and name.
+        Looks up the index for the country which is the key for the
+        code and name.
 
-        @param addr: The IP address
+        @param addr: IPv4 or IPv6 address
         @type addr: str
         @return: network byte order 32-bit integer
         @rtype: int
         """
-        ipnum = util.ip2long(addr)
-        if not ipnum:
-            raise ValueError("Invalid IP address: %s" % addr)
-
         COUNTY_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType not in COUNTY_EDITIONS:
-            message = 'Invalid database type, expected Country'
-            raise GeoIPError(message)
+            raise GeoIPError('Invalid database type, expected Country')
 
+        ipv = 6 if addr.find(':') >= 0 else 4
+        if ipv == 4 and self._databaseType != const.COUNTRY_EDITION:
+            raise GeoIPError('Invalid database type; expected IPv6 address')
+        if ipv == 6 and self._databaseType != const.COUNTRY_EDITION_V6:
+            raise GeoIPError('Invalid database type; expected IPv4 address')
+
+        ipnum = util.ip2long(addr)
         return self._seek_country(ipnum) - const.COUNTRY_BEGIN
 
     def country_code_by_addr(self, addr):
@@ -460,27 +471,14 @@ class GeoIP(object):
         @return: 2-letter country code
         @rtype: str
         """
-        try:
-            VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
-            if self._databaseType in VALID_EDITIONS:
-                ipv = 6 if addr.find(':') >= 0 else 4
+        VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
+        if self._databaseType in VALID_EDITIONS:
+            country_id = self.id_by_addr(addr)
+            return const.COUNTRY_CODES[country_id]
+        elif self._databaseType in const.REGION_CITY_EDITIONS:
+            return self.region_by_addr(addr).get('country_code')
 
-                if ipv == 4 and self._databaseType != const.COUNTRY_EDITION:
-                    message = 'Invalid database type; expected IPv6 address'
-                    raise ValueError(message)
-                if ipv == 6 and self._databaseType != const.COUNTRY_EDITION_V6:
-                    message = 'Invalid database type; expected IPv4 address'
-                    raise ValueError(message)
-
-                country_id = self.id_by_addr(addr)
-                return const.COUNTRY_CODES[country_id]
-            elif self._databaseType in const.REGION_CITY_EDITIONS:
-                return self.region_by_addr(addr).get('country_code')
-
-            message = 'Invalid database type, expected Country, City or Region'
-            raise GeoIPError(message)
-        except ValueError:
-            raise GeoIPError('Failed to lookup address %s' % addr)
+        raise GeoIPError('Invalid database type, expected Country, City or Region')
 
     def country_code_by_name(self, hostname):
         """
@@ -505,18 +503,15 @@ class GeoIP(object):
         @return: country name
         @rtype: str
         """
-        try:
-            VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
-            if self._databaseType in VALID_EDITIONS:
-                country_id = self.id_by_addr(addr)
-                return const.COUNTRY_NAMES[country_id]
-            elif self._databaseType in const.CITY_EDITIONS:
-                return self.record_by_addr(addr).get('country_name')
-            else:
-                message = 'Invalid database type, expected Country or City'
-                raise GeoIPError(message)
-        except ValueError:
-            raise GeoIPError('Failed to lookup address %s' % addr)
+        VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
+        if self._databaseType in VALID_EDITIONS:
+            country_id = self.id_by_addr(addr)
+            return const.COUNTRY_NAMES[country_id]
+        elif self._databaseType in const.CITY_EDITIONS:
+            return self.record_by_addr(addr).get('country_name')
+        else:
+            message = 'Invalid database type, expected Country or City'
+            raise GeoIPError(message)
 
     def country_name_by_name(self, hostname):
         """
@@ -541,19 +536,13 @@ class GeoIP(object):
         @return: organization or ISP name
         @rtype: str
         """
-        try:
-            ipnum = util.ip2long(addr)
-            if not ipnum:
-                raise ValueError('Invalid IP address')
+        valid = (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION, const.ASNUM_EDITION_V6)
+        if self._databaseType not in valid:
+            message = 'Invalid database type, expected Org, ISP or ASNum'
+            raise GeoIPError(message)
 
-            valid = (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION, const.ASNUM_EDITION_V6)
-            if self._databaseType not in valid:
-                message = 'Invalid database type, expected Org, ISP or ASNum'
-                raise GeoIPError(message)
-
-            return self._get_org(ipnum)
-        except ValueError:
-            raise GeoIPError('Failed to lookup address %s' % addr)
+        ipnum = util.ip2long(addr)
+        return self._get_org(ipnum)
 
     def org_by_name(self, hostname):
         """
@@ -580,22 +569,16 @@ class GeoIP(object):
             metro_code, area_code, region_name, time_zone
         @rtype: dict
         """
-        try:
-            ipnum = util.ip2long(addr)
-            if not ipnum:
-                raise ValueError('Invalid IP address')
+        if self._databaseType not in const.CITY_EDITIONS:
+            message = 'Invalid database type, expected City'
+            raise GeoIPError(message)
 
-            if self._databaseType not in const.CITY_EDITIONS:
-                message = 'Invalid database type, expected City'
-                raise GeoIPError(message)
+        ipnum = util.ip2long(addr)
+        rec = self._get_record(ipnum)
+        if not rec:
+            return None
 
-            rec = self._get_record(ipnum)
-            if not rec:
-                return None
-
-            return rec
-        except ValueError:
-            raise GeoIPError('Failed to lookup address %s' % addr)
+        return rec
 
     def record_by_name(self, hostname):
         """
@@ -622,18 +605,12 @@ class GeoIP(object):
         @return: Dictionary containing country_code, region and region_name
         @rtype: dict
         """
-        try:
-            ipnum = util.ip2long(addr)
-            if not ipnum:
-                raise ValueError('Invalid IP address')
+        if self._databaseType not in const.REGION_CITY_EDITIONS:
+            message = 'Invalid database type, expected Region or City'
+            raise GeoIPError(message)
 
-            if self._databaseType not in const.REGION_CITY_EDITIONS:
-                message = 'Invalid database type, expected Region or City'
-                raise GeoIPError(message)
-
-            return self._get_region(ipnum)
-        except ValueError:
-            raise GeoIPError('Failed to lookup address %s' % addr)
+        ipnum = util.ip2long(addr)
+        return self._get_region(ipnum)
 
     def region_by_name(self, hostname):
         """
@@ -658,18 +635,12 @@ class GeoIP(object):
         @return: Time zone
         @rtype: str
         """
-        try:
-            ipnum = util.ip2long(addr)
-            if not ipnum:
-                raise ValueError('Invalid IP address')
+        if self._databaseType not in const.CITY_EDITIONS:
+            message = 'Invalid database type, expected City'
+            raise GeoIPError(message)
 
-            if self._databaseType not in const.CITY_EDITIONS:
-                message = 'Invalid database type, expected City'
-                raise GeoIPError(message)
-
-            return self._get_record(ipnum).get('time_zone')
-        except ValueError:
-            raise GeoIPError('Failed to lookup address %s' % addr)
+        ipnum = util.ip2long(addr)
+        return self._get_record(ipnum).get('time_zone')
 
     def time_zone_by_name(self, hostname):
         """
