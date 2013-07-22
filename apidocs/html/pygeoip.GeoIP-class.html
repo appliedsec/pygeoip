@@ -60,14 +60,28 @@
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class GeoIP</h1><p class="nomargin-top"><span class="codelink"><a href="pygeoip-pysrc.html#GeoIP">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-object --+    
-         |    
-_GeoIPBase --+
-             |
-            <strong class="uidshort">GeoIP</strong>
+object --+
+         |
+        <strong class="uidshort">GeoIP</strong>
 </pre>
 
 <hr />
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Nested Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pygeoip._GeoIPMetaclass-class.html" class="summary-name">__metaclass__</a>
+    </td>
+  </tr>
+</table>
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -84,28 +98,11 @@ _GeoIPBase --+
         <tr>
           <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">filename</span>,
-        <span class="summary-sig-arg">flags</span>=<span class="summary-sig-default">0</span>)</span><br />
+        <span class="summary-sig-arg">flags</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">cache</span>=<span class="summary-sig-default">True</span>)</span><br />
       Initialize the class.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.__init__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">int</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="pygeoip.GeoIP-class.html#id_by_addr" class="summary-sig-name">id_by_addr</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Get the country index.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.id_by_addr">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -382,7 +379,8 @@ _GeoIPBase --+
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">filename</span>,
-        <span class="sig-arg">flags</span>=<span class="sig-default">0</span>)</span>
+        <span class="sig-arg">flags</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">cache</span>=<span class="sig-default">True</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -399,37 +397,11 @@ _GeoIPBase --+
           supported flags are STANDARD (the default), MEMORY_CACHE (preload
           the whole file into memory) and MMAP_CACHE (access the file via 
           mmap).</li>
+        <li><strong class="pname"><code>cache</code></strong> (bool) - Used in tests to skip instance caching</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
     </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="id_by_addr"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">id_by_addr</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">addr</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pygeoip-pysrc.html#GeoIP.id_by_addr">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Get the country index. Looks up the index for the country which is the
-  key for the code and name.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> (str) - The IP address</li>
-    </ul></dd>
-    <dt>Returns: int</dt>
-        <dd>network byte order 32-bit integer</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -793,7 +765,7 @@ _GeoIPBase --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Jul 16 01:07:04 2013
+    Generated by Epydoc 3.0.1 on Mon Jul 22 17:52:51 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

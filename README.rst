@@ -4,7 +4,9 @@ Pure Python GeoIP API
 This library is based on `Maxmind's GeoIP C
 API <https://github.com/maxmind/geoip-api-c>`__.
 
-Tested with Python version 2.5, 2.6, 2.7, 3.1, 3.2 and 3.3.
+Tested with Python version 2.5, 2.6, 2.7, 3.2 and 3.3.
+
+|Build Status|
 
 Installation
 ------------
@@ -134,3 +136,6 @@ ASN Lookup
 
 For more information, `check out the full API
 documentation <http://packages.python.org/pygeoip>`__.
+
+.. |Build Status| image:: https://travis-ci.org/appliedsec/pygeoip.png
+   :target: https://travis-ci.org/appliedsec/pygeoip
