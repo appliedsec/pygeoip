@@ -21,9 +21,29 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
-__all__ = ['time_zone_by_country_and_region']
 
-_country = {
+def time_zone_by_country_and_region(country_code, region_code=None):
+    """
+    Get time zone from country code and region code.
+
+    @param country_code: Country code
+    @type country_code: str
+    @param region_code: Region code
+    @type region_code: str
+    @return: Time zone
+    @rtype: str
+    """
+    timezone = country_dict.get(country_code)
+    if not timezone:
+        return None
+
+    if isinstance(timezone, str):
+        return timezone
+
+    return timezone.get(region_code)
+
+
+country_dict = {
     'AD': 'Europe/Andorra',
     'AE': 'Asia/Dubai',
     'AF': 'Asia/Kabul',
@@ -742,17 +762,3 @@ _country = {
     'ZM': 'Africa/Lusaka',
     'ZW': 'Africa/Harare'
 }
-
-
-def time_zone_by_country_and_region(country_code, region_name=None):
-    timezones = _country.get(country_code)
-    if not timezones:
-        return None
-
-    if isinstance(timezones, str):
-        return timezones
-
-    if not region_name:
-        return None
-
-    return timezones.get(region_name)
