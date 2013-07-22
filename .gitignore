@@ -5,3 +5,4 @@ tests/data/*
 .tox
 build
 dist
+pygeoip-*
