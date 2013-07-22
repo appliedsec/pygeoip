@@ -62,9 +62,6 @@ class _GeoIPMetaclass(type):
     def __call__(cls, *args, **kwargs):
         """ Singleton method to gets an instance without reparsing
         the database, the filename is being used as cache key.
-
-        @param cache: Used in tests for skipping instance caching
-        @type cache: bool
         """
         if len(args) > 0:
             filename = args[0]
@@ -74,7 +71,6 @@ class _GeoIPMetaclass(type):
             return None
 
         if not kwargs.get('cache', True):
-            del kwargs['cache']
             return super(_GeoIPMetaclass, cls).__call__(*args, **kwargs)
 
         cls._instance_lock.acquire()
@@ -88,7 +84,7 @@ class _GeoIPMetaclass(type):
 class GeoIP(object):
     __metaclass__ = _GeoIPMetaclass
 
-    def __init__(self, filename, flags=0):
+    def __init__(self, filename, flags=0, cache=True):
         """
         Initialize the class.
 
@@ -99,6 +95,8 @@ class GeoIP(object):
             MEMORY_CACHE (preload the whole file into memory) and
             MMAP_CACHE (access the file via mmap).
         @type flags: int
+        @param cache: Used in tests to skip instance caching
+        @type cache: bool
         """
         self._flags = flags
 

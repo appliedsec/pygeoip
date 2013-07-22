@@ -9,9 +9,6 @@ from tests.config import COUNTRY_DB_PATH
 
 class TestGenerals(unittest.TestCase):
     def testContructing(self):
-        gi = pygeoip.GeoIP()
-        self.assertEqual(gi, None)
-
         gi = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
         self.assertEqual(gi._type, 'STANDARD')
 
