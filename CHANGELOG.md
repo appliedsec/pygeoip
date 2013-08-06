@@ -1,5 +1,20 @@
 # ChangeLog for pygeoip
 
+### Release 0.2.8
+
+* New: 100% test coverage
+* New: Dropped Python 3.1 support
+* New: Add reStructuredText version of README for PyPI
+* Fix: Rename region_name to region_code (returned by region_by_name and record_by_addr)
+* Fix: Rename id_by_addr to _id_by_addr
+* Fix: Make internal meta class private
+* Fix: Support caching on class inheritance (Thanks to Jiří Techet)
+* Fix: Properly open databases on GAE (Thanks to Jiří Techet)
+* Fix: Treat IndexError and UnicodeDecodeError as corrupt database and raise others (Thanks to Jiří Techet)
+* Fix: Aquire lock on instance creation (Thanks to Jiří Techet)
+
+[William Tisäter](mailto:william@defunct.cc) -- TBA
+
 ### Release 0.2.7
 
 * New: Added support for IPv6 ASN and City databases
