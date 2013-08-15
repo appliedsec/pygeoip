@@ -12,6 +12,7 @@
 * Fix: Properly open databases on GAE (Thanks to Jiří Techet)
 * Fix: Treat IndexError and UnicodeDecodeError as corrupt database and raise others (Thanks to Jiří Techet)
 * Fix: Aquire lock on instance creation (Thanks to Jiří Techet)
+* Fix: Fixed alpha-3 codes ordering, replaced TLS,TKM,TUN,TON with TKM,TUN,TON,TLS (Thanks to Marc Sherry)
 
 [William Tisäter](mailto:william@defunct.cc) -- TBA
 
