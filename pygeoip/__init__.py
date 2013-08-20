@@ -649,3 +649,4 @@ class GeoIP(object):
         """
         addr = self._gethostbyname(hostname)
         return self.time_zone_by_addr(addr)
+
