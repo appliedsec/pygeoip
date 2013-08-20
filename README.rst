@@ -6,7 +6,7 @@ API <https://github.com/maxmind/geoip-api-c>`__.
 
 Tested with Python version 2.5, 2.6, 2.7, 3.2 and 3.3.
 
-|Build Status|
+|Build Status| |Coverage Status| |Downloads|
 
 Installation
 ------------
@@ -82,7 +82,7 @@ Region Lookup
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
     >>> gi.region_by_name('apple.com')
-    {'region_name': 'CA', 'country_code': 'US'}
+    {'region_code': 'CA', 'country_code': 'US'}
 
 City Lookup
 ~~~~~~~~~~~
@@ -92,14 +92,16 @@ City Lookup
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
     >>> gi.record_by_addr('64.233.161.99')
     {
-        'city': 'Mountain View',
-        'region_name': 'CA',
+        'city': u'Mountain View',
+        'region_code': u'CA',
         'area_code': 650,
-        'longitude': -122.0574,
-        'country_code3': 'USA',
-        'latitude': 37.419199999999989,
-        'postal_code': '94043',
+        'time_zone': 'America/Los_Angeles',
         'dma_code': 807,
+        'metro_code': 'San Francisco, CA',
+        'country_code3': 'USA',
+        'latitude': 37.41919999999999,
+        'postal_code': u'94043',
+        'longitude': -122.0574,
         'country_code': 'US',
         'country_name': 'United States',
         'continent': 'NA'
@@ -139,3 +141,7 @@ documentation <http://packages.python.org/pygeoip>`__.
 
 .. |Build Status| image:: https://travis-ci.org/appliedsec/pygeoip.png
    :target: https://travis-ci.org/appliedsec/pygeoip
+.. |Coverage Status| image:: https://coveralls.io/repos/appliedsec/pygeoip/badge.png
+   :target: https://coveralls.io/r/appliedsec/pygeoip
+.. |Downloads| image:: https://pypip.in/d/pygeoip/badge.png
+   :target: https://crate.io/packages/pygeoip
