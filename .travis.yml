@@ -9,6 +9,6 @@ install:
   - "pip install coveralls"
   - "curl -s http://www.defunct.cc/maxmind-geoip-samples.tar.gz | tar -xzC tests/"
 script:
-  - nosetests --with-coverage --cover-package=pygeoip
+  - nosetests --cover-erase --with-coverage --cover-package=pygeoip
 after_success:
   - coveralls
