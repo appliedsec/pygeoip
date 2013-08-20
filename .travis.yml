@@ -6,9 +6,9 @@ python:
   - "3.3"
 install:
   - "pip install nose"
-  - "pip install coveralls"
+  - "pip install python-coveralls"
   - "curl -s http://www.defunct.cc/maxmind-geoip-samples.tar.gz | tar -xzC tests/"
 script:
-  - nosetests --cover-erase --with-coverage --cover-package=pygeoip
+  - coverage run --source=pygeoip setup.py nosetests
 after_success:
   - coveralls
