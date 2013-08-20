@@ -31,4 +31,4 @@ For converting Markdown to reStructuredText used by PyPi we use pandoc.
 
 There's a shell script doing all this for you.
 
-    . build.sh
+    ./build.sh
