@@ -29,7 +29,7 @@ from threading import Lock
 
 try:
     import mmap
-except ImportError:
+except ImportError:  # pragma: no cover
     mmap = None
 
 try:
@@ -99,7 +99,7 @@ class GeoIP(object):
         """
         self._flags = flags
 
-        if self._flags & const.MMAP_CACHE and mmap is None:
+        if self._flags & const.MMAP_CACHE and mmap is None:  # pragma: no cover
             import warnings
             warnings.warn("MMAP_CACHE cannot be used without a mmap module")
             self._flags &= ~const.MMAP_CACHE

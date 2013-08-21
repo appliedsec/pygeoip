@@ -5,7 +5,7 @@ from nose.tools import raises
 
 import pygeoip
 from pygeoip import const
-from tests.config import COUNTRY_DB_PATH
+from tests.config import COUNTRY_DB_PATH, CORRUPT_DB_PATH
 
 class TestGenerals(unittest.TestCase):
     def testContructing(self):
@@ -16,6 +16,16 @@ class TestGenerals(unittest.TestCase):
         assert len(const.COUNTRY_CODES) == len(const.COUNTRY_CODES3)
         assert len(const.COUNTRY_CODES) == len(const.COUNTRY_NAMES)
         assert len(const.COUNTRY_CODES) == len(const.CONTINENT_NAMES)
+
+    def testMetaclass(self):
+        a = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
+        b = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
+        assert a is b
+
+    @raises(pygeoip.GeoIPError)
+    def testCorruptDatabase(self):
+        gi = pygeoip.GeoIP(filename=CORRUPT_DB_PATH)
+        gi.country_code_by_name('google.com')
 
     @raises(socket.gaierror)
     def testFailedLookup(self):
