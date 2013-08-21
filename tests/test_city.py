@@ -22,12 +22,13 @@ class TestGeoIPCityFunctions(unittest.TestCase):
         self.us_record_data = {
             'city': 'Mountain View',
             'region_code': 'CA',
-            'area_code': 650,
             'longitude': -122.05740356445312,
             'country_code3': 'USA',
             'latitude': 37.419200897216797,
             'postal_code': '94043',
             'dma_code': 807,
+            'area_code': 650,
+            'metro_code': 'San Francisco, CA',
             'country_code': 'US',
             'country_name': 'United States',
             'continent': 'NA',
@@ -37,12 +38,13 @@ class TestGeoIPCityFunctions(unittest.TestCase):
         self.gb_record_data = {
             'city': 'Tadworth',
             'region_code': 'N7',
-            'area_code': 0,
             'longitude': -0.23339999999998895,
             'country_code3': 'GBR',
             'latitude': 51.283299999999997,
-            'postal_code': '',
+            'postal_code': None,
             'dma_code': 0,
+            'area_code': 0,
+            'metro_code': None,
             'country_code': 'GB',
             'country_name': 'United Kingdom',
             'continent': 'EU',
@@ -107,7 +109,7 @@ class TestGeoIPCityFunctions(unittest.TestCase):
 
     def testRecordByAddr(self):
         equal_keys = ('city', 'region_name', 'area_code', 'country_code3',
-                      'postal_code', 'dma_code', 'country_code',
+                      'postal_code', 'dma_code', 'country_code', 'metro_code', 
                       'country_name', 'time_zone')
         almost_equal_keys = ('longitude', 'latitude')
 

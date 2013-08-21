@@ -22,9 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
 import os
-import math
 import socket
 import codecs
+from math import floor
 from threading import Lock
 
 try:
@@ -34,6 +34,7 @@ except ImportError:
 
 try:
     from StringIO import StringIO
+    range = xrange  # Use xrange for Python 2
 except ImportError:
     from io import StringIO, BytesIO
 
@@ -272,7 +273,7 @@ class GeoIP(object):
         @rtype: str
         """
         seek_org = self._seek_country(ipnum)
-        if seek_org == self._databaseSegments:
+        if not seek_org:
             return None
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
@@ -344,7 +345,7 @@ class GeoIP(object):
         @rtype: dict
         """
         seek_country = self._seek_country(ipnum)
-        if seek_country == self._databaseSegments:
+        if not seek_country:
             return {}
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
@@ -359,63 +360,49 @@ class GeoIP(object):
         record = {
             'dma_code': 0,
             'area_code': 0,
-            'metro_code': '',
-            'postal_code': ''
+            'metro_code': None,
+            'postal_code': None
         }
 
         latitude = 0
         longitude = 0
-        buf_pos = 0
 
-        # Get country
-        char = ord(buf[buf_pos])
+        char = ord(buf[0])
         record['country_code'] = const.COUNTRY_CODES[char]
         record['country_code3'] = const.COUNTRY_CODES3[char]
         record['country_name'] = const.COUNTRY_NAMES[char]
         record['continent'] = const.CONTINENT_NAMES[char]
 
-        buf_pos += 1
+        def read_data(buf, pos):
+            cur = pos
+            while buf[cur] != '\0':
+                cur += 1
+            return cur, buf[pos:cur] if cur > pos else None
 
-        def get_data(buf, buf_pos):
-            offset = buf_pos
-            char = ord(buf[offset])
-            while char != 0:
-                offset += 1
-                char = ord(buf[offset])
-            if offset > buf_pos:
-                return offset, buf[buf_pos:offset]
-            return offset, ''
-
-        offset, record['region_code'] = get_data(buf, buf_pos)
-        offset, record['city'] = get_data(buf, offset + 1)
-        offset, record['postal_code'] = get_data(buf, offset + 1)
-        buf_pos = offset + 1
+        offset, record['region_code'] = read_data(buf, 1)
+        offset, record['city'] = read_data(buf, offset + 1)
+        offset, record['postal_code'] = read_data(buf, offset + 1)
+        offset = offset + 1
 
         for j in range(3):
-            char = ord(buf[buf_pos])
-            buf_pos += 1
-            latitude += (char << (j * 8))
+            latitude += (ord(buf[offset + j]) << (j * 8))
 
         for j in range(3):
-            char = ord(buf[buf_pos])
-            buf_pos += 1
-            longitude += (char << (j * 8))
+            longitude += (ord(buf[offset + j + 3]) << (j * 8))
 
         record['latitude'] = (latitude / 10000.0) - 180.0
         record['longitude'] = (longitude / 10000.0) - 180.0
 
         if self._databaseType in (const.CITY_EDITION_REV1, const.CITY_EDITION_REV1_V6):
-            dmaarea_combo = 0
             if record['country_code'] == 'US':
+                dma_area = 0
                 for j in range(3):
-                    char = ord(buf[buf_pos])
-                    dmaarea_combo += (char << (j * 8))
-                    buf_pos += 1
+                    dma_area += ord(buf[offset + j + 6]) << (j * 8)
 
-                record['dma_code'] = int(math.floor(dmaarea_combo / 1000))
-                record['area_code'] = dmaarea_combo % 1000
+                record['dma_code'] = int(floor(dma_area / 1000))
+                record['area_code'] = dma_area % 1000
+                record['metro_code'] = const.DMA_MAP.get(record['dma_code'])
 
-        record['metro_code'] = const.DMA_MAP.get(record['dma_code'])
         params = (record['country_code'], record['region_code'])
         record['time_zone'] = time_zone_by_country_and_region(*params)
 
@@ -649,4 +636,3 @@ class GeoIP(object):
         """
         addr = self._gethostbyname(hostname)
         return self.time_zone_by_addr(addr)
-
