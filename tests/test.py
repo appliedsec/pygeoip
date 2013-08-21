@@ -17,11 +17,6 @@ class TestGenerals(unittest.TestCase):
         assert len(const.COUNTRY_CODES) == len(const.COUNTRY_NAMES)
         assert len(const.COUNTRY_CODES) == len(const.CONTINENT_NAMES)
 
-    def testMetaclass(self):
-        a = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
-        b = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
-        assert a is b
-
     @raises(pygeoip.GeoIPError)
     def testCorruptDatabase(self):
         gi = pygeoip.GeoIP(filename=CORRUPT_DB_PATH)

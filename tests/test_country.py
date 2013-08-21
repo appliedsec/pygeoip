@@ -75,3 +75,19 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
     def testOpen6With4(self):
         data = self.gi6.country_code_by_addr(self.gb_ip)
         raise ValueError(data)
+
+    @raises(pygeoip.GeoIPError)
+    def testOrgByAddr(self):
+        self.gi.org_by_addr(self.us_ip)
+
+    @raises(pygeoip.GeoIPError)
+    def testRecordByAddr(self):
+        self.gi.record_by_addr(self.us_ip)
+
+    @raises(pygeoip.GeoIPError)
+    def testRegionByAddr(self):
+        self.gi.region_by_addr(self.us_ip)
+
+    @raises(pygeoip.GeoIPError)
+    def testTimeZoneByAddr(self):
+        self.gi.time_zone_by_addr(self.us_ip)
