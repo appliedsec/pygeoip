@@ -410,13 +410,10 @@ class GeoIP(object):
 
     def _gethostbyname(self, hostname):
         if self._databaseType in const.IPV6_EDITIONS:
-            try:
-                response = socket.getaddrinfo(hostname, 0, socket.AF_INET6)
-                family, socktype, proto, canonname, sockaddr = response[0]
-                address, port, flow, scope = sockaddr
-                return address
-            except socket.gaierror:
-                return ''
+            response = socket.getaddrinfo(hostname, 0, socket.AF_INET6)
+            family, socktype, proto, canonname, sockaddr = response[0]
+            address, port, flow, scope = sockaddr
+            return address
         else:
             return socket.gethostbyname(hostname)
 
@@ -430,10 +427,6 @@ class GeoIP(object):
         @return: network byte order 32-bit integer
         @rtype: int
         """
-        COUNTY_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
-        if self._databaseType not in COUNTY_EDITIONS:
-            raise GeoIPError('Invalid database type, expected Country')
-
         ipv = 6 if addr.find(':') >= 0 else 4
         if ipv == 4 and self._databaseType != const.COUNTRY_EDITION:
             raise GeoIPError('Invalid database type; expected IPv6 address')
