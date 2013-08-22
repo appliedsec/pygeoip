@@ -273,7 +273,7 @@ class GeoIP(object):
         @rtype: str
         """
         seek_org = self._seek_country(ipnum)
-        if not seek_org:
+        if seek_org == self._databaseSegments:
             return None
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
@@ -345,7 +345,7 @@ class GeoIP(object):
         @rtype: dict
         """
         seek_country = self._seek_country(ipnum)
-        if not seek_country:
+        if seek_country == self._databaseSegments:
             return {}
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
