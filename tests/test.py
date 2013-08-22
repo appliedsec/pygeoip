@@ -8,9 +8,9 @@ from pygeoip import const
 from tests.config import COUNTRY_DB_PATH, CORRUPT_DB_PATH
 
 class TestGenerals(unittest.TestCase):
-    def testContructing(self):
-        gi = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
-        self.assertEqual(gi._type, 'STANDARD')
+    def setUp(self):
+        self.gi = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
+        self.assertEqual(self.gi._type, 'STANDARD')
 
     def testConstLengths(self):
         assert len(const.COUNTRY_CODES) == len(const.COUNTRY_CODES3)
@@ -24,10 +24,11 @@ class TestGenerals(unittest.TestCase):
 
     @raises(socket.gaierror)
     def testFailedLookup(self):
-        gi = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
-        gi.country_code_by_name('google')
+        self.gi.country_code_by_name('google')
 
     @raises(socket.error)
     def testInvalidAddress(self):
-        gi = pygeoip.GeoIP(filename=COUNTRY_DB_PATH)
-        gi.country_code_by_addr('google.com')
+        self.gi.country_code_by_addr('google.com')
+
+    def testGetEmptyRecord(self):
+        self.gi._get_record(0)

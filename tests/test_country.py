@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import socket
 import unittest
 from nose.tools import raises
 
@@ -43,7 +44,7 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
         us_code = self.gi.country_code_by_addr(self.us_ip)
         gb_code = self.gi.country_code_by_addr(self.gb_ip)
         ie6_code = self.gi6.country_code_by_addr(self.ie6_ip)
-        
+
         self.assertEqual(us_code, self.us_code)
         self.assertEqual(gb_code, self.gb_code)
         self.assertEqual(ie6_code, self.ie_code)
@@ -65,6 +66,11 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
         self.assertEqual(us_name, self.us_name)
         self.assertEqual(gb_name, self.gb_name)
         self.assertEqual(ie6_name, self.ie_name)
+
+    @raises(socket.gaierror)
+    def testFailedIPv6Lookup(self):
+        data = self.gi6.country_code_by_name('google')
+        raise ValueError(data)
 
     @raises(pygeoip.GeoIPError)
     def testOpen4With6(self):
