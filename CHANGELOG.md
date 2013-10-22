@@ -5,8 +5,8 @@
 * New: 100% test coverage
 * New: Dropped Python 3.1 support
 * New: Add reStructuredText version of README for PyPI
-* Fix: Rename region_name to region_code (returned by region_by_name and record_by_addr)
-* Fix: Rename id_by_addr to _id_by_addr
+* Fix: Rename `region_name` to `region_code` (returned by `region_by_name` and `record_by_addr`)
+* Fix: Rename `id_by_addr` to `_id_by_addr`
 * Fix: Make internal meta class private
 * Fix: Support caching on class inheritance (Thanks to Jiří Techet)
 * Fix: Properly open databases on GAE (Thanks to Jiří Techet)
