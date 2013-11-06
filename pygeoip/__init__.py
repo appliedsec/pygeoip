@@ -439,6 +439,15 @@ class GeoIP(object):
         ipnum = util.ip2long(addr)
         return self._seek_country(ipnum) - const.COUNTRY_BEGIN
 
+    def last_netmask(self):
+        """
+        Return the netmask depth of the last lookup.
+
+        @return: network depth
+        @rtype: int
+        """
+        return self._netmask
+
     def country_code_by_addr(self, addr):
         """
         Returns 2-letter country code (e.g. 'US') for specified IP address.
