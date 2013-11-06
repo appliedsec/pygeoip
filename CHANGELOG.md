@@ -1,6 +1,6 @@
 # ChangeLog for pygeoip
 
-### Release 0.2.8
+### Release 0.3.0
 
 * New: 100% test coverage
 * New: Dropped Python 3.1 support

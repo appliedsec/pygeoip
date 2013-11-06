@@ -29,7 +29,7 @@ except ImportError:
 
 
 setup(name='pygeoip',
-      version='0.2.8',
+      version='0.3.0',
       description='Pure Python GeoIP API',
       author='Jennifer Ennis',
       author_email='zaylea@gmail.com',
