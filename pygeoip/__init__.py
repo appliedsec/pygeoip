@@ -98,6 +98,7 @@ class GeoIP(object):
         @type cache: bool
         """
         self._flags = flags
+        self._netmask = None
 
         if self._flags & const.MMAP_CACHE and mmap is None:  # pragma: no cover
             import warnings
@@ -253,10 +254,12 @@ class GeoIP(object):
                         x[i] += ord(byte) << (j * 8)
                 if ipnum & (1 << depth):
                     if x[1] >= self._databaseSegments:
+                        self._netmask = seek_depth - depth + 1
                         return x[1]
                     offset = x[1]
                 else:
                     if x[0] >= self._databaseSegments:
+                        self._netmask = seek_depth - depth + 1
                         return x[0]
                     offset = x[0]
         except (IndexError, UnicodeDecodeError):
