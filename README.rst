@@ -43,8 +43,8 @@ contribute you can always `create a pull
 request <https://github.com/appliedsec/pygeoip/pulls>`__ for discussion
 and code submission.
 
-Quick Documentation
--------------------
+Getting Started
+---------------
 
 Create your GeoIP instance with appropriate access flag. ``STANDARD``
 reads data from disk when needed, ``MEMORY_CACHE`` loads database into

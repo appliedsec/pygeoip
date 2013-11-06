@@ -30,7 +30,7 @@ You can easily install pygeoip from PyPi.
 
 Bug reports are done by [creating an issue on Github](https://github.com/appliedsec/pygeoip/issues). If you want to contribute you can always [create a pull request](https://github.com/appliedsec/pygeoip/pulls) for discussion and code submission.
 
-## Quick Documentation ##
+## Getting Started ##
 
 Create your GeoIP instance with appropriate access flag. `STANDARD` reads data from disk when needed, `MEMORY_CACHE` loads database into memory on instantiation and `MMAP_CACHE` loads database into memory using mmap.
 
