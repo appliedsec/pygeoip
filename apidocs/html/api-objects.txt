@@ -72,6 +72,7 @@ pygeoip.GeoIP._get_region	pygeoip.GeoIP-class.html#_get_region
 pygeoip.GeoIP.country_code_by_name	pygeoip.GeoIP-class.html#country_code_by_name
 pygeoip.GeoIP._get_org	pygeoip.GeoIP-class.html#_get_org
 pygeoip.GeoIP._str_to_fp	pygeoip.GeoIP-class.html#_str_to_fp
+pygeoip.GeoIP.last_netmask	pygeoip.GeoIP-class.html#last_netmask
 pygeoip.GeoIP.time_zone_by_addr	pygeoip.GeoIP-class.html#time_zone_by_addr
 pygeoip.GeoIP._id_by_addr	pygeoip.GeoIP-class.html#_id_by_addr
 pygeoip.GeoIP._get_record	pygeoip.GeoIP-class.html#_get_record
