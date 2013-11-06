@@ -67,11 +67,6 @@ class TestGeoIPCountryFunctions(unittest.TestCase):
         self.assertEqual(gb_name, self.gb_name)
         self.assertEqual(ie6_name, self.ie_name)
 
-    @raises(socket.gaierror)
-    def testFailedIPv6Lookup(self):
-        data = self.gi6.country_code_by_name('google')
-        raise ValueError(data)
-
     @raises(pygeoip.GeoIPError)
     def testOpen4With6(self):
         data = self.gi.country_code_by_addr(self.ie6_ip)

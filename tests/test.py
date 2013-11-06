@@ -22,10 +22,6 @@ class TestGenerals(unittest.TestCase):
         gi = pygeoip.GeoIP(filename=CORRUPT_DB_PATH)
         gi.country_code_by_name('google.com')
 
-    @raises(socket.gaierror)
-    def testFailedLookup(self):
-        self.gi.country_code_by_name('google')
-
     @raises(socket.error)
     def testInvalidAddress(self):
         self.gi.country_code_by_addr('google.com')
