@@ -5,6 +5,7 @@
 * New: 100% test coverage
 * New: Dropped Python 3.1 support
 * New: Add reStructuredText version of README for PyPI
+* New: Add `last_netmask` function and return the netmask depth of the last lookup
 * Fix: Rename `region_name` to `region_code` (returned by `region_by_name` and `record_by_addr`)
 * Fix: Rename `id_by_addr` to `_id_by_addr`
 * Fix: Make internal meta class private
