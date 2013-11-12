@@ -15,7 +15,7 @@ pushd $(dirname $0)
 
     if [ ! -d tests/data ]; then
         pushd tests
-            wget http://www.defunct.cc/maxmind-geoip-samples.tar.gz
+            wget https://www.defunct.cc/maxmind-geoip-samples.tar.gz
             tar -zxvf maxmind-geoip-samples.tar.gz
             unlink maxmind-geoip-samples.tar.gz
         popd

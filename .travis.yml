@@ -7,7 +7,7 @@ python:
 install:
   - "pip install nose"
   - "pip install python-coveralls"
-  - "curl -s http://www.defunct.cc/maxmind-geoip-samples.tar.gz | tar -xzC tests/"
+  - "curl -s https://www.defunct.cc/maxmind-geoip-samples.tar.gz | tar -xzC tests/"
 script:
   - coverage run --source=pygeoip setup.py nosetests
 after_success:
