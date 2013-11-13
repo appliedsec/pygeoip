@@ -1,5 +1,9 @@
 # ChangeLog for pygeoip
 
+### Release 0.3.1
+
+Not yet uploaded to PyPi
+
 ### Release 0.3.0
 
 * New: 100% test coverage
@@ -15,7 +19,7 @@
 * Fix: Aquire lock on instance creation (Thanks to Jiří Techet)
 * Fix: Fixed alpha-3 codes ordering, replaced TLS,TKM,TUN,TON with TKM,TUN,TON,TLS (Thanks to Marc Sherry)
 
-[William Tisäter](mailto:william@defunct.cc) -- TBA
+Uploaded to PyPi on 2013-11-13
 
 ### Release 0.2.7
 
@@ -23,7 +27,7 @@
 * Fix: Sync timezones from latest ISO-8601 edition
 * Fix: `record_by_addr()` will now return `None` when missing data
 
-[William Tisäter](mailto:william@defunct.cc) -- 2013-06-04 15:55:01
+Uploaded to PyPi on 2013-07-15
 
 ### Release 0.2.6
 
@@ -47,5 +51,4 @@
 * Fix: Remove dependency of ez_setup.py
 * Fix: Add Python 3.2 and 3.3 to tox tests
 
-[William Tisäter](mailto:william@defunct.cc) -- 2013-02-22 02:51:36
-
+Uploaded to PyPi on 2013-02-23
