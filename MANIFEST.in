@@ -4,5 +4,4 @@ include README.rst
 include LICENSE.md
 include DEVELOPER.md
 include CHANGELOG.md
-include epydoc.ini
 include tox.ini
