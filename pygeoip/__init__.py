@@ -574,6 +574,11 @@ class GeoIP(object):
         addr = self._gethostbyname(hostname)
         return self.org_by_addr(addr)
 
+    isp_by_addr = org_by_addr
+    isp_by_name = org_by_name
+    asn_by_addr = org_by_addr
+    asn_by_name = org_by_name
+
     def record_by_addr(self, addr):
         """
         Look up the record for a given IP address.

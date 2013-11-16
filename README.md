@@ -95,7 +95,7 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
 
 ```python
 >>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
->>> gi.org_by_name('cnn.com')
+>>> gi.isp_by_name('cnn.com')
 'Turner Broadcasting System'
 ```
 
@@ -103,7 +103,7 @@ Create your GeoIP instance with appropriate access flag. `STANDARD` reads data f
 
 ```python
 >>> gi = pygeoip.GeoIP('/path/to/GeoIPASNum.dat')
->>> gi.org_by_name('cnn.com')
+>>> gi.asn_by_name('cnn.com')
 'AS5662 Turner Broadcasting'
 ```
 

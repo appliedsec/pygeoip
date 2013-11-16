@@ -18,15 +18,15 @@ class TestGeOIPISPFunctions(unittest.TestCase):
         self.gi = pygeoip.GeoIP(ISP_DB_PATH)
 
     def testISPByAddr(self):
-        se_isp = self.gi.org_by_addr(self.se_ip)
-        us_isp = self.gi.org_by_addr(self.us_ip)
+        se_isp = self.gi.isp_by_addr(self.se_ip)
+        us_isp = self.gi.isp_by_addr(self.us_ip)
 
         self.assertEqual(se_isp, self.se_isp)
         self.assertEqual(us_isp, self.us_isp)
 
     def testISPByName(self):
-        se_isp = self.gi.org_by_name(self.se_hostname)
-        us_isp = self.gi.org_by_name(self.us_hostname)
+        se_isp = self.gi.isp_by_name(self.se_hostname)
+        us_isp = self.gi.isp_by_name(self.us_hostname)
 
         self.assertEqual(se_isp, self.se_isp)
         self.assertEqual(us_isp, self.us_isp)

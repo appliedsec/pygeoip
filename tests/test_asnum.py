@@ -19,15 +19,15 @@ class TestGeoIPASNumFunctions(unittest.TestCase):
         self.gia = pygeoip.GeoIP(ASNUM_DB_PATH)
 
     def testOrgByAddr(self):
-        gb_as = self.gia.org_by_addr(self.gb_ip)
-        us_as = self.gia.org_by_addr(self.us_ip)
+        gb_as = self.gia.asn_by_addr(self.gb_ip)
+        us_as = self.gia.asn_by_addr(self.us_ip)
 
         self.assertEqual(gb_as, self.gb_as)
         self.assertEqual(us_as, self.us_as)
 
     def testOrgByName(self):
-        gb_as = self.gia.org_by_name(self.gb_hostname)
-        us_as = self.gia.org_by_name(self.us_hostname)
+        gb_as = self.gia.asn_by_name(self.gb_hostname)
+        us_as = self.gia.asn_by_name(self.us_hostname)
 
         self.assertEqual(gb_as, self.gb_as)
         self.assertEqual(us_as, self.us_as)
