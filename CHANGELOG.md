@@ -3,6 +3,7 @@
 ### Release 0.3.1
 
 * New: MaxMind Netspeed database support
+* Fix: Release thread lock on exceptions
 
 Not yet uploaded to PyPi
 
