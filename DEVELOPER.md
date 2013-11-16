@@ -12,7 +12,7 @@ Running the tests requires a couple of sample databases found on the
 link below.
 
 Maxmind sample databases for testing can be downloaded here:
-https://www.defunct.cc/maxmind-geoip-samples.tar.gz (58 MB)
+https://www.defunct.cc/maxmind-geoip-samples.tar.gz (17 MB)
 
 Extract the tarball in the tests directory and run `tox` from the root directory.
 

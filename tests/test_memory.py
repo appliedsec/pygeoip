@@ -11,5 +11,5 @@ class TestMemoryCache(unittest.TestCase):
         gi = pygeoip.GeoIP(COUNTRY_DB_PATH, flags=const.MEMORY_CACHE, cache=False)
         self.assertEqual(gi._type, 'MEMORY_CACHE')
 
-        code = gi.country_code_by_name('dn.se')
-        self.assertEqual(code, 'SE')
+        code = gi.country_code_by_addr('64.17.254.216')
+        self.assertEqual(code, 'US')

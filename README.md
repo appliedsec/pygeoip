@@ -111,12 +111,12 @@ For more information, [check out the full API documentation](http://packages.pyt
 
 ## Supported Databases
 
-| Type           | IPv4 | IPv6 | Details       |
-| -------------- |:----:|:----:| -------------- | 
-| Country        | ✓ | ✓ | [MaxMind Country product page](http://www.maxmind.com/en/country) |
-| City           | ✓ | ✓ | [MaxMind City product page](http://www.maxmind.com/en/city) |
-| Organization   | ✓ | | [MaxMind Organization product page](http://www.maxmind.com/en/organization) |
-| ISP            | ✓ | | [MaxMind ISP product page](http://www.maxmind.com/en/isp) |
-| Region         | ✓ | | [MaxMind Region product page](http://www.maxmind.com/en/geolocation_landing) |
-| ASN            | ✓ | ✓ | [MaxMind ASN product page](http://dev.maxmind.com/geoip/legacy/geolite) |
-| Netspeed       | ✓ | | [MaxMind Netspeed product page](http://www.maxmind.com/en/netspeed) |
+| Type           | IPv4 | IPv6 | Details |
+| -------------- |:----:|:----:| ------- | 
+| Country        | ✓    | ✓    | [MaxMind Country product page](http://www.maxmind.com/en/country) |
+| City           | ✓    | ✓    | [MaxMind City product page](http://www.maxmind.com/en/city) |
+| Organization   | ✓    |      | [MaxMind Organization product page](http://www.maxmind.com/en/organization) |
+| ISP            | ✓    |      | [MaxMind ISP product page](http://www.maxmind.com/en/isp) |
+| Region         | ✓    |      | [MaxMind Region product page](http://www.maxmind.com/en/geolocation_landing) |
+| ASN            | ✓    | ✓    | [MaxMind ASN product page](http://dev.maxmind.com/geoip/legacy/geolite) |
+| Netspeed       | ✓    |      | [MaxMind Netspeed product page](http://www.maxmind.com/en/netspeed) |

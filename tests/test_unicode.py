@@ -2,7 +2,7 @@
 import unittest
 
 import pygeoip
-from pygeoip.const import PY2, PY3
+from pygeoip.const import PY2
 from tests.config import CITY_DB_PATH
 
 
