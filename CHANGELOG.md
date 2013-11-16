@@ -2,6 +2,8 @@
 
 ### Release 0.3.1
 
+* Fix: Release thread lock on exceptions
+
 Not yet uploaded to PyPi
 
 ### Release 0.3.0
