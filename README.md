@@ -1,4 +1,4 @@
-# Pure Python GeoIP API #
+# Pure Python GeoIP API
 
 This library is based on [Maxmind's GeoIP C API](https://github.com/maxmind/geoip-api-c).
 
@@ -6,97 +6,114 @@ Tested with Python version 2.5, 2.6, 2.7, 3.2 and 3.3.
 
 [![Build Status](https://api.travis-ci.org/appliedsec/pygeoip.png?branch=master)](https://travis-ci.org/appliedsec/pygeoip) [![Coverage Status](https://coveralls.io/repos/appliedsec/pygeoip/badge.png)](https://coveralls.io/r/appliedsec/pygeoip) [![Downloads](https://pypip.in/d/pygeoip/badge.png)](https://crate.io/packages/pygeoip)
 
-## Installation ##
+## Installation
 
 You can easily install pygeoip from PyPi.
 
-    pip install pygeoip
+```bash
+pip install pygeoip
+```
 
-## Supported Databases ##
-
-    * COUNTRY_EDITION
-    * COUNTRY_EDITION_V6
-    * REGION_EDITION_REV0
-    * REGION_EDITION_REV1
-    * CITY_EDITION_REV0
-    * CITY_EDITION_REV1
-    * CITY_EDITION_REV1_V6
-    * ORG_EDITION
-    * ISP_EDITION
-    * ASNUM_EDITION
-    * ASNUM_EDITION_V6
-
-## Issues and Contribution ##
+## Issues and Contribution
 
 Bug reports are done by [creating an issue on Github](https://github.com/appliedsec/pygeoip/issues). If you want to contribute you can always [create a pull request](https://github.com/appliedsec/pygeoip/pulls) for discussion and code submission.
 
-## Getting Started ##
+## Getting Started
 
 Create your GeoIP instance with appropriate access flag. `STANDARD` reads data from disk when needed, `MEMORY_CACHE` loads database into memory on instantiation and `MMAP_CACHE` loads database into memory using mmap.
 
-    import pygeoip
-    gi4 = pygeoip.GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
-    gi6 = pygeoip.GeoIP('/path/to/GeoIPv6.dat', pygeoip.MEMORY_CACHE)
+```python
+>>> import pygeoip
+>>> gi = pygeoip.GeoIP('/path/to/GeoIP.dat')
+>>> gi.country_name_by_addr('64.233.161.99')
+'United States'
+```
 
-### Country Lookup ###
+### Country Lookup
 
-    >>> gi4.country_code_by_name('google.com')
-    'US'
-    >>> gi4.country_code_by_addr('64.233.161.99')
-    'US'
-    >>> gi4.country_name_by_addr('64.233.161.99')
-    'United States'
-    >>> gi6.country_code_by_name('google.com')
-    'IE'
-    >>> gi6.country_code_by_addr('2001:7fd::1')
-    'EU'
-    >>> gi6.country_name_by_addr('2001:7fd::1')
-    'Europe'
+```python
+>>> gi = pygeoip.GeoIP('/path/to/GeoIP.dat')
+>>> gi.country_code_by_name('google.com')
+'US'
+>>> gi.country_code_by_addr('64.233.161.99')
+'US'
+>>> gi.country_name_by_addr('64.233.161.99')
+'United States'
+```
 
-### Region Lookup ###
+```python
+>>> gi = pygeoip.GeoIP('/path/to/GeoIPv6.dat')
+>>> gi.country_code_by_name('google.com')
+'IE'
+>>> gi.country_code_by_addr('2001:7fd::1')
+'EU'
+>>> gi.country_name_by_addr('2001:7fd::1')
+'Europe'
+```
 
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
-    >>> gi.region_by_name('apple.com')
-    {'region_code': 'CA', 'country_code': 'US'}
+### Region Lookup
+
+```python
+>>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
+>>> gi.region_by_name('apple.com')
+{'region_code': 'CA', 'country_code': 'US'}
+```
 
 ### City Lookup ###
 
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
-    >>> gi.record_by_addr('64.233.161.99')
-    {
-        'city': u'Mountain View',
-        'region_code': u'CA',
-        'area_code': 650,
-        'time_zone': 'America/Los_Angeles',
-        'dma_code': 807,
-        'metro_code': 'San Francisco, CA',
-        'country_code3': 'USA',
-        'latitude': 37.41919999999999,
-        'postal_code': u'94043',
-        'longitude': -122.0574,
-        'country_code': 'US',
-        'country_name': 'United States',
-        'continent': 'NA'
-    }
-    >>> gi.time_zone_by_addr('64.233.161.99')
-    'America/Los_Angeles'
+```python
+>>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
+>>> gi.record_by_addr('64.233.161.99')
+{
+    'city': u'Mountain View',
+    'region_code': u'CA',
+    'area_code': 650,
+    'time_zone': 'America/Los_Angeles',
+    'dma_code': 807,
+    'metro_code': 'San Francisco, CA',
+    'country_code3': 'USA',
+    'latitude': 37.41919999999999,
+    'postal_code': u'94043',
+    'longitude': -122.0574,
+    'country_code': 'US',
+    'country_name': 'United States',
+    'continent': 'NA'
+}
+>>> gi.time_zone_by_addr('64.233.161.99')
+'America/Los_Angeles'
+```
 
-### Organization Lookup ###
+### Organization Lookup
 
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPOrg.dat')
-    >>> gi.org_by_name('dell.com')
-    'Dell Computer Corporation'
+```python
+>>> gi = pygeoip.GeoIP('/path/to/GeoIPOrg.dat')
+>>> gi.org_by_name('dell.com')
+'Dell Computer Corporation'
+```
 
-### ISP Lookup ###
+### ISP Lookup
 
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
-    >>> gi.org_by_name('cnn.com')
-    'Turner Broadcasting System'
+```python
+>>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
+>>> gi.org_by_name('cnn.com')
+'Turner Broadcasting System'
+```
 
-### ASN Lookup ###
+### ASN Lookup
 
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPASNum.dat')
-    >>> gi.org_by_name('cnn.com')
-    'AS5662 Turner Broadcasting'
+```python
+>>> gi = pygeoip.GeoIP('/path/to/GeoIPASNum.dat')
+>>> gi.org_by_name('cnn.com')
+'AS5662 Turner Broadcasting'
+```
 
 For more information, [check out the full API documentation](http://packages.python.org/pygeoip).
+
+## Supported Databases
+
+* Country IPv4 and IPv6
+* City IPv4 and IPv6
+* Organization IPv4
+* ISP IPv4
+* Region IPv4
+* ASNum IPv4 and IPv6
