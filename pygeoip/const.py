@@ -383,6 +383,10 @@ CONTINENT_NAMES = (
     'NA', 'NA', 'AF'
 )
 
+NETSPEED_NAMES = (
+    'Unknown', 'Dial-up', 'Cable', 'Corporate'
+)
+
 # storage / caching flags
 STANDARD = 0
 MEMORY_CACHE = 1
@@ -408,9 +412,11 @@ ORG_EDITION = 5
 ISP_EDITION = 4
 ASNUM_EDITION = 9
 ASNUM_EDITION_V6 = 21
+NETSPEED_EDITION = 10
 # Not yet supported databases
 PROXY_EDITION = 8
-NETSPEED_EDITION = 11
+NETSPEED_EDITION_REV1 = 32
+NETSPEED_EDITION_REV1_V6 = 33
 
 # Collection of databases
 IPV6_EDITIONS = (COUNTRY_EDITION_V6, ASNUM_EDITION_V6, CITY_EDITION_REV1_V6)

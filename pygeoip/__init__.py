@@ -144,6 +144,7 @@ class GeoIP(object):
         * ISP_EDITION
         * ASNUM_EDITION
         * ASNUM_EDITION_V6
+        * NETSPEED_EDITION
 
         """
         self._databaseType = const.COUNTRY_EDITION
@@ -413,10 +414,23 @@ class GeoIP(object):
         else:
             return socket.gethostbyname(hostname)
 
-    def _id_by_addr(self, addr):
+    def id_by_name(self, hostname):
         """
-        Looks up the index for the country which is the key for the
-        code and name.
+        Returns the database id for specified hostname.
+        The id might be useful as array index. 0 is unknown.
+
+        @param hostname: Hostname
+        @type hostname: str
+        @return: network byte order 32-bit integer
+        @rtype: int
+        """
+        addr = self._gethostbyname(hostname)
+        return self.id_by_addr(addr)
+
+    def id_by_addr(self, addr):
+        """
+        Returns the database id for specified address.
+        The id might be useful as array index. 0 is unknown.
 
         @param addr: IPv4 or IPv6 address
         @type addr: str
@@ -424,7 +438,7 @@ class GeoIP(object):
         @rtype: int
         """
         ipv = 6 if addr.find(':') >= 0 else 4
-        if ipv == 4 and self._databaseType != const.COUNTRY_EDITION:
+        if ipv == 4 and self._databaseType not in (const.COUNTRY_EDITION, const.NETSPEED_EDITION):
             raise GeoIPError('Invalid database type; expected IPv6 address')
         if ipv == 6 and self._databaseType != const.COUNTRY_EDITION_V6:
             raise GeoIPError('Invalid database type; expected IPv4 address')
@@ -453,7 +467,7 @@ class GeoIP(object):
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
-            country_id = self._id_by_addr(addr)
+            country_id = self.id_by_addr(addr)
             return const.COUNTRY_CODES[country_id]
         elif self._databaseType in const.REGION_CITY_EDITIONS:
             return self.region_by_addr(addr).get('country_code')
@@ -473,6 +487,29 @@ class GeoIP(object):
         addr = self._gethostbyname(hostname)
         return self.country_code_by_addr(addr)
 
+    def netspeed_by_addr(self, addr):
+        """
+        Returns NetSpeed name from address.
+
+        @param hostname: IP address
+        @type hostname: str
+        @return: netspeed name
+        @rtype: str
+        """
+        return const.NETSPEED_NAMES[self.id_by_addr(addr)]
+
+    def netspeed_by_name(self, hostname):
+        """
+        Returns NetSpeed name from hostname.
+
+        @param hostname: Hostname
+        @type hostname: str
+        @return: netspeed name
+        @rtype: str
+        """
+        addr = self._gethostbyname(hostname)
+        return self.netspeed_by_addr(addr)
+
     def country_name_by_addr(self, addr):
         """
         Returns full country name for specified IP address.
@@ -485,7 +522,7 @@ class GeoIP(object):
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
-            country_id = self._id_by_addr(addr)
+            country_id = self.id_by_addr(addr)
             return const.COUNTRY_NAMES[country_id]
         elif self._databaseType in const.CITY_EDITIONS:
             return self.record_by_addr(addr).get('country_name')
