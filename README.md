@@ -111,10 +111,12 @@ For more information, [check out the full API documentation](http://packages.pyt
 
 ## Supported Databases
 
-* Country IPv4 and IPv6
-* City IPv4 and IPv6
-* Organization IPv4
-* ISP IPv4
-* Region IPv4
-* ASN IPv4 and IPv6
-* Netspeed IPv4
+| Type           | IPv4 | IPv6 | Details       |
+| -------------- |:----:|:----:| -------------- | 
+| Country        | ✓ | ✓ | [MaxMind Country product page](http://www.maxmind.com/en/country) |
+| City           | ✓ | ✓ | [MaxMind City product page](http://www.maxmind.com/en/city) |
+| Organization   | ✓ | | [MaxMind Organization product page](http://www.maxmind.com/en/organization) |
+| ISP            | ✓ | | [MaxMind ISP product page](http://www.maxmind.com/en/isp) |
+| Region         | ✓ | | [MaxMind Region product page](http://www.maxmind.com/en/geolocation_landing) |
+| ASN            | ✓ | ✓ | [MaxMind ASN product page](http://dev.maxmind.com/geoip/legacy/geolite) |
+| Netspeed       | ✓ | | [MaxMind Netspeed product page](http://www.maxmind.com/en/netspeed) |
