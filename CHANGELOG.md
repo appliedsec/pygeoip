@@ -2,6 +2,8 @@
 
 ### Release 0.3.1
 
+* New: MaxMind Netspeed database support
+
 Not yet uploaded to PyPi
 
 ### Release 0.3.0

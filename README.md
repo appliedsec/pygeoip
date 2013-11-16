@@ -116,4 +116,5 @@ For more information, [check out the full API documentation](http://packages.pyt
 * Organization IPv4
 * ISP IPv4
 * Region IPv4
-* ASNum IPv4 and IPv6
+* ASN IPv4 and IPv6
+* Netspeed IPv4
