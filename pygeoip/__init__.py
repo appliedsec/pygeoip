@@ -20,6 +20,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
+__version__ = "0.3.1"
 
 import os
 import socket
@@ -32,16 +33,11 @@ try:
 except ImportError:  # pragma: no cover
     mmap = None
 
-try:
-    from StringIO import StringIO
-    range = xrange  # Use xrange for Python 2
-except ImportError:
-    from io import StringIO, BytesIO
-
 from pygeoip import util, const
 from pygeoip.const import PY2, PY3
 from pygeoip.timezone import time_zone_by_country_and_region
 
+range = xrange if PY2 else range
 
 STANDARD = const.STANDARD
 MMAP_CACHE = const.MMAP_CACHE
@@ -72,10 +68,12 @@ class _GeoIPMetaclass(type):
         if not kwargs.get('cache', True):
             return super(_GeoIPMetaclass, cls).__call__(*args, **kwargs)
 
-        cls._instance_lock.acquire()
-        if filename not in cls._instances:
-            cls._instances[filename] = super(_GeoIPMetaclass, cls).__call__(*args, **kwargs)
-        cls._instance_lock.release()
+        try:
+            cls._instance_lock.acquire()
+            if filename not in cls._instances:
+                cls._instances[filename] = super(_GeoIPMetaclass, cls).__call__(*args, **kwargs)
+        finally:
+            cls._instance_lock.release()
 
         return cls._instances[filename]
 
@@ -97,6 +95,7 @@ class GeoIP(object):
         @param cache: Used in tests to skip instance caching
         @type cache: bool
         """
+        self._lock = Lock()
         self._flags = flags
         self._netmask = None
 
@@ -114,27 +113,18 @@ class GeoIP(object):
         elif self._flags & const.MEMORY_CACHE:
             f = codecs.open(filename, 'rb', ENCODING)
             self._memory = f.read()
-            self._fp = self._str_to_fp(self._memory)
+            self._fp = util.str2fp(self._memory)
             self._type = 'MEMORY_CACHE'
             f.close()
         else:
             self._fp = codecs.open(filename, 'rb', ENCODING)
             self._type = 'STANDARD'
 
-        self._lock = Lock()
-        self._setup_segments()
-
-    @classmethod
-    def _str_to_fp(cls, data):
-        """
-        Convert bytes data to file handle object
-
-        @param data: string data
-        @type data: str
-        @return: file handle object
-        @rtype: StringIO or BytesIO
-        """
-        return BytesIO(bytearray(data, ENCODING)) if PY3 else StringIO(data)
+        try:
+            self._lock.acquire()
+            self._setup_segments()
+        finally:
+            self._lock.release()
 
     def _setup_segments(self):
         """
@@ -155,13 +145,13 @@ class GeoIP(object):
         * ISP_EDITION
         * ASNUM_EDITION
         * ASNUM_EDITION_V6
+        * NETSPEED_EDITION
 
         """
         self._databaseType = const.COUNTRY_EDITION
         self._recordLength = const.STANDARD_RECORD_LENGTH
         self._databaseSegments = const.COUNTRY_BEGIN
 
-        self._lock.acquire()
         filepos = self._fp.tell()
         self._fp.seek(-3, os.SEEK_END)
 
@@ -215,7 +205,6 @@ class GeoIP(object):
                 self._fp.seek(-4, os.SEEK_CUR)
 
         self._fp.seek(filepos, os.SEEK_SET)
-        self._lock.release()
 
     def _seek_country(self, ipnum):
         """
@@ -239,10 +228,12 @@ class GeoIP(object):
                 else:
                     startIndex = 2 * self._recordLength * offset
                     readLength = 2 * self._recordLength
-                    self._lock.acquire()
-                    self._fp.seek(startIndex, os.SEEK_SET)
-                    buf = self._fp.read(readLength)
-                    self._lock.release()
+                    try:
+                        self._lock.acquire()
+                        self._fp.seek(startIndex, os.SEEK_SET)
+                        buf = self._fp.read(readLength)
+                    finally:
+                        self._lock.release()
 
                 if PY3 and type(buf) is bytes:
                     buf = buf.decode(ENCODING)
@@ -280,10 +271,12 @@ class GeoIP(object):
             return None
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
-        self._lock.acquire()
-        self._fp.seek(seek_org + read_length, os.SEEK_SET)
-        buf = self._fp.read(const.MAX_ORG_RECORD_LENGTH)
-        self._lock.release()
+        try:
+            self._lock.acquire()
+            self._fp.seek(seek_org + read_length, os.SEEK_SET)
+            buf = self._fp.read(const.MAX_ORG_RECORD_LENGTH)
+        finally:
+            self._lock.release()
 
         if PY3 and type(buf) is bytes:
             buf = buf.decode(ENCODING)
@@ -352,10 +345,12 @@ class GeoIP(object):
             return {}
 
         read_length = (2 * self._recordLength - 1) * self._databaseSegments
-        self._lock.acquire()
-        self._fp.seek(seek_country + read_length, os.SEEK_SET)
-        buf = self._fp.read(const.FULL_RECORD_LENGTH)
-        self._lock.release()
+        try:
+            self._lock.acquire()
+            self._fp.seek(seek_country + read_length, os.SEEK_SET)
+            buf = self._fp.read(const.FULL_RECORD_LENGTH)
+        finally:
+            self._lock.release()
 
         if PY3 and type(buf) is bytes:
             buf = buf.decode(ENCODING)
@@ -420,10 +415,23 @@ class GeoIP(object):
         else:
             return socket.gethostbyname(hostname)
 
-    def _id_by_addr(self, addr):
+    def id_by_name(self, hostname):
         """
-        Looks up the index for the country which is the key for the
-        code and name.
+        Returns the database id for specified hostname.
+        The id might be useful as array index. 0 is unknown.
+
+        @param hostname: Hostname
+        @type hostname: str
+        @return: network byte order 32-bit integer
+        @rtype: int
+        """
+        addr = self._gethostbyname(hostname)
+        return self.id_by_addr(addr)
+
+    def id_by_addr(self, addr):
+        """
+        Returns the database id for specified address.
+        The id might be useful as array index. 0 is unknown.
 
         @param addr: IPv4 or IPv6 address
         @type addr: str
@@ -431,7 +439,7 @@ class GeoIP(object):
         @rtype: int
         """
         ipv = 6 if addr.find(':') >= 0 else 4
-        if ipv == 4 and self._databaseType != const.COUNTRY_EDITION:
+        if ipv == 4 and self._databaseType not in (const.COUNTRY_EDITION, const.NETSPEED_EDITION):
             raise GeoIPError('Invalid database type; expected IPv6 address')
         if ipv == 6 and self._databaseType != const.COUNTRY_EDITION_V6:
             raise GeoIPError('Invalid database type; expected IPv4 address')
@@ -460,7 +468,7 @@ class GeoIP(object):
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
-            country_id = self._id_by_addr(addr)
+            country_id = self.id_by_addr(addr)
             return const.COUNTRY_CODES[country_id]
         elif self._databaseType in const.REGION_CITY_EDITIONS:
             return self.region_by_addr(addr).get('country_code')
@@ -480,6 +488,29 @@ class GeoIP(object):
         addr = self._gethostbyname(hostname)
         return self.country_code_by_addr(addr)
 
+    def netspeed_by_addr(self, addr):
+        """
+        Returns NetSpeed name from address.
+
+        @param hostname: IP address
+        @type hostname: str
+        @return: netspeed name
+        @rtype: str
+        """
+        return const.NETSPEED_NAMES[self.id_by_addr(addr)]
+
+    def netspeed_by_name(self, hostname):
+        """
+        Returns NetSpeed name from hostname.
+
+        @param hostname: Hostname
+        @type hostname: str
+        @return: netspeed name
+        @rtype: str
+        """
+        addr = self._gethostbyname(hostname)
+        return self.netspeed_by_addr(addr)
+
     def country_name_by_addr(self, addr):
         """
         Returns full country name for specified IP address.
@@ -492,7 +523,7 @@ class GeoIP(object):
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
-            country_id = self._id_by_addr(addr)
+            country_id = self.id_by_addr(addr)
             return const.COUNTRY_NAMES[country_id]
         elif self._databaseType in const.CITY_EDITIONS:
             return self.record_by_addr(addr).get('country_name')
@@ -543,6 +574,11 @@ class GeoIP(object):
         """
         addr = self._gethostbyname(hostname)
         return self.org_by_addr(addr)
+
+    isp_by_addr = org_by_addr
+    isp_by_name = org_by_name
+    asn_by_addr = org_by_addr
+    asn_by_name = org_by_name
 
     def record_by_addr(self, addr):
         """

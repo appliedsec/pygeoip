@@ -27,9 +27,10 @@ try:
 except ImportError:
     from distutils.core import setup
 
+from pygeoip import __version__
 
 setup(name='pygeoip',
-      version='0.3.0',
+      version=__version__,
       description='Pure Python GeoIP API',
       author='Jennifer Ennis',
       author_email='zaylea@gmail.com',
@@ -37,7 +38,6 @@ setup(name='pygeoip',
       maintainer_email='william@defunct.cc',
       url='https://github.com/appliedsec/pygeoip',
       classifiers=['Programming Language :: Python',
-                   'Programming Language :: Python :: 2.5',
                    'Programming Language :: Python :: 2.6',
                    'Programming Language :: Python :: 2.7',
                    'Programming Language :: Python :: 3',
