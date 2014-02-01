@@ -2,7 +2,7 @@
 
 This library is based on [Maxmind's GeoIP C API](https://github.com/maxmind/geoip-api-c).
 
-Tested with Python version 2.5, 2.6, 2.7, 3.2 and 3.3.
+Tested with Python version 2.6, 2.7, 3.2 and 3.3.
 
 [![Build Status](https://api.travis-ci.org/appliedsec/pygeoip.png?branch=master)](https://travis-ci.org/appliedsec/pygeoip) [![Coverage Status](https://coveralls.io/repos/appliedsec/pygeoip/badge.png)](https://coveralls.io/r/appliedsec/pygeoip) [![Downloads](https://pypip.in/d/pygeoip/badge.png)](https://crate.io/packages/pygeoip)
 
