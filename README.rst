@@ -4,7 +4,7 @@ Pure Python GeoIP API
 This library is based on `Maxmind's GeoIP C
 API <https://github.com/maxmind/geoip-api-c>`__.
 
-Tested with Python version 2.5, 2.6, 2.7, 3.2 and 3.3.
+Tested with Python version 2.6, 2.7, 3.2 and 3.3.
 
 |Build Status| |Coverage Status| |Downloads|
 
@@ -13,26 +13,9 @@ Installation
 
 You can easily install pygeoip from PyPi.
 
-::
+.. code:: bash
 
     pip install pygeoip
-
-Supported Databases
--------------------
-
-::
-
-    * COUNTRY_EDITION
-    * COUNTRY_EDITION_V6
-    * REGION_EDITION_REV0
-    * REGION_EDITION_REV1
-    * CITY_EDITION_REV0
-    * CITY_EDITION_REV1
-    * CITY_EDITION_REV1_V6
-    * ORG_EDITION
-    * ISP_EDITION
-    * ASNUM_EDITION
-    * ASNUM_EDITION_V6
 
 Issues and Contribution
 -----------------------
@@ -51,34 +34,40 @@ reads data from disk when needed, ``MEMORY_CACHE`` loads database into
 memory on instantiation and ``MMAP_CACHE`` loads database into memory
 using mmap.
 
-::
+.. code:: python
 
-    import pygeoip
-    gi4 = pygeoip.GeoIP('/path/to/GeoIP.dat', pygeoip.MEMORY_CACHE)
-    gi6 = pygeoip.GeoIP('/path/to/GeoIPv6.dat', pygeoip.MEMORY_CACHE)
+    >>> import pygeoip
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIP.dat')
+    >>> gi.country_name_by_addr('64.233.161.99')
+    'United States'
 
 Country Lookup
 ~~~~~~~~~~~~~~
 
-::
+.. code:: python
 
-    >>> gi4.country_code_by_name('google.com')
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIP.dat')
+    >>> gi.country_code_by_name('google.com')
     'US'
-    >>> gi4.country_code_by_addr('64.233.161.99')
+    >>> gi.country_code_by_addr('64.233.161.99')
     'US'
-    >>> gi4.country_name_by_addr('64.233.161.99')
+    >>> gi.country_name_by_addr('64.233.161.99')
     'United States'
-    >>> gi6.country_code_by_name('google.com')
+
+.. code:: python
+
+    >>> gi = pygeoip.GeoIP('/path/to/GeoIPv6.dat')
+    >>> gi.country_code_by_name('google.com')
     'IE'
-    >>> gi6.country_code_by_addr('2001:7fd::1')
+    >>> gi.country_code_by_addr('2001:7fd::1')
     'EU'
-    >>> gi6.country_name_by_addr('2001:7fd::1')
+    >>> gi.country_name_by_addr('2001:7fd::1')
     'Europe'
 
 Region Lookup
 ~~~~~~~~~~~~~
 
-::
+.. code:: python
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
     >>> gi.region_by_name('apple.com')
@@ -87,7 +76,7 @@ Region Lookup
 City Lookup
 ~~~~~~~~~~~
 
-::
+.. code:: python
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
     >>> gi.record_by_addr('64.233.161.99')
@@ -112,7 +101,7 @@ City Lookup
 Organization Lookup
 ~~~~~~~~~~~~~~~~~~~
 
-::
+.. code:: python
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPOrg.dat')
     >>> gi.org_by_name('dell.com')
@@ -121,25 +110,46 @@ Organization Lookup
 ISP Lookup
 ~~~~~~~~~~
 
-::
+.. code:: python
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
-    >>> gi.org_by_name('cnn.com')
+    >>> gi.isp_by_name('cnn.com')
     'Turner Broadcasting System'
 
 ASN Lookup
 ~~~~~~~~~~
 
-::
+.. code:: python
 
     >>> gi = pygeoip.GeoIP('/path/to/GeoIPASNum.dat')
-    >>> gi.org_by_name('cnn.com')
+    >>> gi.asn_by_name('cnn.com')
     'AS5662 Turner Broadcasting'
 
 For more information, `check out the full API
 documentation <http://packages.python.org/pygeoip>`__.
 
-.. |Build Status| image:: https://travis-ci.org/appliedsec/pygeoip.png
+Supported Databases
+-------------------
+
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+| Type           | IPv4   | IPv6   | Details                                                                           |
++================+========+========+===================================================================================+
+| Country        | ✓      | ✓      | `MaxMind Country product page <http://www.maxmind.com/en/country>`__              |
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+| City           | ✓      | ✓      | `MaxMind City product page <http://www.maxmind.com/en/city>`__                    |
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+| Organization   | ✓      |        | `MaxMind Organization product page <http://www.maxmind.com/en/organization>`__    |
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+| ISP            | ✓      |        | `MaxMind ISP product page <http://www.maxmind.com/en/isp>`__                      |
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+| Region         | ✓      |        | `MaxMind Region product page <http://www.maxmind.com/en/geolocation_landing>`__   |
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+| ASN            | ✓      | ✓      | `MaxMind ASN product page <http://dev.maxmind.com/geoip/legacy/geolite>`__        |
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+| Netspeed       | ✓      |        | `MaxMind Netspeed product page <http://www.maxmind.com/en/netspeed>`__            |
++----------------+--------+--------+-----------------------------------------------------------------------------------+
+
+.. |Build Status| image:: https://api.travis-ci.org/appliedsec/pygeoip.png?branch=master
    :target: https://travis-ci.org/appliedsec/pygeoip
 .. |Coverage Status| image:: https://coveralls.io/repos/appliedsec/pygeoip/badge.png
    :target: https://coveralls.io/r/appliedsec/pygeoip
