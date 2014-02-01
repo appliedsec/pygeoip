@@ -18,6 +18,7 @@ docs:
 
 clean:
 	@echo "Cleaning doc, test and cache files"
+	git clean -fd
 	find . -name *.pyc -delete
 	rm -rf pygeoip-* pygeoip.egg-info
 
