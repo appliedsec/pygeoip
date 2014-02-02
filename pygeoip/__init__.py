@@ -55,7 +55,8 @@ class _GeoIPMetaclass(type):
     _instance_lock = Lock()
 
     def __call__(cls, *args, **kwargs):
-        """ Singleton method to gets an instance without reparsing
+        """
+        Singleton method to gets an instance without reparsing
         the database, the filename is being used as cache key.
         """
         if len(args) > 0:
@@ -83,17 +84,14 @@ class GeoIP(object):
 
     def __init__(self, filename, flags=0, cache=True):
         """
-        Initialize the class.
+        Create and return an GeoIP instance.
 
-        @param filename: Path to a geoip database.
-        @type filename: str
-        @param flags: Flags that affect how the database is processed.
-            Currently supported flags are STANDARD (the default),
+        :arg filename: File path to a GeoIP database
+        :arg flags: Flags that affect how the database is processed.
+            Currently supported flags are STANDARD (default),
             MEMORY_CACHE (preload the whole file into memory) and
-            MMAP_CACHE (access the file via mmap).
-        @type flags: int
-        @param cache: Used in tests to skip instance caching
-        @type cache: bool
+            MMAP_CACHE (access the file via mmap)
+        :arg cache: Used in tests to skip instance caching
         """
         self._lock = Lock()
         self._flags = flags
@@ -131,22 +129,6 @@ class GeoIP(object):
         Parses the database file to determine what kind of database is
         being used and setup segment sizes and start points that will
         be used by the seek*() methods later.
-
-        Supported databases:
-
-        * COUNTRY_EDITION
-        * COUNTRY_EDITION_V6
-        * REGION_EDITION_REV0
-        * REGION_EDITION_REV1
-        * CITY_EDITION_REV0
-        * CITY_EDITION_REV1
-        * CITY_EDITION_REV1_V6
-        * ORG_EDITION
-        * ISP_EDITION
-        * ASNUM_EDITION
-        * ASNUM_EDITION_V6
-        * NETSPEED_EDITION
-
         """
         self._databaseType = const.COUNTRY_EDITION
         self._recordLength = const.STANDARD_RECORD_LENGTH
@@ -210,11 +192,9 @@ class GeoIP(object):
         """
         Using the record length and appropriate start points, seek to the
         country that corresponds to the converted IP address integer.
+        Return offset of record.
 
-        @param ipnum: result of ip2long conversion
-        @type ipnum: int
-        @return: offset of start of record
-        @rtype: int
+        :arg ipnum: Result of ip2long conversion
         """
         try:
             offset = 0
@@ -261,10 +241,9 @@ class GeoIP(object):
     def _get_org(self, ipnum):
         """
         Seek and return organization or ISP name for ipnum.
-        @param ipnum: Converted IP address
-        @type ipnum: int
-        @return: org/isp name
-        @rtype: str
+        Return org/isp name.
+
+        :arg ipnum: Result of ip2long conversion
         """
         seek_org = self._seek_country(ipnum)
         if seek_org == self._databaseSegments:
@@ -286,11 +265,9 @@ class GeoIP(object):
     def _get_region(self, ipnum):
         """
         Seek and return the region information.
+        Returns dict containing country_code and region_code.
 
-        @param ipnum: Converted IP address
-        @type ipnum: int
-        @return: dict containing country_code and region_code
-        @rtype: dict
+        :arg ipnum: Result of ip2long conversion
         """
         region_code = None
         country_code = None
@@ -332,13 +309,9 @@ class GeoIP(object):
     def _get_record(self, ipnum):
         """
         Populate location dict for converted IP.
+        Returns dict with numerous location properties.
 
-        @param ipnum: Converted IP address
-        @type ipnum: int
-        @return: dict with city, region_code, area_code, time_zone,
-            dma_code, metro_code, country_code3, latitude, postal_code,
-            longitude, country_code, country_name, continent
-        @rtype: dict
+        :arg ipnum: Result of ip2long conversion
         """
         seek_country = self._seek_country(ipnum)
         if seek_country == self._databaseSegments:
@@ -407,6 +380,9 @@ class GeoIP(object):
         return record
 
     def _gethostbyname(self, hostname):
+        """
+        Hostname lookup method, supports both IPv4 and IPv6.
+        """
         if self._databaseType in const.IPV6_EDITIONS:
             response = socket.getaddrinfo(hostname, 0, socket.AF_INET6)
             family, socktype, proto, canonname, sockaddr = response[0]
@@ -417,26 +393,20 @@ class GeoIP(object):
 
     def id_by_name(self, hostname):
         """
-        Returns the database id for specified hostname.
+        Returns the database ID for specified hostname.
         The id might be useful as array index. 0 is unknown.
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: network byte order 32-bit integer
-        @rtype: int
+        :arg hostname: Hostname to get ID from.
         """
         addr = self._gethostbyname(hostname)
         return self.id_by_addr(addr)
 
     def id_by_addr(self, addr):
         """
-        Returns the database id for specified address.
+        Returns the database ID for specified address.
         The id might be useful as array index. 0 is unknown.
 
-        @param addr: IPv4 or IPv6 address
-        @type addr: str
-        @return: network byte order 32-bit integer
-        @rtype: int
+        :arg addr: IPv4 or IPv6 address (eg. 127.0.0.1)
         """
         ipv = 6 if addr.find(':') >= 0 else 4
         if ipv == 4 and self._databaseType not in (const.COUNTRY_EDITION, const.NETSPEED_EDITION):
@@ -450,9 +420,6 @@ class GeoIP(object):
     def last_netmask(self):
         """
         Return the netmask depth of the last lookup.
-
-        @return: network depth
-        @rtype: int
         """
         return self._netmask
 
@@ -461,10 +428,7 @@ class GeoIP(object):
         Returns 2-letter country code (e.g. 'US') for specified IP address.
         Use this method if you have a Country, Region, or City database.
 
-        @param addr: IP address
-        @type addr: str
-        @return: 2-letter country code
-        @rtype: str
+        :arg addr: IP address (eg. 127.0.0.1)
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
@@ -480,10 +444,7 @@ class GeoIP(object):
         Returns 2-letter country code (e.g. 'US') for specified hostname.
         Use this method if you have a Country, Region, or City database.
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: 2-letter country code
-        @rtype: str
+        :arg hostname: Hostname (eg. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.country_code_by_addr(addr)
