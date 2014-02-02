@@ -9,4 +9,4 @@ pygeoip-*
 cover
 .coverage
 .coveralls.yml
-apidocs/html/.*
+docs/_build/*
