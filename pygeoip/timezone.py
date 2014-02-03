@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Time zone data and lookup function
-
-@author: Jennifer Ennis <zaylea@gmail.com>
-@author: William Tisäter <william@defunct.cc>
-
-@license: Copyright(C) 2004 MaxMind LLC
+Copyright (c) 2010-2014 Jennifer Ennis, William Tisäter.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -21,17 +16,12 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
-
 def time_zone_by_country_and_region(country_code, region_code=None):
     """
-    Get time zone from country code and region code.
+    Returns time zone from country and region code.
 
-    @param country_code: Country code
-    @type country_code: str
-    @param region_code: Region code
-    @type region_code: str
-    @return: Time zone
-    @rtype: str
+    :arg country_code: Country code
+    :arg region_code: Region code
     """
     timezone = country_dict.get(country_code)
     if not timezone:

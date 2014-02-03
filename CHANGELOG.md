@@ -2,6 +2,7 @@
 
 ### Release 0.3.1
 
+* New: Documentation now available on readthedocs.org
 * New: MaxMind Netspeed database support
 * Fix: Release thread lock on exceptions
 

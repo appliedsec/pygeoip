@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Utility function for address translation
-
-@author: Jennifer Ennis <zaylea@gmail.com>
-@author: William Tisäter <william@defunct.cc>
-
-@license: Copyright(C) 2004 MaxMind LLC
+Copyright (c) 2010-2014 Jennifer Ennis, William Tisäter.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -34,9 +29,9 @@ from pygeoip import const
 
 def ip2long(ip):
     """
-    Wrapper function for IPv4 and IPv6 converters
-    @param ip: IPv4 or IPv6 address
-    @type ip: str
+    Wrapper function for IPv4 and IPv6 converters.
+
+    :arg ip: IPv4 or IPv6 address
     """
     try:
         return int(binascii.hexlify(socket.inet_aton(ip)), 16)
@@ -46,11 +41,8 @@ def ip2long(ip):
 
 def str2fp(data):
     """
-    Convert bytes data to file handle object
+    Convert bytes data to file handle object (StringIO or BytesIO).
 
-    @param data: string data
-    @type data: str
-    @return: file handle object
-    @rtype: StringIO or BytesIO
+    :arg data: String data to transform
     """
     return BytesIO(bytearray(data, const.ENCODING)) if const.PY3 else StringIO(data)
