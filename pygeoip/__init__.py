@@ -47,6 +47,10 @@ ENCODING = const.ENCODING
 
 
 class GeoIPError(Exception):
+    """
+    Thin wrapper of `Exception`, will be thrown in case of an
+    unrecoverable error.
+    """
     pass
 
 
@@ -82,7 +86,7 @@ class _GeoIPMetaclass(type):
 class GeoIP(object):
     __metaclass__ = _GeoIPMetaclass
 
-    def __init__(self, filename, flags=0, cache=True):
+    def __init__(self, filename, flags=STANDARD, cache=True):
         """
         Create and return an GeoIP instance.
 
@@ -404,9 +408,9 @@ class GeoIP(object):
     def id_by_addr(self, addr):
         """
         Returns the database ID for specified address.
-        The id might be useful as array index. 0 is unknown.
+        The ID might be useful as array index. 0 is unknown.
 
-        :arg addr: IPv4 or IPv6 address (eg. 127.0.0.1)
+        :arg addr: IPv4 or IPv6 address (eg. 203.0.113.30)
         """
         ipv = 6 if addr.find(':') >= 0 else 4
         if ipv == 4 and self._databaseType not in (const.COUNTRY_EDITION, const.NETSPEED_EDITION):
@@ -419,16 +423,15 @@ class GeoIP(object):
 
     def last_netmask(self):
         """
-        Return the netmask depth of the last lookup.
+        Returns the netmask depth of the last lookup.
         """
         return self._netmask
 
     def country_code_by_addr(self, addr):
         """
-        Returns 2-letter country code (e.g. 'US') for specified IP address.
-        Use this method if you have a Country, Region, or City database.
+        Returns 2-letter country code (e.g. US) from IP address.
 
-        :arg addr: IP address (eg. 127.0.0.1)
+        :arg addr: IP address (e.g. 203.0.113.30)
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
@@ -441,10 +444,9 @@ class GeoIP(object):
 
     def country_code_by_name(self, hostname):
         """
-        Returns 2-letter country code (e.g. 'US') for specified hostname.
-        Use this method if you have a Country, Region, or City database.
+        Returns 2-letter country code (e.g. US) from hostname.
 
-        :arg hostname: Hostname (eg. example.com)
+        :arg hostname: Hostname (e.g. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.country_code_by_addr(addr)
@@ -453,21 +455,16 @@ class GeoIP(object):
         """
         Returns NetSpeed name from address.
 
-        @param hostname: IP address
-        @type hostname: str
-        @return: netspeed name
-        @rtype: str
+        :arg addr: IP address (e.g. 203.0.113.30)
         """
         return const.NETSPEED_NAMES[self.id_by_addr(addr)]
 
     def netspeed_by_name(self, hostname):
         """
-        Returns NetSpeed name from hostname.
+        Returns NetSpeed name from hostname. Can be Unknown, Dial-up,
+        Cable, or Corporate.
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: netspeed name
-        @rtype: str
+        :arg hostname: Hostname (e.g. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.netspeed_by_addr(addr)
@@ -475,12 +472,8 @@ class GeoIP(object):
     def country_name_by_addr(self, addr):
         """
         Returns full country name for specified IP address.
-        Use this method if you have a Country or City database.
 
-        @param addr: IP address
-        @type addr: str
-        @return: country name
-        @rtype: str
+        :arg addr: IP address (e.g. 203.0.113.30)
         """
         VALID_EDITIONS = (const.COUNTRY_EDITION, const.COUNTRY_EDITION_V6)
         if self._databaseType in VALID_EDITIONS:
@@ -495,25 +488,17 @@ class GeoIP(object):
     def country_name_by_name(self, hostname):
         """
         Returns full country name for specified hostname.
-        Use this method if you have a Country database.
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: country name
-        @rtype: str
+        :arg hostname: Hostname (e.g. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.country_name_by_addr(addr)
 
     def org_by_addr(self, addr):
         """
-        Lookup Organization, ISP or ASNum for given IP address.
-        Use this method if you have an Organization, ISP or ASNum database.
+        Returns Organization, ISP, or ASNum name for given IP address.
 
-        @param addr: IP address
-        @type addr: str
-        @return: organization or ISP name
-        @rtype: str
+        :arg addr: IP address (e.g. 203.0.113.30)
         """
         valid = (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION, const.ASNUM_EDITION_V6)
         if self._databaseType not in valid:
@@ -525,13 +510,9 @@ class GeoIP(object):
 
     def org_by_name(self, hostname):
         """
-        Lookup the organization (or ISP) for hostname.
-        Use this method if you have an Organization/ISP database.
+        Returns Organization, ISP, or ASNum name for given hostname.
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: Organization or ISP name
-        @rtype: str
+        :arg hostname: Hostname (e.g. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.org_by_addr(addr)
@@ -543,15 +524,11 @@ class GeoIP(object):
 
     def record_by_addr(self, addr):
         """
-        Look up the record for a given IP address.
-        Use this method if you have a City database.
+        Returns dictionary with city data containing `country_code`, `country_name`,
+        `region`, `city`, `postal_code`, `latitude`, `longitude`, `dma_code`,
+        `metro_code`, `area_code`, `region_code` and `time_zone`.
 
-        @param addr: IP address
-        @type addr: str
-        @return: Dictionary with country_code, country_code3, country_name,
-            region, city, postal_code, latitude, longitude, dma_code,
-            metro_code, area_code, region_code, time_zone
-        @rtype: dict
+        :arg addr: IP address (e.g. 203.0.113.30)
         """
         if self._databaseType not in const.CITY_EDITIONS:
             message = 'Invalid database type, expected City'
@@ -566,28 +543,20 @@ class GeoIP(object):
 
     def record_by_name(self, hostname):
         """
-        Look up the record for a given hostname.
-        Use this method if you have a City database.
+        Returns dictionary with city data containing `country_code`, `country_name`,
+        `region`, `city`, `postal_code`, `latitude`, `longitude`, `dma_code`,
+        `metro_code`, `area_code`, `region_code` and `time_zone`.
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: Dictionary with country_code, country_code3, country_name,
-            region, city, postal_code, latitude, longitude, dma_code,
-            metro_code, area_code, region_code, time_zone
-        @rtype: dict
+        :arg hostname: Hostname (e.g. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.record_by_addr(addr)
 
     def region_by_addr(self, addr):
         """
-        Lookup the region for given IP address.
-        Use this method if you have a Region database.
+        Returns dictionary containing `country_code` and `region_code`.
 
-        @param addr: IP address
-        @type addr: str
-        @return: Dictionary containing country_code and region_code
-        @rtype: dict
+        :arg addr: IP address (e.g. 203.0.113.30)
         """
         if self._databaseType not in const.REGION_CITY_EDITIONS:
             message = 'Invalid database type, expected Region or City'
@@ -598,26 +567,18 @@ class GeoIP(object):
 
     def region_by_name(self, hostname):
         """
-        Lookup the region for given hostname.
-        Use this method if you have a Region database.
+        Returns dictionary containing `country_code` and `region_code`.
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: Dictionary containing country_code, region_code and region
-        @rtype: dict
+        :arg hostname: Hostname (e.g. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.region_by_addr(addr)
 
     def time_zone_by_addr(self, addr):
         """
-        Look up the time zone for a given IP address.
-        Use this method if you have a Region or City database.
+        Returns timezone in tzdata format (e.g. America/New_York or Europe/Paris)
 
-        @param addr: IP address
-        @type addr: str
-        @return: Time zone
-        @rtype: str
+        :arg addr: IP address (e.g. 203.0.113.30)
         """
         if self._databaseType not in const.CITY_EDITIONS:
             message = 'Invalid database type, expected City'
@@ -628,13 +589,9 @@ class GeoIP(object):
 
     def time_zone_by_name(self, hostname):
         """
-        Look up the time zone for a given hostname.
-        Use this method if you have a Region or City database.
+        Returns timezone in tzdata format (e.g. America/New_York or Europe/Paris)
 
-        @param hostname: Hostname
-        @type hostname: str
-        @return: Time zone
-        @rtype: str
+        :arg hostname: Hostname (e.g. example.com)
         """
         addr = self._gethostbyname(hostname)
         return self.time_zone_by_addr(addr)

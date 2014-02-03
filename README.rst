@@ -1,8 +1,7 @@
 Pure Python GeoIP API
 =====================
 
-This library is based on `Maxmind's GeoIP C
-API <https://github.com/maxmind/geoip-api-c>`__.
+This library is based on `Maxmind's GeoIP C API <https://github.com/maxmind/geoip-api-c>`__.
 
 Tested with Python version 2.6, 2.7, 3.2 and 3.3.
 
@@ -26,132 +25,21 @@ contribute you can always `create a pull
 request <https://github.com/appliedsec/pygeoip/pulls>`__ for discussion
 and code submission.
 
-Getting Started
----------------
+Documentation
+-------------
 
-Create your GeoIP instance with appropriate access flag. ``STANDARD``
-reads data from disk when needed, ``MEMORY_CACHE`` loads database into
-memory on instantiation and ``MMAP_CACHE`` loads database into memory
-using mmap.
+.. toctree::
+   :maxdepth: 1
 
-.. code:: python
+   getting-started
+   supported-databases
+   api-reference
 
-    >>> import pygeoip
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIP.dat')
-    >>> gi.country_name_by_addr('64.233.161.99')
-    'United States'
-
-Country Lookup
-~~~~~~~~~~~~~~
-
-.. code:: python
-
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIP.dat')
-    >>> gi.country_code_by_name('google.com')
-    'US'
-    >>> gi.country_code_by_addr('64.233.161.99')
-    'US'
-    >>> gi.country_name_by_addr('64.233.161.99')
-    'United States'
-
-.. code:: python
-
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPv6.dat')
-    >>> gi.country_code_by_name('google.com')
-    'IE'
-    >>> gi.country_code_by_addr('2001:7fd::1')
-    'EU'
-    >>> gi.country_name_by_addr('2001:7fd::1')
-    'Europe'
-
-Region Lookup
-~~~~~~~~~~~~~
-
-.. code:: python
-
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPRegion.dat')
-    >>> gi.region_by_name('apple.com')
-    {'region_code': 'CA', 'country_code': 'US'}
-
-City Lookup
-~~~~~~~~~~~
-
-.. code:: python
-
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPCity.dat')
-    >>> gi.record_by_addr('64.233.161.99')
-    {
-        'city': u'Mountain View',
-        'region_code': u'CA',
-        'area_code': 650,
-        'time_zone': 'America/Los_Angeles',
-        'dma_code': 807,
-        'metro_code': 'San Francisco, CA',
-        'country_code3': 'USA',
-        'latitude': 37.41919999999999,
-        'postal_code': u'94043',
-        'longitude': -122.0574,
-        'country_code': 'US',
-        'country_name': 'United States',
-        'continent': 'NA'
-    }
-    >>> gi.time_zone_by_addr('64.233.161.99')
-    'America/Los_Angeles'
-
-Organization Lookup
-~~~~~~~~~~~~~~~~~~~
-
-.. code:: python
-
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPOrg.dat')
-    >>> gi.org_by_name('dell.com')
-    'Dell Computer Corporation'
-
-ISP Lookup
-~~~~~~~~~~
-
-.. code:: python
-
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPISP.dat')
-    >>> gi.isp_by_name('cnn.com')
-    'Turner Broadcasting System'
-
-ASN Lookup
-~~~~~~~~~~
-
-.. code:: python
-
-    >>> gi = pygeoip.GeoIP('/path/to/GeoIPASNum.dat')
-    >>> gi.asn_by_name('cnn.com')
-    'AS5662 Turner Broadcasting'
-
-For more information, `check out the full API
-documentation <http://packages.python.org/pygeoip>`__.
-
-Supported Databases
--------------------
-
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
-| Type           | IPv4   | IPv6   | Details                                                                           |
-+================+========+========+===================================================================================+
-| Country        | ✓      | ✓      | `MaxMind Country product page <http://www.maxmind.com/en/country>`__              |
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
-| City           | ✓      | ✓      | `MaxMind City product page <http://www.maxmind.com/en/city>`__                    |
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
-| Organization   | ✓      |        | `MaxMind Organization product page <http://www.maxmind.com/en/organization>`__    |
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
-| ISP            | ✓      |        | `MaxMind ISP product page <http://www.maxmind.com/en/isp>`__                      |
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
-| Region         | ✓      |        | `MaxMind Region product page <http://www.maxmind.com/en/geolocation_landing>`__   |
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
-| ASN            | ✓      | ✓      | `MaxMind ASN product page <http://dev.maxmind.com/geoip/legacy/geolite>`__        |
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
-| Netspeed       | ✓      |        | `MaxMind Netspeed product page <http://www.maxmind.com/en/netspeed>`__            |
-+----------------+--------+--------+-----------------------------------------------------------------------------------+
+For more information, `check out the documentation <http://pygeoip.readthedocs.org/>`__ over at Read the Docs.
 
 .. |Build Status| image:: https://api.travis-ci.org/appliedsec/pygeoip.png?branch=master
-   :target: https://travis-ci.org/appliedsec/pygeoip
+	:target: https://travis-ci.org/appliedsec/pygeoip
 .. |Coverage Status| image:: https://coveralls.io/repos/appliedsec/pygeoip/badge.png
-   :target: https://coveralls.io/r/appliedsec/pygeoip
+	:target: https://coveralls.io/r/appliedsec/pygeoip
 .. |Downloads| image:: https://pypip.in/d/pygeoip/badge.png
-   :target: https://crate.io/packages/pygeoip
+	:target: https://crate.io/packages/pygeoip
