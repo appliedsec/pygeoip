@@ -12,7 +12,7 @@ Installation
 
 You can easily install pygeoip from PyPi.
 
-.. code:: bash
+.. code:: python
 
     pip install pygeoip
 
