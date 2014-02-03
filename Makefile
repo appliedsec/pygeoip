@@ -1,6 +1,6 @@
 .PHONY: docs
 
-all: test docs
+all: test
 
 test:
 	@echo "Downloading test databases"

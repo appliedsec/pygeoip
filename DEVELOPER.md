@@ -16,15 +16,10 @@ https://www.defunct.cc/maxmind-geoip-samples.tar.gz (17 MB)
 
 Extract the tarball in the tests directory and run `tox` from the root directory.
 
-This requires a machine with Python 2.5 - 3.3 installed and all dependencies mention in the header.
-
-### Documentation
-
-For converting Markdown to reStructuredText used by PyPi we use pandoc.
-[Read pandoc's install instructions](http://johnmacfarlane.net/pandoc/installing.html).
+This requires a machine with Python 2.6 - 3.3 installed and all dependencies mention in the header.
 
 ### TL;DR
 
-There's a shell script doing all this for you.
+There's a Makefile doing all this for you.
 
-    ./build.sh
+    make test
