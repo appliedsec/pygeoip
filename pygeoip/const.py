@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Constants for the database parser
-
-@author: Jennifer Ennis <zaylea@gmail.com>
-@author: William Tisäter <william@defunct.cc>
-
-@license: Copyright(C) 2004 MaxMind LLC
+Copyright (c) 2010-2014 Jennifer Ennis, William Tisäter.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by

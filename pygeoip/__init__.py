@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Pure Python GeoIP API
-
-@author: Jennifer Ennis <zaylea@gmail.com>
-@author: William Tisäter <william@defunct.cc>
-
-@license: Copyright(C) 2004 MaxMind LLC
+Copyright (c) 2010-2014 Jennifer Ennis, William Tisäter.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -20,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
+
 __version__ = "0.3.1"
 
 import os
@@ -576,7 +572,7 @@ class GeoIP(object):
 
     def time_zone_by_addr(self, addr):
         """
-        Returns timezone in tzdata format (e.g. America/New_York or Europe/Paris)
+        Returns time zone in tzdata format (e.g. America/New_York or Europe/Paris)
 
         :arg addr: IP address (e.g. 203.0.113.30)
         """
@@ -589,7 +585,7 @@ class GeoIP(object):
 
     def time_zone_by_name(self, hostname):
         """
-        Returns timezone in tzdata format (e.g. America/New_York or Europe/Paris)
+        Returns time zone in tzdata format (e.g. America/New_York or Europe/Paris)
 
         :arg hostname: Hostname (e.g. example.com)
         """

@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Setup file for pygeoip package.
-
-@author: Jennifer Ennis <zaylea at gmail dot com>
-
-@license:
-Copyright(C) 2004 MaxMind LLC
+Copyright (c) 2010-2014 Jennifer Ennis, William Tisäter.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
