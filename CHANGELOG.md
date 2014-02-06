@@ -1,12 +1,16 @@
 # ChangeLog for pygeoip
 
+### Release 0.3.2
+
+Not yet uploaded to PyPi
+
 ### Release 0.3.1
 
 * New: Documentation now available on readthedocs.org
 * New: MaxMind Netspeed database support
 * Fix: Release thread lock on exceptions
 
-Not yet uploaded to PyPi
+Uploaded to PyPi on 2014-02-05
 
 ### Release 0.3.0
 
