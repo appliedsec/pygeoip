@@ -23,6 +23,9 @@ contribute you can always `create a pull
 request <https://github.com/appliedsec/pygeoip/pulls>`__ for discussion
 and code submission.
 
+Documentation
+-------------
+
 .. toctree::
    :maxdepth: 1
 
