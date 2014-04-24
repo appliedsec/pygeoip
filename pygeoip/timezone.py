@@ -652,6 +652,7 @@ country_dict = {
         '09': 'Europe/Kiev',
         '10': 'Europe/Zaporozhye',
         '11': 'Europe/Simferopol',
+        '12': 'Europe/Kiev',
         '13': 'Europe/Kiev',
         '14': 'Europe/Zaporozhye',
         '15': 'Europe/Uzhgorod',
