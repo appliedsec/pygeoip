@@ -168,6 +168,8 @@ class GeoIP(object):
                                             const.CITY_EDITION_REV1_V6,
                                             const.ORG_EDITION,
                                             const.ISP_EDITION,
+                                            const.NETSPEED_EDITION_REV1,
+                                            const.NETSPEED_EDITION_REV1_V6,
                                             const.ASNUM_EDITION,
                                             const.ASNUM_EDITION_V6):
                     self._databaseSegments = 0
@@ -453,7 +455,15 @@ class GeoIP(object):
 
         :arg addr: IP address (e.g. 203.0.113.30)
         """
-        return const.NETSPEED_NAMES[self.id_by_addr(addr)]
+        if self._databaseType == const.NETSPEED_EDITION:
+            return const.NETSPEED_NAMES[self.id_by_addr(addr)]
+        elif self._databaseType in (const.NETSPEED_EDITION_REV1,
+                                    const.NETSPEED_EDITION_REV1_V6):
+            ipnum = util.ip2long(addr)
+            return self._get_org(ipnum)
+
+        raise GeoIPError(
+            'Invalid database type, expected NetSpeed or NetSpeedCell')
 
     def netspeed_by_name(self, hostname):
         """
@@ -496,7 +506,8 @@ class GeoIP(object):
 
         :arg addr: IP address (e.g. 203.0.113.30)
         """
-        valid = (const.ORG_EDITION, const.ISP_EDITION, const.ASNUM_EDITION, const.ASNUM_EDITION_V6)
+        valid = (const.ORG_EDITION, const.ISP_EDITION,
+                 const.ASNUM_EDITION, const.ASNUM_EDITION_V6)
         if self._databaseType not in valid:
             message = 'Invalid database type, expected Org, ISP or ASNum'
             raise GeoIPError(message)
