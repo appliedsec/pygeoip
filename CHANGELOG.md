@@ -2,6 +2,11 @@
 
 ### Release 0.3.2
 
+* New: Support for Python 3.4
+* New: Support for NetSpeedCell databases (Thanks to Gregory Oschwald)
+* Fix: Improved exception handling (Thanks to Oliver Keyes)
+* Fix: Return country for region lookups outside US and CA
+
 Not yet uploaded to PyPi
 
 ### Release 0.3.1
