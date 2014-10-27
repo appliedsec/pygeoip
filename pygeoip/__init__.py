@@ -299,7 +299,7 @@ class GeoIP(object):
                 region_code = get_region_code(seek_region - const.CANADA_OFFSET)
             else:
                 index = (seek_region - const.WORLD_OFFSET) // const.FIPS_RANGE
-                if index in const.COUNTRY_CODES:
+                if index < len(const.COUNTRY_CODES):
                     country_code = const.COUNTRY_CODES[index]
         elif self._databaseType in const.CITY_EDITIONS:
             rec = self._get_record(ipnum)
