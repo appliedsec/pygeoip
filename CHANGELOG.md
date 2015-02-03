@@ -7,7 +7,7 @@
 * Fix: Improved exception handling (Thanks to Oliver Keyes)
 * Fix: Return country for region lookups outside US and CA
 
-Not yet uploaded to PyPi
+Uploaded to PyPi on 2014-10-28
 
 ### Release 0.3.1
 
