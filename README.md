@@ -1,7 +1,7 @@
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 # DEPRECATED
-This project is no longer supported. Please consider using [Maxmind's GeoIP C API](https://github.com/maxmind/geoip-api-c).
+This project is no longer supported. Please consider using [Maxmind's GeoIP2 Python API](https://github.com/maxmind/GeoIP2-python).
 
 # Pure Python GeoIP API
 
